@@ -1,119 +1,115 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>ELK / Proxy 작업 메뉴</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8" />
 
-    body {
-      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #0f172a; /* 어두운 남색 배경 */
-      color: #e5e7eb;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+<style>
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
 
-    .container {
-      text-align: center;
-      padding: 24px;
-      width: 100%;
-      max-width: 480px;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-    .title {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 16px;
-    }
+  /* 3×3 메뉴 */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    justify-items: center;
+  }
 
-    .subtitle {
-      font-size: 13px;
-      color: #9ca3af;
-      margin-bottom: 24px;
-    }
+  /* 고급스러운 Glass 버튼 */
+  .menu-btn {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    text-decoration: none;
+    cursor: pointer;
 
-    .btn-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 
-    .menu-btn {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 10px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      background: rgba(15, 23, 42, 0.9);
-      color: #e5e7eb;
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.7);
-    }
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e3a5f;
 
-    .menu-btn span.emoji {
-      font-size: 18px;
-    }
+    /* Glassmorphism 스타일 */
+    background: rgba(255, 255, 255, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
-    .menu-btn:hover {
-      background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
-      border-color: transparent;
-      transform: translateY(-1px);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
-    }
+    /* Soft shadow */
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.08),
+      0 3px 6px rgba(0, 0, 0, 0.05);
 
-    .menu-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.7);
-    }
-  </style>
+    transition: all 0.25s ease;
+  }
+
+  .menu-btn span.emoji {
+    font-size: 42px;
+  }
+
+  /* Hover 시 고급스러운 발광 + 입체감 */
+  .menu-btn:hover {
+    transform: translateY(-6px);
+    background: rgba(255, 255, 255, 0.55);
+    box-shadow:
+      0 14px 30px rgba(0, 0, 0, 0.16),
+      0 6px 12px rgba(0, 0, 0, 0.08);
+    color: #002b77;
+  }
+
+</style>
 </head>
-<body>
-  <div class="container">
-    <div class="title">작업 메뉴</div>
-    <div class="subtitle">Proxy / SG / ELK 작업 선택</div>
 
-    <div class="btn-list">
-      <button class="menu-btn">
-        <span class="emoji">⏳</span>
-        <span>EoS 확인</span>
-      </button>
-      <button class="menu-btn">
-        <span class="emoji">🧩</span>
-        <span>Sysinfo 분석</span>
-      </button>
-      <button class="menu-btn">
-        <span class="emoji">🔎</span>
-        <span>ISG 분석</span>
-      </button>
-      <button class="menu-btn">
-        <span class="emoji">📄</span>
-        <span>Trace 분석</span>
-      </button>
-      <button class="menu-btn">
-        <span class="emoji">📊</span>
-        <span>Sizing-SG 보기</span>
-      </button>
-      <button class="menu-btn">
-        <span class="emoji">🧬</span>
-        <span>ELK 로그 설정</span>
-      </button>
-      <button class="menu-btn">
-        <span class="emoji">🚦</span>
-        <span>PAC</span>
-      </button>
-    </div>
-  </div>
+<body>
+
+<div class="menu-grid">
+
+  <a href="https://etech-symantec.github.io/eos" class="menu-btn">
+    <span class="emoji">⏳</span>EoS 확인
+  </a>
+
+  <a href="https://etech-symantec.github.io/sysinfo" class="menu-btn">
+    <span class="emoji">🧩</span>Sysinfo 분석
+  </a>
+
+  <a href="https://etech-symantec.github.io/isg" class="menu-btn">
+    <span class="emoji">🔎</span>ISG 분석
+  </a>
+
+  <a href="https://etech-symantec.github.io/trace" class="menu-btn">
+    <span class="emoji">📄</span>Trace 분석
+  </a>
+
+  <a href="https://etech-symantec.github.io/sizing-sg" class="menu-btn">
+    <span class="emoji">📊</span>Sizing-SG
+  </a>
+
+  <a href="https://etech-symantec.github.io/elk" class="menu-btn">
+    <span class="emoji">🧬</span>ELK 로그 설정
+  </a>
+
+  <a href="https://etech-symantec.github.io/pac" class="menu-btn">
+    <span class="emoji">🚦</span>PAC
+  </a>
+
+  <div></div>
+  <div></div>
+
+</div>
+
 </body>
 </html>
