@@ -29,18 +29,7 @@
     align-items: center;
     height: 100vh;
   }
-  body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: linear-gradient(180deg, #ffffff 0%, #f6f9ff 50%, #eef3ff 100%);
-    margin: 0;
-    padding: 0;
-    color: #333;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  }
+  
 
   /* ⭐ 메뉴 Fade-in + Slide Down 등장 애니메이션 */
   @keyframes menuFadeIn {
@@ -136,6 +125,38 @@
     transform: scale(1.75);
   }
 
+  /* ------------------------------- */
+  /* ✨ Hover 시 Shimmer(빛 흔들림 효과) */
+  /* ------------------------------- */
+  @keyframes shimmer {
+    0%   { transform: translateX(-180%); }
+    100% { transform: translateX(180%); }
+  }
+
+  .menu-btn .shimmer {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      115deg,
+      transparent,
+      rgba(255,255,255,0.28),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .menu-btn:hover .shimmer {
+    opacity: 1;
+    animation: shimmer 1.4s linear infinite;
+  }
+
+
+
   /* Light reflection */
   .menu-btn::before {
     content: "";
@@ -206,15 +227,15 @@
 
 <div class="menu-grid">
 
-  <a href="https://etech-symantec.github.io/eos" class="menu-btn"><span class="emoji">⏳</span>EoS 확인</a>
-  <a href="https://etech-symantec.github.io/sysinfo" class="menu-btn"><span class="emoji">🧩</span>Sysinfo 분석</a>
-  <a href="https://etech-symantec.github.io/isg" class="menu-btn"><span class="emoji">🔎</span>ISG 분석</a>
+  <a href="https://etech-symantec.github.io/eos" class="menu-btn"><span class="emoji">⏳</span>EoS 확인<div class="shimmer"></div></a>
+  <a href="https://etech-symantec.github.io/sysinfo" class="menu-btn"><span class="emoji">🧩</span>Sysinfo 분석<div class="shimmer"></div></a>
+  <a href="https://etech-symantec.github.io/isg" class="menu-btn"><span class="emoji">🔎</span>ISG 분석<div class="shimmer"></div></a>
 
-  <a href="https://etech-symantec.github.io/trace" class="menu-btn"><span class="emoji">📄</span>Trace 분석</a>
-  <a href="https://etech-symantec.github.io/sizing-sg" class="menu-btn"><span class="emoji">📊</span>Sizing-SG</a>
-  <a href="https://etech-symantec.github.io/elk" class="menu-btn"><span class="emoji">🧬</span>ELK 로그 설정</a>
+  <a href="https://etech-symantec.github.io/trace" class="menu-btn"><span class="emoji">📄</span>Trace 분석<div class="shimmer"></div></a>
+  <a href="https://etech-symantec.github.io/sizing-sg" class="menu-btn"><span class="emoji">📊</span>Sizing-SG<div class="shimmer"></div></a>
+  <a href="https://etech-symantec.github.io/elk" class="menu-btn"><span class="emoji">🧬</span>ELK 로그 설정<div class="shimmer"></div></a>
 
-  <a href="https://etech-symantec.github.io/pac" class="menu-btn"><span class="emoji">🚦</span>PAC</a>
+  <a href="https://etech-symantec.github.io/pac" class="menu-btn"><span class="emoji">🚦</span>PAC<div class="shimmer"></div></a>
 
   <div></div><div></div>
 </div>
