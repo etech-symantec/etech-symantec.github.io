@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>ELK / Proxy 작업 메뉴</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #0f172a; /* 어두운 남색 배경 */
+      color: #e5e7eb;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container {
+      text-align: center;
+      padding: 24px;
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .title {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 13px;
+      color: #9ca3af;
+      margin-bottom: 24px;
+    }
+
+    .btn-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .menu-btn {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
+      color: #e5e7eb;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.7);
+    }
+
+    .menu-btn span.emoji {
+      font-size: 18px;
+    }
+
+    .menu-btn:hover {
+      background: linear-gradient(135deg, #1d4ed8, #0ea5e9);
+      border-color: transparent;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+    }
+
+    .menu-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="title">작업 메뉴</div>
+    <div class="subtitle">Proxy / SG / ELK 작업 선택</div>
+
+    <div class="btn-list">
+      <button class="menu-btn">
+        <span class="emoji">⏳</span>
+        <span>EoS 확인</span>
+      </button>
+      <button class="menu-btn">
+        <span class="emoji">🧩</span>
+        <span>Sysinfo 분석</span>
+      </button>
+      <button class="menu-btn">
+        <span class="emoji">🔎</span>
+        <span>ISG 분석</span>
+      </button>
+      <button class="menu-btn">
+        <span class="emoji">📄</span>
+        <span>Trace 분석</span>
+      </button>
+      <button class="menu-btn">
+        <span class="emoji">📊</span>
+        <span>Sizing-SG 보기</span>
+      </button>
+      <button class="menu-btn">
+        <span class="emoji">🧬</span>
+        <span>ELK 로그 설정</span>
+      </button>
+      <button class="menu-btn">
+        <span class="emoji">🚦</span>
+        <span>PAC</span>
+      </button>
+    </div>
+  </div>
+</body>
+</html>
