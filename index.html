@@ -2,20 +2,16 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
 <style>
 
   /* ------------------------------- */
-  /* ✨ 부드러운 움직이는 배경 Gradient */
+  /* ✨ 폰트 적용 (전체 바디 수정)      */
   /* ------------------------------- */
-  @keyframes bgMove {
-    0%   { background-position: 0% 0%; }
-    50%  { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-  }
-
   body {
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: "Do Hyeon", sans-serif; /* 폰트 변경됨 */
     background: linear-gradient(135deg, #ffffff, #f6f9ff, #eef3ff);
     background-size: 200% 200%;
     animation: bgMove 12s ease-in-out infinite;
@@ -29,7 +25,15 @@
     align-items: center;
     height: 100vh;
   }
-  
+
+  /* ------------------------------- */
+  /* ✨ 부드러운 움직이는 배경 Gradient */
+  /* ------------------------------- */
+  @keyframes bgMove {
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
 
   /* ⭐ 메뉴 Fade-in + Slide Down 등장 애니메이션 */
   @keyframes menuFadeIn {
@@ -66,8 +70,10 @@
 
     border: 1px solid rgba(255, 255, 255, 0.45);
     color: #1e3a5f;
-    font-size: 16px;
-    font-weight: 600;
+    
+    /* 폰트 명시적용 (안전장치) 및 두께 조정 */
+    font-family: "Do Hyeon", sans-serif;
+    font-size: 22px; /* 가독성을 위해 약간 키움 */
 
     background: rgba(255,255,255,0.35);
     backdrop-filter: blur(10px);
