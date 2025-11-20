@@ -134,10 +134,6 @@ h1 {
   margin-top: 2px;
   display: block;
 }
-.date-container {
-  text-align: right;
-  line-height: 1.2;
-}
 .version {
   font-size: 12px;
   font-weight: 100;
