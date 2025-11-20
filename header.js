@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function() {
+    // HTML에서 설정한 변수가 있으면 사용하고, 없으면 기본값 사용
+    const title = window.pageTitle || "기본 타이틀";
+    const version = window.pageVersion || "ver.1.0";
+
     const headerHTML = `
     <div class="header-wrap">
       <div class="top-nav">
@@ -23,16 +27,15 @@ document.addEventListener("DOMContentLoaded", function() {
 
       <h1 class="dongle-regular">
         <div class="title-left">
-          ELK logstash.conf 생성기<br>
+          ${title}<br>
           <span class="subtitle">by 이테크시스템</span>
         </div>
         <div class="date-container">
-          <div class="version">ver.2025.11.17.01</div><p>
+          <div class="version">${version}</div><p>
         </div>
       </h1>
     </div>
     `;
 
-    // body 태그의 맨 처음에 헤더를 삽입합니다.
     document.body.insertAdjacentHTML("afterbegin", headerHTML);
 });
