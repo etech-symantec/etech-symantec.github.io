@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", function() {
           <span class="subtitle">by 이테크시스템</span>
         </div>
         <div class="date-container">
-          <div class="version">${version}</div><p>
+          <div class="version">${version}</div>
+          <div class="date-header" id="today-date"></div>
         </div>
       </h1>
     </div>
