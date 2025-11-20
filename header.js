@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
       </div>
 
-      <h1 class="gamja-flower-regular">
+      <h1 class="do-hyeon-regular">
         <div class="title-left">
           ${title}<br>
           <span class="subtitle">by 이테크시스템</span>
