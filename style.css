@@ -22,6 +22,12 @@ a {
   box-sizing: border-box;
 }
 
+/* ✨폰트 */
+.sunflower-light {
+  font-family: "Sunflower", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
 .dongle-regular {
   font-family: "Dongle", sans-serif;
   font-weight: 400;
