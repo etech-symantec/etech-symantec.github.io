@@ -30,9 +30,7 @@ document.addEventListener("DOMContentLoaded", function() {
           ${title}<br>
           <span class="subtitle">by 이테크시스템</span>
         </div>
-        <div class="date-container">
-          <div class="version">${version}</div><p></p><p></p>
-        </div>
+        <div class="version">${version}</div>
       </h1>
     </div>
     `;
