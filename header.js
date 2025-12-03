@@ -16,13 +16,14 @@ document.addEventListener("DOMContentLoaded", function() {
                  style="width:14px;height:14px;margin-right:2px;margin-bottom:3px;vertical-align:middle;">
             Broadcom 링크
           </a>
-          <a href="https://etech-symantec.github.io/case" class="nav-btn">📧 Case</a>
+          <a href="https://etech-symantec.github.io/case" class="nav-btn">⚠️ Case</a>
           <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn">🧩 Sysinfo 분석</a>
           <a href="https://etech-symantec.github.io/isg" class="nav-btn">🔎 ISG 분석</a>
           <a href="https://etech-symantec.github.io/trace" class="nav-btn">📄 Trace 분석</a>
           <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn">📊 Sizing-SG 보기</a>
           <a href="https://etech-symantec.github.io/elk" class="nav-btn">🧬 ELK 로그 설정</a>
           <a href="https://etech-symantec.github.io/pac" class="nav-btn-soon">🚦 PAC</a>
+          <a href="https://etech-symantec.github.io/mail" class="nav-btn">📫 Mail</a>
         </div>
       </div>
 
