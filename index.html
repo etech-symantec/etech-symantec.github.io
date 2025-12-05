@@ -1,689 +1,274 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <link rel="stylesheet" href="https://etech-symantec.github.io/style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
-    <meta charset="UTF-8">
-    <title>ProxySG Archive Config 편집기</title>
-    <style>
-        /* 본문 스타일 */
-          .section { background: white; margin: 20px 0; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
-          .section-header { background: #1e3a5f; color: white; padding: 6px 12px; border-radius: 8px 8px 0 0; font-weight: bold; }
-          table { width: 100%; border-collapse: collapse; }
-          th, td { border: 1px solid #ccc; padding: 6px 10px; text-align: center; font-size: 13px; }
-          th { background: #f0f2f5; font-weight: bold; }
-          tr.down-row { color: #999; background: #f9fafb; }
+<meta charset="UTF-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+<style>
 
-        .container {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            max-width: 90%;
-            margin: 0 auto;
-            flex: 1;
-        }
+  /* ------------------------------- */
+  /* ✨ 폰트 적용 (전체 바디 수정)      */
+  /* ------------------------------- */
+  body {
+    font-family: "Do Hyeon", sans-serif; /* 폰트 변경됨 */
+    background: linear-gradient(135deg, #ffffff, #f6f9ff, #eef3ff);
+    background-size: 200% 200%;
+    animation: bgMove 12s ease-in-out infinite;
 
-        .left-sidebar {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            width: 250px;
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            height: 100%;
-            overflow-y: auto;
-        }
+    margin: 0;
+    padding: 0;
+    color: #333;
 
-        .right-content {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            flex: 1;
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            max-width: calc(100% - 350px);  /* 좌측 사이드바 너비 250px을 제외한 값으로 제한 */
-            overflow-x: auto;  /* 가로 스크롤 방지 */
-        }
-        
-        /* 반응형 처리: 화면 크기가 작은 경우 우측 사이드바를 100%로 설정 */
-        @media (max-width: 1024px) {
-            .right-content {
-                max-width: 100%;
-            }
-        }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
 
-        .box-title {
-            font-weight: bold;
-            background: #1e3a5f;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 8px 8px 0 0;
-        }
-        
-        /* 줄 번호와 내용 스타일 */
-        .code-line {
-            display: flex;
-            padding: 2px 0;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        
-        .code-line:hover {
-            background-color: #f0f7ff;
-        }
+  /* ------------------------------- */
+  /* ✨ 부드러운 움직이는 배경 Gradient */
+  /* ------------------------------- */
+  @keyframes bgMove {
+    0%   { background-position: 0% 0%; }
+    50%  { background-position: 100% 100%; }
+    100% { background-position: 0% 0%; }
+  }
 
-        .line-number {
-            min-width: 50px;
-            padding: 0 12px;
-            text-align: right;
-            color: #6b7280;
-            background-color: #f9fafb;
-            border-right: 2px solid #e5e7eb;
-            user-select: none;
-            font-weight: 600;
-        }
+  /* ⭐ 메뉴 Fade-in + Slide Down 등장 애니메이션 */
+  @keyframes menuFadeIn {
+    0%   { opacity: 0; transform: translateY(-18px); }
+    60%  { opacity: 0.75; transform: translateY(6px); }
+    100% { opacity: 1; transform: translateY(0px); }
+  }
 
-        .line-text {
-            padding: 0 12px;
-            flex: 1;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            color: #1f2937;
-        }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+    justify-items: center;
 
-        /* "Archive Config 내용" 박스에 드래그 앤 드롭 스타일 추가 */
-        .output {
-            white-space: pre-wrap;
-            border: 1px solid #ccc;
-            padding: 10px;
-            height: 330px;
-            overflow-y: scroll;
-            background: #fafafa;
-            font-family: monospace;
-            overflow-wrap: break-word;
-            cursor: pointer;  /* 드래그 가능하게 커서 변경 */
-        }
-        
-        #output:hover {
-            background-color: #f0f7ff;  /* 마우스 오버 시 색상 변경 */
-        }
-        
-        /* 스크롤바 스타일 */
-        .output::-webkit-scrollbar {
-            width: 8px;
-        }
+    animation: menuFadeIn 1.1s ease forwards;
+  }
 
-        .output::-webkit-scrollbar-track {
-            background: #f1f1f1;
-            border-radius: 10px;
-        }
+  /* Floating Animation */
+  @keyframes floatUpDown {
+    0%   { transform: translateY(0px); }
+    50%  { transform: translateY(-6px); }
+    100% { transform: translateY(0px); }
+  }
 
-        .output::-webkit-scrollbar-thumb {
-            background: #667eea;
-            border-radius: 10px;
-        }
+  .menu-btn {
+    width: 150px;
+    height: 150px;
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
 
-        .output::-webkit-scrollbar-thumb:hover {
-            background: #764ba2;
-        }
-        
-        /* "Archive Config 내용" 안내문구 스타일 */
-        #dragText {
-            text-align: center;
-            color: #888;
-            font-size: 16px;
-            font-style: italic;
-        }
+    text-decoration: none;
+    cursor: pointer;
 
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    color: #1e3a5f;
+    
+    /* 폰트 명시적용 (안전장치) 및 두께 조정 */
+    font-family: "Do Hyeon", sans-serif;
+    font-size: 22px; /* 가독성을 위해 약간 키움 */
 
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            color: white;
-            padding: 8px 14px;
-            margin: 6px 4px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        }
+    background: rgba(255,255,255,0.35);
+    backdrop-filter: blur(10px);
 
-        .tag:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-        }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
 
-        .input-area {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            max-width: 95%;
-            background: #fff;
-            border-radius: 8px;
-            border: 1px solid #cbd5e1;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
+    box-shadow:
+      0 8px 18px rgba(0, 0, 0, 0.08),
+      0 3px 6px rgba(0, 0, 0, 0.05);
 
-        textarea {
-            width: 100%;
-            min-height: 140px;
-            padding: 16px 18px;
-            border-radius: 12px;
-            border: 1.5px solid #cbd5e1;
-            font-family: monospace;
-            background: #fafafa;
-            resize: vertical;
-            font-size: 13px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: all 0.2s ease;
-        }
+    transition: all 0.28s ease;
 
-        textarea:focus {
-            outline: none;
-            background: #fff;
-            border-color: #2563eb;
-            box-shadow: 0 4px 16px rgba(37,99,235,0.15);
-        }
+    /* ✨ Floating */
+    animation: floatUpDown 3.5s ease-in-out infinite;
+  }
 
-        .file-drop-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 14px;
-            border: 2px dashed #1e3a5f;
-            border-radius: 12px;
-            background-color: #f0f7ff;
-            cursor: pointer;
-            font-size: 14px;
-            color: #1e3a5f;
-            transition: all 0.3s ease;
-        }
+  .menu-btn:hover { animation-play-state: paused; }
 
-        .file-drop-container:hover {
-            background-color: #e3f2fd;
-        }
+  .menu-btn span.emoji {
+    font-size: 42px;
+    transition: transform 0.3s ease;
+  }
 
-        .file-drop-container p {
-            margin: 0;
-        }
+  .menu-btn:hover {
+    transform: translateY(-7px);
+    background: linear-gradient(135deg, #FF0066cc, #0046FFcc);
+    color: #ffffff;
 
-        #keywordInput {
-            width: 100%;
-            padding: 12px 15px;
-            border-radius: 12px;
-            border: 2px solid #e2e8f0;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
+    box-shadow:
+      0 18px 40px rgba(0, 0, 0, 0.25),
+      0 0 25px rgba(255, 0, 102, 0.4),
+      0 0 28px rgba(0, 70, 255, 0.35),
+      0 0 35px rgba(255, 255, 255, 0.45);
+  }
+  
+  /* ------------------------------- */
+  /* ✨ 버튼 클릭 시 Spring 효과 */
+  /* ------------------------------- */
+  @keyframes springClick {
+    0%   { transform: scale(1); }
+    30%  { transform: scale(0.90); }
+    60%  { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
 
-        #keywordInput:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
+  .menu-btn:active {
+    animation: springClick 0.25s ease;
+  }
 
-        .options-container {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 15px 0;
-        }
+  .menu-btn:hover span.emoji {
+    transform: scale(1.75);
+  }
 
-        .options-container label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            color: #4a5568;
-        }
+  /* ------------------------------- */
+  /* ✨ Hover 시 Shimmer(빛 흔들림 효과) */
+  /* ------------------------------- */
+  @keyframes shimmer {
+    0%   { transform: translateX(-180%); }
+    100% { transform: translateX(180%); }
+  }
 
-        .options-container input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
+  .menu-btn .shimmer {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+      115deg,
+      transparent,
+      rgba(255,255,255,0.28),
+      transparent
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
 
-        button {
-            width: 100%;
-            padding: 12px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
-        }
+  .menu-btn:hover .shimmer {
+    opacity: 1;
+    animation: shimmer 1.4s linear infinite;
+  }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-        }
+  /* Light reflection */
+  .menu-btn::before {
+    content: "";
+    position: absolute;
+    top: -130%;
+    left: -50%;
+    width: 250%;
+    height: 200%;
+    background: linear-gradient(
+      120deg,
+      transparent 0%,
+      rgba(255,255,255,0.45) 50%,
+      transparent 100%
+    );
+    transform: rotate(25deg);
+    transition: 0.6s;
+    opacity: 0;
+  }
+  .menu-btn:hover::before {
+    top: -20%;
+    left: -20%;
+    opacity: 1;
+  }
 
-        button:active {
-            transform: translateY(0);
-        }
+  /* Neon border */
+  .menu-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    padding: 2px;
 
-        .btn-secondary {
-            background: white;
-            color: #667eea;
-            border: 2px solid #667eea;
-            box-shadow: none;
-        }
+    background: linear-gradient(135deg, #FF0066, #0046FF);
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
 
-        .btn-secondary:hover {
-            background: #667eea;
-            color: white;
-        }
+    opacity: 0;
+    transition: 0.3s ease;
+  }
+  .menu-btn:hover::after {
+    opacity: 1;
+    box-shadow: 0 0 14px rgba(255, 0, 102, 0.6);
+  }
 
-        .regex-helper {
-            background: #f7fafc;
-            padding: 15px;
-            border-radius: 12px;
-            margin: 15px 0;
-        }
+  /* Ripple */
+  .ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    background: rgba(255,255,255,0.6);
+    animation: ripple-effect 0.6s linear;
+    pointer-events: none;
+  }
 
-        .regex-helper strong {
-            display: block;
-            margin-bottom: 10px;
-            color: #2d3748;
-            font-size: 14px;
-        }
+  @keyframes ripple-effect {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
 
-        .regex-btn {
-            padding: 6px 12px;
-            margin: 4px;
-            font-size: 12px;
-            cursor: pointer;
-            background: white;
-            color: #667eea;
-            border: 1px solid #667eea;
-            border-radius: 8px;
-            transition: all 0.2s ease;
-            display: inline-block;
-            width: auto;
-            box-shadow: none;
-        }
-
-        .regex-btn:hover {
-            background: #667eea;
-            color: white;
-            transform: translateY(-1px);
-        }
-        
-        #keywordList {
-            min-height: 50px;
-            padding: 10px;
-            background: #f7fafc;
-            border-radius: 12px;
-        }
-        
-        .copy-btn {
-            background: rgba(255,255,255,0.2);
-            color: white;
-            border: 1px solid rgba(255,255,255,0.3);
-            padding: 8px 16px;
-            font-size: 13px;
-            width: auto;
-            box-shadow: none;
-        }
-
-        .copy-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: none;
-        }
-        
-        
-        /* 애니메이션 */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* 반응형 */
-        @media (max-width: 1024px) {
-            .container {
-                flex-direction: column;
-            }
-
-            .left-sidebar {
-                width: 100%;
-                position: static;
-            }
-
-            .main-header h1 {
-                font-size: 2em;
-            }
-        }
-        
-    </style>
+</style>
 </head>
+
 <body>
-<!-- 공통 헤더 + 제목 + 버전 -->
-<script>
-  window.pageTitle = "ProxySG Archive Config 편집기";
-  window.pageVersion = "ver.2025.12.04.01";
-</script> 
-<script src="https://etech-symantec.github.io/header.js"></script>
 
+<div class="menu-grid">
 
+  <a href="./broadcom" class="menu-btn"><span class="emoji"><img src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico"
+                 style="width:35px;height:35px;margin-right:2px;margin-bottom:3px;vertical-align:middle;"></span>브로드컴 링크<div class="shimmer"></div></a>
+  <a href="./case" class="menu-btn"><span class="emoji">⚠️</span>TAC Cases<div class="shimmer"></div></a>
+  <a href="./sysinfo" class="menu-btn"><span class="emoji">🧩</span>Sysinfo 분석<div class="shimmer"></div></a>
+  
+  <a href="./archive" class="menu-btn"><span class="emoji">✂️</span>Archive 편집<div class="shimmer"></div></a>
+  <a href="./isg" class="menu-btn"><span class="emoji">🔎</span>ISG 분석<div class="shimmer"></div></a>
+  <a href="./trace" class="menu-btn"><span class="emoji">📄</span>Trace 분석<div class="shimmer"></div></a>
+  
+  <a href="./sizing-sg" class="menu-btn"><span class="emoji">📊</span>Sizing-SG<div class="shimmer"></div></a>
+  <a href="./elk" class="menu-btn"><span class="emoji">🧬</span>ELK 로그 설정<div class="shimmer"></div></a>
+  <a href="./pac" class="menu-btn"><span class="emoji">🚦</span>PAC<div class="shimmer"></div></a>
+  
+  <a href="./mail" class="menu-btn"><span class="emoji">📫</span>리태쿠 이메일<div class="shimmer"></div></a>
 
-
-
-<div class="container">
-    <!-- 좌측 사이드바 -->
-        <div class="left-sidebar">
-            <div class="sidebar-section">
-                <h3>🔍 키워드 입력</h3>
-                <input type="text" id="keywordInput" placeholder="키워드를 입력하세요...">
-            </div>
-
-            <div class="sidebar-section">
-                <div class="options-container">
-                    <label>
-                        <input type="checkbox" id="ignoreCase">
-                        대소문자 무시
-                    </label>
-                    <label>
-                        <input type="checkbox" id="useRegex">
-                        정규식 사용
-                    </label>
-                </div>
-            </div>
-
-            <button onclick="addKeyword()">➕ 키워드 추가</button>
-
-            <div class="sidebar-section">
-                <div class="regex-helper">
-                    <strong>📝 정규식 도우미</strong>
-                    <button class="regex-btn" onclick="insertRegex('^')">^ 시작</button>
-                    <button class="regex-btn" onclick="insertRegex('$')">$ 끝</button>
-                    <button class="regex-btn" onclick="insertRegex('\\d')">\\d 숫자</button>
-                    <button class="regex-btn" onclick="insertRegex('.')">. 문자</button>
-                    <button class="regex-btn" onclick="insertRegex('[A-Za-z]')">영문자</button>
-                    <button class="regex-btn" onclick="insertRegex('\\s')">\\s 공백</button>
-                    <button class="regex-btn" onclick="insertRegex('*')">* 0회+</button>
-                    <button class="regex-btn" onclick="insertRegex('+')">+ 1회+</button>
-                    <button class="regex-btn" onclick="insertRegex('?')">? 옵션</button>
-                    <button class="regex-btn" onclick="insertRegex('|')">| OR</button>
-                </div>
-            </div>
-
-            <div class="sidebar-section">
-                <h3>🏷️ 등록된 키워드</h3>
-                <div id="keywordList"></div>
-            </div>
-
-            <button onclick="filterText()" style="margin-top: 15px;">✨ 필터 적용</button>
-        </div>
-
-    <!-- 우측 내용 -->
-    <div class="right-content">
-        <!-- Archive Config 내용 박스에 초기 안내문구 추가 -->
-        <div class="box">
-            <div class="box-title">📌 Archive Config 내용
-                <button onclick="copyResult()">Archive Config 내용 복사</button>
-            </div>
-            <div id="output" class="output">
-                <p id="dragText">여기에 텍스트 파일을 드래그하여 업로드하세요.</p>
-            </div>
-        </div>
-        <div class="box">
-            <div class="box-title">🗑 삭제 내용</div>
-            <div id="removed" class="output"></div>
-        </div>
-    </div>
+  <div></div><div></div>
 </div>
 
 <script>
-let fileContent = "";
-let keywords = [];
+  // Ripple 효과
+  document.querySelectorAll(".menu-btn").forEach(btn => {
+    btn.addEventListener("click", function(e) {
+      const circle = document.createElement("span");
+      const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+      const radius = diameter / 2;
 
-// 키워드 로딩
-window.onload = function() {
-    defaultKeywords.forEach(k => {
-        keywords.push({ text: k, color: randomColor() });
+      circle.style.width = circle.style.height = diameter + "px";
+      circle.style.left = e.clientX - btn.offsetLeft - radius + "px";
+      circle.style.top = e.clientY - btn.offsetTop - radius + "px";
+      circle.classList.add("ripple");
+
+      const ripple = btn.getElementsByClassName("ripple")[0];
+      if (ripple) ripple.remove();
+
+      btn.appendChild(circle);
     });
-    renderKeywordTags();
-    filterText();
-};
-
-// 🎨 랜덤 색상 생성
-function randomColor() {
-    const colors = [
-        "#ff7f7f", "#ffb27f", "#ffe77f",
-        "#a0ff7f", "#7fffd4", "#7fbaff",
-        "#c27fff", "#ff7fe5"
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
-// 기본 키워드 그룹 (요청하신: line, google)
-const defaultKeywords = ["test", "google"];
-
-// 웹 로드 시 기본 키워드 추가
-window.onload = function() {
-    defaultKeywords.forEach(k => {
-        keywords.push({ text: k, color: randomColor() });
-    });
-    renderKeywordTags();
-};
-
-// "Archive Config 내용" 박스에 드래그 앤 드롭 기능 추가
-document.getElementById("output").addEventListener("dragover", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.style.backgroundColor = "#e3f2fd";  // 드래그 중 색상 변경
-});
-
-document.getElementById("output").addEventListener("dragleave", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.style.backgroundColor = "#fafafa";  // 원래 색상으로 복귀
-});
-
-document.getElementById("output").addEventListener("drop", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    this.style.backgroundColor = "#fafafa";  // 드롭 후 색상 복귀
-    const file = e.dataTransfer.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            fileContent = e.target.result;
-            document.getElementById("dragText").style.display = "none";  // 안내문구 숨기기
-            filterText();  // 파일 읽은 후 필터링 적용
-        };
-        reader.readAsText(file, "UTF-8");
-    }
-});
-
-
-// 파일 입력
-document.getElementById("fileInput").addEventListener("change", function () {
-    const file = this.files[0];
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-        fileContent = e.target.result;
-        filterText();
-    };
-
-    reader.readAsText(file, "UTF-8");
-});
-
-// 엔터로 키워드 추가
-document.getElementById("keywordInput").addEventListener("keyup", function(e){
-    if (e.key === "Enter") addKeyword();
-});
-
-// 정규식 도우미 → 입력창에 삽입
-function insertRegex(text) {
-    const input = document.getElementById("keywordInput");
-    input.value += text;
-    input.focus();
-}
-
-// 키워드 추가
-function addKeyword() {
-    const input = document.getElementById("keywordInput");
-    const value = input.value.trim();
-    if (!value) return;
-
-    keywords.push({ text: value, color: randomColor() });
-    input.value = "";
-
-    // 키워드를 로컬 스토리지에 저장
-    localStorage.setItem("keywords", JSON.stringify(keywords));
-
-    renderKeywordTags();
-    filterText();
-}
-
-
-// 키워드 태그 UI
-function renderKeywordTags() {
-    const container = document.getElementById("keywordList");
-    container.innerHTML = "";
-
-    keywords.forEach((kw, i) => {
-        const tag = document.createElement("span");
-        tag.className = "tag";
-        tag.style.background = kw.color;
-        tag.textContent = kw.text + " ×";
-        tag.onclick = () => {
-            keywords.splice(i, 1);
-            localStorage.setItem("keywords", JSON.stringify(keywords));
-            renderKeywordTags();
-            filterText();
-        };
-        container.appendChild(tag);
-    });
-}
-
-// 필터링 (항상 OR 방식)
-function filterText() {
-    if (!fileContent) return;
-
-    const ignoreCase = document.getElementById("ignoreCase").checked;
-    const useRegex = document.getElementById("useRegex").checked;
-
-    const lines = fileContent.split(/\r?\n/);
-
-    let kept = [];
-    let removed = [];
-    let removedLines = [];
-
-    // 키워드 준비
-    const searchKeywords = keywords.map(k => ignoreCase ? k.text.toLowerCase() : k.text);
-
-    lines.forEach((line, index) => {
-        const processedLine = ignoreCase ? line.toLowerCase() : line;
-
-        let matchFound = false;
-
-        if (useRegex) {
-            try {
-                matchFound = searchKeywords.some(k =>
-                    new RegExp(k, ignoreCase ? "i" : "").test(line)
-                );
-            } catch (e) {
-                // 오류 발생 시 사용자에게 명확한 메시지 출력
-                alert("정규식 오류: 유효하지 않은 정규식입니다. 다시 확인해 주세요.");
-                return;  // 오류 발생 시 더 이상 진행되지 않도록 처리
-            }
-        } else {
-            matchFound = searchKeywords.some(k => processedLine.includes(k));
-        }
-
-        // OR 고정 → 하나라도 맞으면 제거
-        if (matchFound) {
-            removed.push(line);
-            removedLines.push(index + 1); // 줄 번호
-        } else {
-            kept.push(line);
-        }
-    });
-
-    // 남은 줄 표시
-    const outputDiv = document.getElementById("output");
-    outputDiv.innerHTML = "";
-    kept.forEach((line, idx) => {
-        const lineDiv = document.createElement("div");
-        lineDiv.className = "code-line";
-        
-        const numDiv = document.createElement("div");
-        numDiv.className = "line-number";
-        numDiv.textContent = idx + 1;
-        
-        const textDiv = document.createElement("div");
-        textDiv.className = "line-text";
-        textDiv.textContent = line;
-        
-        lineDiv.appendChild(numDiv);
-        lineDiv.appendChild(textDiv);
-        outputDiv.appendChild(lineDiv);
-    });
-
-    // 제거된 줄 표시
-    const removedDiv = document.getElementById("removed");
-    removedDiv.innerHTML = "";
-    removed.forEach((line, idx) => {
-        const lineDiv = document.createElement("div");
-        lineDiv.className = "code-line";
-        
-        const numDiv = document.createElement("div");
-        numDiv.className = "line-number";
-        numDiv.textContent = removedLines[idx];
-        
-        const textDiv = document.createElement("div");
-        textDiv.className = "line-text";
-        textDiv.textContent = line;
-        
-        lineDiv.appendChild(numDiv);
-        lineDiv.appendChild(textDiv);
-        removedDiv.appendChild(lineDiv);
-    });
-}
-
-// 복사 기능
-function copyResult() {
-    const text = document.getElementById("output").innerText;
-    navigator.clipboard.writeText(text)
-        .then(() => alert("Archive Config 내용이 복사되었습니다!"));
-}
+  });
 </script>
-
 
 </body>
 </html>
