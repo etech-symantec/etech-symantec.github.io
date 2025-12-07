@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function() {
           <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn">📊 Sizing-SG 보기</a>
           <a href="https://etech-symantec.github.io/elk" class="nav-btn">🧬 ELK 로그 설정</a>
           <a href="https://etech-symantec.github.io/pac" class="nav-btn-soon">🚦 PAC</a>
-          <a href="https://etech-symantec.github.io/mail" class="nav-btn">📫 Mail</a>
         </div>
       </div>
 
