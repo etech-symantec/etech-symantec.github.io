@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function() {
         </div>
 
         <div class="nav-right">
+          <a href="https://etech-symantec.github.io/calendar" class="nav-btn">　</a>
           <a href="https://etech-symantec.github.io/broadcom" class="nav-btn">
             <img src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico"
                  style="width:14px;height:14px;margin-right:2px;margin-bottom:3px;vertical-align:middle;">
