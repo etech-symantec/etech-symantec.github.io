@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
     <div class="header-wrap">
       <div class="top-nav">
         <div class="nav-left">
-          <a href="https://etech-symantec.github.io/" class="home-btn">🪟</a>
+          <a href="https://etech-symantec.github.io/" class="home-btn">🕳️</a>
         </div>
 
         <div class="nav-right">
