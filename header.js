@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
           <a href="https://etech-symantec.github.io/broadcom" class="nav-btn">
             <img src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico"
                  style="width:14px;height:14px;margin-right:2px;margin-bottom:3px;vertical-align:middle;">
-            Broadcom 링크
+            Broadcom
           </a>
           <a href="https://etech-symantec.github.io/case" class="nav-btn">⚠️ Case 관리</a>
           <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn">🧩 Sysinfo 분석</a>
