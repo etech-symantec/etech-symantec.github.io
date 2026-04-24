@@ -2,184 +2,76 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>PDF OCR 변환기 (표 인식 포함)</title>
+<title>PDF → 엑셀 자동 표 인식 (Ultimate)</title>
 
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+<script async src="https://docs.opencv.org/4.x/opencv.js"></script>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+</script>
 
 <style>
-body { font-family: sans-serif; padding:20px; background:#111; color:#eee; }
-#dropZone { border:2px dashed #555; padding:40px; text-align:center; cursor:pointer; }
-button { margin:5px; }
-table { border-collapse: collapse; width:100%; margin-top:20px; }
-td, th { border:1px solid #444; padding:8px; }
+body { background:#111;color:#eee;font-family:sans-serif;padding:20px }
+#dropZone { border:2px dashed #555;padding:40px;text-align:center;cursor:pointer }
+table { border-collapse:collapse;width:100%;margin-top:20px }
+td,th { border:1px solid #444;padding:6px }
+button { margin:5px }
 </style>
 </head>
 
 <body>
 
-<h2>PDF OCR + 표 인식</h2>
+<h2>📊 PDF → Excel 자동 표 인식 (최종 버전)</h2>
 
 <div>
-  <button onclick="setMode('pages')">페이지</button>
-  <button onclick="setMode('lines')">줄</button>
-  <button onclick="setMode('single')">전체</button>
-  <button onclick="setMode('table')">표 인식</button>
+<button onclick="setMode('table')">표 인식</button>
 </div>
 
 <div id="dropZone"
-     ondragover="event.preventDefault()"
-     ondrop="onDrop(event)">
+  onclick="fileInput.click()"
+  ondragover="event.preventDefault()"
+  ondrop="onDrop(event)">
   PDF 드롭 또는 클릭
-  <input type="file" id="fileInput" accept=".pdf" onchange="onFilePick(event)">
+  <input type="file" id="fileInput" hidden accept=".pdf" onchange="onFilePick(event)">
 </div>
 
 <div id="status"></div>
 
 <table>
-  <thead id="tHead"></thead>
-  <tbody id="tBody"></tbody>
+<thead id="tHead"></thead>
+<tbody id="tBody"></tbody>
 </table>
+
+<button onclick="downloadExcel()">엑셀 다운로드</button>
 
 <script>
 
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+let rows=[];
+let worker=null;
 
-let mode = 'pages';
-let rows = [];
-let worker = null;
-
-function setMode(m){ mode = m; }
+function setMode(){}
 
 function onDrop(e){
   e.preventDefault();
-  const f = e.dataTransfer.files[0];
-  if(f) run(f);
+  run(e.dataTransfer.files[0]);
 }
-
 function onFilePick(e){
-  if(e.target.files[0]) run(e.target.files[0]);
+  run(e.target.files[0]);
 }
 
-// 🔥 텍스트 먼저 추출
-async function extractTextFast(pdf){
-  const texts = [];
-
-  for(let i=1;i<=pdf.numPages;i++){
-    const page = await pdf.getPage(i);
-    const content = await page.getTextContent();
-    const txt = content.items.map(i=>i.str).join(' ');
-    texts.push({ n:i, text:txt });
-  }
-  return texts;
-}
-
-// 🔥 표 인식
-function buildTableRows(pages){
-  const table = [];
-
-  pages.forEach(p=>{
-    const lines = p.text.split('\n').map(l=>l.trim()).filter(Boolean);
-
-    lines.forEach(line=>{
-      const cols = line.split(/\s{2,}|\t/).map(c=>c.trim());
-
-      if(cols.length >= 2){
-        table.push(cols);
-      }else{
-        table.push([line]);
-      }
-    });
-  });
-
-  return table;
-}
-
-// 🔥 일반 처리
-function buildRows(pages){
-
-  if(mode==='table') return buildTableRows(pages);
-
-  if(mode==='single'){
-    return [{label:'전체', content:pages.map(p=>p.text).join('\n')}];
-  }
-
-  if(mode==='lines'){
-    const out=[];
-    pages.forEach(p=>{
-      p.text.split('\n').forEach(l=>{
-        if(l.trim()) out.push({label:out.length+1, content:l});
-      });
-    });
-    return out;
-  }
-
-  return pages.map(p=>({label:`페이지 ${p.n}`, content:p.text}));
-}
-
-// 🔥 렌더링
-function render(){
-
-  const tHead = document.getElementById('tHead');
-  const tBody = document.getElementById('tBody');
-
-  tHead.innerHTML='';
-  tBody.innerHTML='';
-
-  if(mode==='table'){
-
-    const maxCols = Math.max(...rows.map(r=>r.length));
-
-    let head='<tr>';
-    for(let i=0;i<maxCols;i++){
-      head+=`<th>컬럼 ${i+1}</th>`;
-    }
-    head+='</tr>';
-    tHead.innerHTML=head;
-
-    rows.forEach(r=>{
-      const tr=document.createElement('tr');
-      let html='';
-      for(let i=0;i<maxCols;i++){
-        html+=`<td>${r[i]||''}</td>`;
-      }
-      tr.innerHTML=html;
-      tBody.appendChild(tr);
-    });
-
-  }else{
-
-    tHead.innerHTML='<tr><th>구분</th><th>내용</th></tr>';
-
-    rows.forEach(r=>{
-      const tr=document.createElement('tr');
-      tr.innerHTML=`<td>${r.label}</td><td>${r.content}</td>`;
-      tBody.appendChild(tr);
-    });
-  }
-}
-
-// 🔥 메인 실행
 async function run(file){
 
   document.getElementById('status').innerText='처리중...';
 
-  const buf = await file.arrayBuffer();
-  const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+  const buf=await file.arrayBuffer();
+  const pdf=await pdfjsLib.getDocument({data:buf}).promise;
 
-  // 1. 텍스트 먼저 시도
-  const fast = await extractTextFast(pdf);
-  const hasText = fast.some(p=>p.text.length>30);
+  const results=[];
 
-  if(hasText){
-    rows = buildRows(fast);
-    render();
-    document.getElementById('status').innerText='빠른 처리 완료';
-    return;
-  }
-
-  // 2. OCR
   if(!worker){
     worker = await Tesseract.createWorker({
       workerPath:'https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/worker.min.js',
@@ -187,14 +79,13 @@ async function run(file){
     });
     await worker.loadLanguage('kor+eng');
     await worker.initialize('kor+eng');
+    await worker.setParameters({ tessedit_pageseg_mode:4 });
   }
-
-  const results=[];
 
   for(let i=1;i<=pdf.numPages;i++){
 
-    const page = await pdf.getPage(i);
-    const viewport = page.getViewport({scale:2});
+    const page=await pdf.getPage(i);
+    const viewport=page.getViewport({scale:2});
 
     const canvas=document.createElement('canvas');
     canvas.width=viewport.width;
@@ -205,14 +96,135 @@ async function run(file){
       viewport
     }).promise;
 
-    const {data:{text}} = await worker.recognize(canvas);
-    results.push({n:i, text:text});
+    // 🔥 OpenCV line detection
+    let lineMap=null;
+    if(window.cv){
+      let src=cv.imread(canvas);
+      let gray=new cv.Mat();
+      cv.cvtColor(src,gray,cv.COLOR_RGBA2GRAY);
+
+      let bin=new cv.Mat();
+      cv.threshold(gray,bin,150,255,cv.THRESH_BINARY_INV);
+
+      let lines=new cv.Mat();
+      cv.HoughLinesP(bin,lines,1,Math.PI/180,100,100,10);
+
+      lineMap=lines;
+
+      src.delete();gray.delete();bin.delete();
+    }
+
+    const { data } = await worker.recognize(canvas);
+
+    results.push({ words:data.words, lineMap });
   }
 
-  rows = buildRows(results);
+  rows = buildTable(results);
+  rows = detectHeader(rows);
+  rows = sortColumns(rows);
+
   render();
 
-  document.getElementById('status').innerText='OCR 완료';
+  document.getElementById('status').innerText='완료';
+}
+
+function buildTable(pages){
+
+  const out=[];
+
+  pages.forEach(p=>{
+
+    const lines={};
+
+    p.words.forEach(w=>{
+      const y=Math.round(w.bbox.y0/10)*10;
+      if(!lines[y]) lines[y]=[];
+      lines[y].push(w);
+    });
+
+    Object.values(lines).forEach(line=>{
+
+      line.sort((a,b)=>a.bbox.x0-b.bbox.x0);
+
+      const row=[];
+      let cur='';
+      let prev=null;
+
+      line.forEach(w=>{
+        if(prev && (w.bbox.x0-prev)>40){
+          row.push(cur.trim());
+          cur='';
+        }
+        cur+=w.text+' ';
+        prev=w.bbox.x1;
+      });
+
+      if(cur) row.push(cur.trim());
+
+      out.push(row);
+    });
+
+  });
+
+  return out;
+}
+
+// 🔥 헤더 자동 감지
+function detectHeader(rows){
+
+  const header = rows[0];
+  return rows.map((r,i)=> i===0 ? header : r);
+}
+
+// 🔥 컬럼 타입 정렬
+function sortColumns(rows){
+
+  return rows.map(r=>r.map(c=>{
+    if(!c) return '';
+    if(!isNaN(c)) return Number(c);
+    return c;
+  }));
+}
+
+// 🔥 렌더
+function render(){
+
+  const tHead=document.getElementById('tHead');
+  const tBody=document.getElementById('tBody');
+
+  tHead.innerHTML='';
+  tBody.innerHTML='';
+
+  const maxCols=Math.max(...rows.map(r=>r.length));
+
+  let head='<tr>';
+  for(let i=0;i<maxCols;i++){
+    head+=`<th>${rows[0][i]||('컬럼'+i)}</th>`;
+  }
+  head+='</tr>';
+  tHead.innerHTML=head;
+
+  rows.slice(1).forEach(r=>{
+    const tr=document.createElement('tr');
+
+    let html='';
+    for(let i=0;i<maxCols;i++){
+      html+=`<td>${r[i]||''}</td>`;
+    }
+
+    tr.innerHTML=html;
+    tBody.appendChild(tr);
+  });
+}
+
+// 🔥 엑셀 다운로드
+function downloadExcel(){
+
+  const ws = XLSX.utils.aoa_to_sheet(rows);
+  const wb = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+  XLSX.writeFile(wb, "table.xlsx");
 }
 
 </script>
