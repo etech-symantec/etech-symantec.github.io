@@ -2,428 +2,217 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PDF OCR 변환기 (무료)</title>
+<title>PDF OCR 변환기 (표 인식 포함)</title>
 
-<!-- UMD builds — no import() issues -->
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap');
-
-  :root {
-    --bg:          #0f0e17;
-    --surface:     #1a1928;
-    --border:      #2e2d45;
-    --accent:      #a78bfa;
-    --accent-dim:  rgba(167,139,250,.12);
-    --accent-glow: rgba(167,139,250,.3);
-    --text:        #ede9fe;
-    --muted:       #7c7a9e;
-    --danger:      #f87171;
-    --success:     #4ade80;
-    --th-bg:       #1e1d30;
-    --tr-alt:      #1e1d2e;
-    --tr-border:   #2a2940;
-  }
-
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-
-  body {
-    font-family: 'Noto Sans KR', sans-serif;
-    background: var(--bg); color: var(--text);
-    min-height: 100vh; display: flex; flex-direction: column;
-  }
-
-  /* ── Header ── */
-  header {
-    padding: 24px 40px;
-    border-bottom: 1px solid var(--border);
-    display: flex; align-items: center; gap: 14px;
-    background: linear-gradient(90deg, rgba(167,139,250,.05) 0%, transparent 60%);
-  }
-  .logo {
-    width: 40px; height: 40px; border-radius: 10px;
-    background: var(--accent-dim); border: 1.5px solid var(--accent);
-    display: grid; place-items: center; font-size: 20px;
-    box-shadow: 0 0 18px var(--accent-glow);
-  }
-  .logo-title { font-size: 15px; font-weight: 700; }
-  .logo-sub   { font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
-  .free-pill  {
-    margin-left: auto; font-family: 'DM Mono', monospace; font-size: 11px;
-    padding: 4px 12px; border-radius: 20px;
-    background: rgba(74,222,128,.1); border: 1px solid rgba(74,222,128,.35); color: var(--success);
-  }
-
-  /* ── Main ── */
-  main { flex: 1; padding: 40px; max-width: 1080px; width: 100%; margin: 0 auto; }
-
-  .info-card {
-    background: var(--accent-dim); border: 1px solid rgba(167,139,250,.22);
-    border-radius: 12px; padding: 14px 18px; margin-bottom: 26px;
-    font-size: 13px; color: var(--muted); line-height: 1.6;
-    display: flex; gap: 10px; align-items: flex-start;
-  }
-
-  /* ── Labels ── */
-  .lbl {
-    font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted);
-    letter-spacing: .1em; text-transform: uppercase; margin-bottom: 9px;
-    display: flex; align-items: center; gap: 5px;
-  }
-  .lbl::before { content:''; width:4px; height:4px; background:var(--accent); border-radius:50%; display:inline-block; }
-
-  /* ── Controls ── */
-  .controls { display: flex; gap: 24px; margin-bottom: 26px; flex-wrap: wrap; }
-  .ctrl     { flex: 1; min-width: 200px; }
-  .pills    { display: flex; gap: 8px; flex-wrap: wrap; }
-  .pill {
-    padding: 8px 15px; border-radius: 8px; font-size: 13px; font-weight: 500;
-    cursor: pointer; border: 1px solid var(--border);
-    background: var(--surface); color: var(--muted); transition: all .18s;
-    font-family: 'Noto Sans KR', sans-serif;
-  }
-  .pill:hover  { border-color: var(--accent); color: var(--accent); }
-  .pill.active { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
-
-  /* ── Drop zone ── */
-  #dropZone {
-    border: 2px dashed var(--border); border-radius: 16px;
-    padding: 54px 40px; text-align: center; cursor: pointer;
-    background: var(--surface); margin-bottom: 26px; transition: all .22s;
-  }
-  #dropZone:hover, #dropZone.over {
-    border-color: var(--accent); background: var(--accent-dim);
-    box-shadow: 0 0 30px var(--accent-glow) inset;
-  }
-  .dz-icon  { font-size: 38px; margin-bottom: 12px; }
-  .dz-title { font-size: 17px; font-weight: 600; margin-bottom: 7px; }
-  .dz-sub   { font-size: 13px; color: var(--muted); margin-bottom: 18px; }
-  #fileInput { display: none; }
-
-  /* ── Buttons ── */
-  .btn { padding: 10px 20px; border-radius: 8px; font-family: 'Noto Sans KR', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; border: none; transition: all .18s; white-space: nowrap; }
-  .btn-accent { background: var(--accent); color: #0f0e17; }
-  .btn-accent:hover { background: #c4b5fd; box-shadow: 0 0 18px var(--accent-glow); }
-  .btn-ghost  { background: transparent; color: var(--muted); border: 1px solid var(--border); }
-  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-
-  /* ── Progress ── */
-  #progressWrap { display: none; margin-bottom: 26px; }
-  .prog-header  { display: flex; justify-content: space-between; margin-bottom: 9px; }
-  .prog-label   { font-size: 13px; font-weight: 500; }
-  .prog-pct     { font-family: 'DM Mono', monospace; font-size: 13px; color: var(--accent); }
-  .prog-track   { height: 6px; background: var(--border); border-radius: 999px; overflow: hidden; margin-bottom: 7px; }
-  .prog-fill    {
-    height: 100%; width: 0%; border-radius: 999px; transition: width .35s ease;
-    background: linear-gradient(90deg, var(--accent), #60a5fa);
-    box-shadow: 0 0 8px var(--accent-glow);
-  }
-  .prog-log { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
-
-  /* ── Error ── */
-  #errorBox {
-    display: none; background: rgba(248,113,113,.08);
-    border: 1px solid rgba(248,113,113,.3); border-radius: 10px;
-    padding: 13px 17px; font-size: 13px; color: var(--danger); margin-bottom: 20px;
-  }
-
-  /* ── Results ── */
-  #resultSection { display: none; }
-  .res-header {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 18px; gap: 14px; flex-wrap: wrap;
-  }
-  .res-title { font-size: 16px; font-weight: 600; margin-bottom: 3px; }
-  .res-meta  { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); }
-  .res-actions { display: flex; gap: 8px; flex-wrap: wrap; }
-
-  .tbl-wrap { overflow-x: auto; border-radius: 12px; border: 1px solid var(--tr-border); }
-  table  { width: 100%; border-collapse: collapse; font-size: 13.5px; }
-  thead tr { background: var(--th-bg); }
-  thead th {
-    padding: 11px 15px; text-align: left;
-    font-size: 11px; font-family: 'DM Mono', monospace; font-weight: 500;
-    color: var(--muted); letter-spacing: .08em; text-transform: uppercase;
-    border-bottom: 1px solid var(--tr-border);
-  }
-  thead th:first-child { color: var(--accent); width: 82px; text-align: center; }
-  tbody tr { background: var(--surface); border-bottom: 1px solid var(--tr-border); transition: background .12s; }
-  tbody tr:nth-child(even) { background: var(--tr-alt); }
-  tbody tr:hover { background: rgba(167,139,250,.06); }
-  tbody td { padding: 14px 15px; vertical-align: top; line-height: 1.7; }
-  tbody td:first-child { text-align: center; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); opacity: .75; }
-  .cell { white-space: pre-wrap; word-break: break-word; }
-
-  /* ── Scrollbar ── */
-  ::-webkit-scrollbar { width: 5px; height: 5px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
-
-  /* ── Footer ── */
-  footer {
-    padding: 16px 40px; border-top: 1px solid var(--border);
-    font-size: 11px; font-family: 'DM Mono', monospace; color: var(--muted);
-    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px;
-  }
-
-  @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-  .fu { animation: fadeUp .3s ease both; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
-  .pulse { animation: pulse 1.4s ease-in-out infinite; }
+body { font-family: sans-serif; padding:20px; background:#111; color:#eee; }
+#dropZone { border:2px dashed #555; padding:40px; text-align:center; cursor:pointer; }
+button { margin:5px; }
+table { border-collapse: collapse; width:100%; margin-top:20px; }
+td, th { border:1px solid #444; padding:8px; }
 </style>
 </head>
+
 <body>
 
-<header>
-  <div class="logo">🔍</div>
-  <div>
-    <div class="logo-title">PDF OCR 변환기</div>
-    <div class="logo-sub">TESSERACT.JS · 완전 무료 · 로컬 실행</div>
-  </div>
-  <div class="free-pill">✦ API 키 불필요</div>
-</header>
+<h2>PDF OCR + 표 인식</h2>
 
-<main>
+<div>
+  <button onclick="setMode('pages')">페이지</button>
+  <button onclick="setMode('lines')">줄</button>
+  <button onclick="setMode('single')">전체</button>
+  <button onclick="setMode('table')">표 인식</button>
+</div>
 
-  <div class="info-card fu">
-    💡&nbsp; <span><strong>완전 로컬 처리</strong> — OCR은 이 브라우저 탭 안에서만 실행됩니다. 텍스트는 외부로 전송되지 않으며, 첫 실행 시 선택한 언어 데이터를 다운로드합니다 (한국어 약 10MB).</span>
-  </div>
+<div id="dropZone"
+     ondragover="event.preventDefault()"
+     ondrop="onDrop(event)">
+  PDF 드롭 또는 클릭
+  <input type="file" id="fileInput" accept=".pdf" onchange="onFilePick(event)">
+</div>
 
-  <div id="errorBox"></div>
+<div id="status"></div>
 
-  <!-- Controls -->
-  <div class="controls fu">
-    <div class="ctrl">
-      <div class="lbl">OCR 언어</div>
-      <div class="pills">
-        <button class="pill active" data-lang="kor+eng"  onclick="pickLang(this)">🇰🇷 한+영</button>
-        <button class="pill"        data-lang="eng"      onclick="pickLang(this)">🇺🇸 영어</button>
-        <button class="pill"        data-lang="jpn+eng"  onclick="pickLang(this)">🇯🇵 일+영</button>
-        <button class="pill"        data-lang="chi_sim"  onclick="pickLang(this)">🇨🇳 중국어</button>
-      </div>
-    </div>
-    <div class="ctrl">
-      <div class="lbl">표 구성</div>
-      <div class="pills">
-        <button class="pill active" data-mode="pages"  onclick="pickMode(this)">📄 페이지별</button>
-        <button class="pill"        data-mode="lines"  onclick="pickMode(this)">📝 줄별</button>
-        <button class="pill"        data-mode="single" onclick="pickMode(this)">📋 전체</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Drop zone -->
-  <div id="dropZone" class="fu"
-       ondragover="ev.preventDefault();this.classList.add('over')"
-       ondragleave="this.classList.remove('over')"
-       ondrop="onDrop(event)"
-       onclick="document.getElementById('fileInput').click()">
-    <div class="dz-icon">📂</div>
-    <div class="dz-title">PDF를 끌어다 놓거나 클릭하세요</div>
-    <div class="dz-sub">무료 · API 없음 · 개인정보 보호 · 스캔 이미지 PDF 포함</div>
-    <button class="btn btn-accent" onclick="event.stopPropagation();document.getElementById('fileInput').click()">파일 선택</button>
-    <input type="file" id="fileInput" accept=".pdf" onchange="onFilePick(event)">
-  </div>
-
-  <!-- Progress -->
-  <div id="progressWrap" class="fu">
-    <div class="prog-header">
-      <span class="prog-label pulse" id="progLabel">준비 중...</span>
-      <span class="prog-pct" id="progPct">0%</span>
-    </div>
-    <div class="prog-track"><div class="prog-fill" id="progFill"></div></div>
-    <div class="prog-log" id="progLog"></div>
-  </div>
-
-  <!-- Results -->
-  <div id="resultSection" class="fu">
-    <div class="res-header">
-      <div>
-        <div class="res-title" id="resTitle"></div>
-        <div class="res-meta"  id="resMeta"></div>
-      </div>
-      <div class="res-actions">
-        <button class="btn btn-ghost"  onclick="copyAll()">📋 전체 복사</button>
-        <button class="btn btn-ghost"  onclick="dlCSV()">⬇ CSV 저장</button>
-        <button class="btn btn-accent" onclick="reset()">새 파일</button>
-      </div>
-    </div>
-    <div class="tbl-wrap">
-      <table>
-        <thead id="tHead"></thead>
-        <tbody id="tBody"></tbody>
-      </table>
-    </div>
-  </div>
-
-</main>
-
-<footer>
-  <span>텍스트는 브라우저 내에서만 처리 — 외부 전송 없음</span>
-  <span>Tesseract.js v4 + PDF.js v3 · 오픈소스</span>
-</footer>
+<table>
+  <thead id="tHead"></thead>
+  <tbody id="tBody"></tbody>
+</table>
 
 <script>
-// ── Wait for scripts to load ──
-window.addEventListener('load', () => {
-  // Set PDF.js worker (same CDN, same version)
-  pdfjsLib.GlobalWorkerOptions.workerSrc =
-    'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
-});
 
-let rows      = [];
-let fileName  = '';
-let mode      = 'pages';
-let lang      = 'kor+eng';
-let worker    = null;
+let mode = 'pages';
+let rows = [];
+let worker = null;
 
-function pickLang(btn) {
-  document.querySelectorAll('[data-lang]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  lang = btn.dataset.lang;
-  // reset worker so it re-initialises with new language
-  if (worker) { worker.terminate(); worker = null; }
-}
-function pickMode(btn) {
-  document.querySelectorAll('[data-mode]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  mode = btn.dataset.mode;
-}
+function setMode(m){ mode = m; }
 
-function onDrop(e) {
+function onDrop(e){
   e.preventDefault();
-  document.getElementById('dropZone').classList.remove('over');
   const f = e.dataTransfer.files[0];
-  if (f?.type === 'application/pdf') run(f);
-  else err('PDF 파일만 지원됩니다.');
-}
-function onFilePick(e) { if (e.target.files[0]) run(e.target.files[0]); }
-
-// ── Core ──
-async function run(file) {
-  clearErr();
-  fileName = file.name;
-  rows = [];
-  document.getElementById('dropZone').style.display    = 'none';
-  document.getElementById('resultSection').style.display = 'none';
-  showProg(true);
-
-  try {
-    // 1. Load PDF
-    prog(5, 'PDF 로딩 중...');
-    const buf = await file.arrayBuffer();
-    const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
-    const total = pdf.numPages;
-    prog(10, `${total}페이지 감지됨`);
-
-    // 2. Init Tesseract worker
-    prog(13, `Tesseract 초기화 중 (${lang})...`);
-    if (!worker) {
-      worker = await Tesseract.createWorker(lang, 1, {
-        logger: () => {}   // silence internal logs
-      });
-    }
-
-    // 3. OCR each page
-    const pageTexts = [];
-    for (let n = 1; n <= total; n++) {
-      const pct = Math.round(15 + ((n - 1) / total) * 80);
-      prog(pct, `페이지 ${n}/${total} OCR 중...`);
-
-      const page     = await pdf.getPage(n);
-      const viewport = page.getViewport({ scale: 2.5 });
-      const canvas   = Object.assign(document.createElement('canvas'), {
-        width: viewport.width, height: viewport.height
-      });
-      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
-
-      const { data: { text } } = await worker.recognize(canvas);
-      pageTexts.push({ n, text: text.trim() || '[텍스트 없음]' });
-    }
-
-    prog(97, '결과 정리 중...');
-    rows = buildRows(pageTexts);
-    prog(100, '완료!');
-    await sleep(300);
-    showProg(false);
-    render(file.name, total);
-
-  } catch (e) {
-    showProg(false);
-    document.getElementById('dropZone').style.display = '';
-    err('오류: ' + e.message);
-    console.error(e);
-  }
+  if(f) run(f);
 }
 
-function buildRows(pages) {
-  if (mode === 'single') {
-    return [{ label: '전체', content: pages.map(p => p.text).join('\n\n') }];
+function onFilePick(e){
+  if(e.target.files[0]) run(e.target.files[0]);
+}
+
+// 🔥 텍스트 먼저 추출
+async function extractTextFast(pdf){
+  const texts = [];
+
+  for(let i=1;i<=pdf.numPages;i++){
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    const txt = content.items.map(i=>i.str).join(' ');
+    texts.push({ n:i, text:txt });
   }
-  if (mode === 'lines') {
-    const out = [];
-    pages.forEach(p =>
-      p.text.split('\n').map(l => l.trim()).filter(Boolean)
-        .forEach(l => out.push({ label: String(out.length + 1), content: l }))
-    );
+  return texts;
+}
+
+// 🔥 표 인식
+function buildTableRows(pages){
+  const table = [];
+
+  pages.forEach(p=>{
+    const lines = p.text.split('\n').map(l=>l.trim()).filter(Boolean);
+
+    lines.forEach(line=>{
+      const cols = line.split(/\s{2,}|\t/).map(c=>c.trim());
+
+      if(cols.length >= 2){
+        table.push(cols);
+      }else{
+        table.push([line]);
+      }
+    });
+  });
+
+  return table;
+}
+
+// 🔥 일반 처리
+function buildRows(pages){
+
+  if(mode==='table') return buildTableRows(pages);
+
+  if(mode==='single'){
+    return [{label:'전체', content:pages.map(p=>p.text).join('\n')}];
+  }
+
+  if(mode==='lines'){
+    const out=[];
+    pages.forEach(p=>{
+      p.text.split('\n').forEach(l=>{
+        if(l.trim()) out.push({label:out.length+1, content:l});
+      });
+    });
     return out;
   }
-  // pages (default)
-  return pages.map(p => ({ label: `페이지 ${p.n}`, content: p.text }));
+
+  return pages.map(p=>({label:`페이지 ${p.n}`, content:p.text}));
 }
 
-function render(name, total) {
-  const col = mode === 'lines' ? '번호' : '구분';
-  document.getElementById('tHead').innerHTML =
-    `<tr><th style="width:82px">${col}</th><th>추출된 텍스트 내용</th></tr>`;
+// 🔥 렌더링
+function render(){
 
-  const tbody = document.getElementById('tBody');
-  tbody.innerHTML = '';
-  rows.forEach(r => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `<td>${x(r.label)}</td><td><div class="cell">${x(r.content)}</div></td>`;
-    tbody.appendChild(tr);
-  });
+  const tHead = document.getElementById('tHead');
+  const tBody = document.getElementById('tBody');
 
-  document.getElementById('resTitle').textContent = name;
-  document.getElementById('resMeta').textContent  = `${total}페이지 · ${rows.length}행 · ${lang}`;
-  document.getElementById('resultSection').style.display = '';
+  tHead.innerHTML='';
+  tBody.innerHTML='';
+
+  if(mode==='table'){
+
+    const maxCols = Math.max(...rows.map(r=>r.length));
+
+    let head='<tr>';
+    for(let i=0;i<maxCols;i++){
+      head+=`<th>컬럼 ${i+1}</th>`;
+    }
+    head+='</tr>';
+    tHead.innerHTML=head;
+
+    rows.forEach(r=>{
+      const tr=document.createElement('tr');
+      let html='';
+      for(let i=0;i<maxCols;i++){
+        html+=`<td>${r[i]||''}</td>`;
+      }
+      tr.innerHTML=html;
+      tBody.appendChild(tr);
+    });
+
+  }else{
+
+    tHead.innerHTML='<tr><th>구분</th><th>내용</th></tr>';
+
+    rows.forEach(r=>{
+      const tr=document.createElement('tr');
+      tr.innerHTML=`<td>${r.label}</td><td>${r.content}</td>`;
+      tBody.appendChild(tr);
+    });
+  }
 }
 
-function copyAll() {
-  navigator.clipboard.writeText(rows.map(r => `[${r.label}]\n${r.content}`).join('\n\n'))
-    .then(() => alert('클립보드에 복사됐습니다!'));
-}
-function dlCSV() {
-  const data = [['구분','텍스트 내용'], ...rows.map(r => [`"${r.label}"`,`"${r.content.replace(/"/g,'""')}"`])];
-  const csv  = '\uFEFF' + data.map(r => r.join(',')).join('\n');
-  const a    = Object.assign(document.createElement('a'), {
-    href: URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })),
-    download: fileName.replace('.pdf','') + '_ocr.csv'
-  });
-  a.click();
-}
-function reset() {
-  document.getElementById('resultSection').style.display = 'none';
-  document.getElementById('dropZone').style.display = '';
-  document.getElementById('fileInput').value = '';
-  rows = [];
+// 🔥 메인 실행
+async function run(file){
+
+  document.getElementById('status').innerText='처리중...';
+
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+
+  // 1. 텍스트 먼저 시도
+  const fast = await extractTextFast(pdf);
+  const hasText = fast.some(p=>p.text.length>30);
+
+  if(hasText){
+    rows = buildRows(fast);
+    render();
+    document.getElementById('status').innerText='빠른 처리 완료';
+    return;
+  }
+
+  // 2. OCR
+  if(!worker){
+    worker = await Tesseract.createWorker({
+      workerPath:'https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/worker.min.js',
+      corePath:'https://cdn.jsdelivr.net/npm/tesseract.js-core@4/tesseract-core.wasm.js'
+    });
+    await worker.loadLanguage('kor+eng');
+    await worker.initialize('kor+eng');
+  }
+
+  const results=[];
+
+  for(let i=1;i<=pdf.numPages;i++){
+
+    const page = await pdf.getPage(i);
+    const viewport = page.getViewport({scale:2});
+
+    const canvas=document.createElement('canvas');
+    canvas.width=viewport.width;
+    canvas.height=viewport.height;
+
+    await page.render({
+      canvasContext:canvas.getContext('2d'),
+      viewport
+    }).promise;
+
+    const {data:{text}} = await worker.recognize(canvas);
+    results.push({n:i, text:text});
+  }
+
+  rows = buildRows(results);
+  render();
+
+  document.getElementById('status').innerText='OCR 완료';
 }
 
-// ── Helpers ──
-function showProg(on) { document.getElementById('progressWrap').style.display = on ? '' : 'none'; }
-function prog(pct, log) {
-  document.getElementById('progFill').style.width = pct + '%';
-  document.getElementById('progPct').textContent  = pct + '%';
-  if (log) document.getElementById('progLog').textContent = '› ' + log;
-}
-function err(msg)   { const el = document.getElementById('errorBox'); el.textContent = msg; el.style.display = ''; }
-function clearErr() { document.getElementById('errorBox').style.display = 'none'; }
-function x(s)       { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function sleep(ms)  { return new Promise(r => setTimeout(r, ms)); }
 </script>
+
 </body>
 </html>
