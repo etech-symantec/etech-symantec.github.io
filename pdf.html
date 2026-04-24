@@ -2,14 +2,14 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>PDF → 표 자동 추출 (정확도 최고)</title>
+<title>Symantec Report Parser</title>
 
 <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc =
-  'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
 </script>
 
 <style>
@@ -17,26 +17,33 @@ body { background:#111;color:#eee;font-family:sans-serif;padding:20px }
 #dropZone { border:2px dashed #555;padding:40px;text-align:center;cursor:pointer }
 table { border-collapse:collapse;width:100%;margin-top:20px }
 td,th { border:1px solid #444;padding:6px }
-button { margin-top:10px }
 </style>
 </head>
 
 <body>
 
-<h2>📊 PDF → 표 자동 추출 (텍스트 기반)</h2>
+<h2>📊 Symantec 리포트 자동 추출</h2>
 
 <div id="dropZone"
-  onclick="fileInput.click()"
-  ondragover="event.preventDefault()"
-  ondrop="onDrop(event)">
-  PDF 드롭 또는 클릭
-  <input type="file" id="fileInput" hidden accept=".pdf" onchange="onFilePick(event)">
+ onclick="fileInput.click()"
+ ondragover="event.preventDefault()"
+ ondrop="onDrop(event)">
+ PDF 업로드
+ <input type="file" id="fileInput" hidden accept=".pdf" onchange="onFilePick(event)">
 </div>
 
-<div id="status"></div>
-
 <table>
-<thead id="thead"></thead>
+<thead>
+<tr>
+<th>Customer</th>
+<th>Date</th>
+<th>Host</th>
+<th>CPU</th>
+<th>MEM</th>
+<th>HTTP</th>
+<th>HTTPS</th>
+</tr>
+</thead>
 <tbody id="tbody"></tbody>
 </table>
 
@@ -44,7 +51,7 @@ button { margin-top:10px }
 
 <script>
 
-let tableData = [];
+let results = [];
 
 function onDrop(e){
   e.preventDefault();
@@ -56,116 +63,70 @@ function onFilePick(e){
 
 async function run(file){
 
-  document.getElementById('status').innerText='PDF 분석 중...';
-
   const buf = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({data:buf}).promise;
 
-  const rows = [];
+  let fullText = '';
 
-  for(let p=1;p<=pdf.numPages;p++){
-
-    const page = await pdf.getPage(p);
+  for(let i=1;i<=pdf.numPages;i++){
+    const page = await pdf.getPage(i);
     const content = await page.getTextContent();
 
-    const lines = {};
-
-    content.items.forEach(item => {
-
-      const y = Math.round(item.transform[5] / 10) * 10;
-
-      if(!lines[y]) lines[y] = [];
-
-      lines[y].push({
-        text: item.str,
-        x: item.transform[4]
-      });
-
-    });
-
-    Object.values(lines).forEach(line => {
-
-      line.sort((a,b)=>a.x - b.x);
-
-      const row = [];
-      let current = '';
-      let prevX = null;
-
-      line.forEach(w => {
-
-        if(prevX !== null && (w.x - prevX) > 50){
-          row.push(current.trim());
-          current = '';
-        }
-
-        current += w.text + ' ';
-        prevX = w.x;
-      });
-
-      if(current.trim()) row.push(current.trim());
-
-      rows.push(row);
-    });
-
+    fullText += content.items.map(i=>i.str).join(' ') + '\n';
   }
 
-  tableData = normalize(rows);
+  parse(fullText);
+}
+
+// 🔥 핵심 파서
+function parse(text){
+
+  const data = {
+    customer: find(text, /Customer Name\s+([A-Z0-9_]+)/),
+    date: find(text, /Date\s+([0-9\.\sA-Za-z]+)/),
+    host: find(text, /Host Name\s+([A-Z0-9_]+)/),
+    cpu: find(text, /CPU\s+([0-9]+°C)/),
+    mem: find(text, /MEM Usage.*?([0-9]+%)/),
+    http: find(text, /HTTP\s+([0-9\.]+%)/),
+    https: find(text, /HTTPS\s+([0-9\.]+%)/)
+  };
+
+  results.push(data);
   render();
-
-  document.getElementById('status').innerText='완료';
 }
 
-// 🔥 행 길이 맞추기
-function normalize(rows){
-
-  const max = Math.max(...rows.map(r=>r.length));
-
-  return rows.map(r=>{
-    while(r.length < max) r.push('');
-    return r;
-  });
+function find(text, regex){
+  const m = text.match(regex);
+  return m ? m[1] : '';
 }
 
-// 🔥 렌더
 function render(){
 
-  const thead = document.getElementById('thead');
   const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
 
-  thead.innerHTML='';
-  tbody.innerHTML='';
-
-  if(tableData.length===0) return;
-
-  let head='<tr>';
-  tableData[0].forEach(h=>{
-    head+=`<th>${h || ''}</th>`;
-  });
-  head+='</tr>';
-
-  thead.innerHTML=head;
-
-  tableData.slice(1).forEach(r=>{
-    const tr=document.createElement('tr');
-
-    let html='';
-    r.forEach(c=>{
-      html+=`<td>${c}</td>`;
-    });
-
-    tr.innerHTML=html;
+  results.forEach(r=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${r.customer}</td>
+      <td>${r.date}</td>
+      <td>${r.host}</td>
+      <td>${r.cpu}</td>
+      <td>${r.mem}</td>
+      <td>${r.http}</td>
+      <td>${r.https}</td>
+    `;
     tbody.appendChild(tr);
   });
 }
 
-// 🔥 엑셀 다운로드
 function downloadExcel(){
 
-  const ws = XLSX.utils.aoa_to_sheet(tableData);
+  const ws = XLSX.utils.json_to_sheet(results);
   const wb = XLSX.utils.book_new();
 
-  XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-  XLSX.writeFile(wb, "table.xlsx");
+  XLSX.utils.book_append_sheet(wb, ws, "Report");
+  XLSX.writeFile(wb, "symantec_report.xlsx");
 }
 
 </script>
