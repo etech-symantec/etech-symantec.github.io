@@ -2,105 +2,163 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>텍스트 → 표 변환기 (복붙 전용)</title>
+<title>PDF → 표 자동 추출 (정확도 최고)</title>
 
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc =
+  'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+</script>
+
 <style>
-body { font-family: sans-serif; background:#111; color:#eee; padding:20px }
-textarea {
-  width:100%; height:200px;
-  background:#222; color:#fff;
-  border:1px solid #444; padding:10px;
-}
-button { margin:10px 5px; padding:8px 16px }
-table { border-collapse: collapse; width:100%; margin-top:20px }
-td, th { border:1px solid #444; padding:6px }
+body { background:#111;color:#eee;font-family:sans-serif;padding:20px }
+#dropZone { border:2px dashed #555;padding:40px;text-align:center;cursor:pointer }
+table { border-collapse:collapse;width:100%;margin-top:20px }
+td,th { border:1px solid #444;padding:6px }
+button { margin-top:10px }
 </style>
 </head>
 
 <body>
 
-<h2>📋 PDF 복붙 → 표 자동 변환</h2>
+<h2>📊 PDF → 표 자동 추출 (텍스트 기반)</h2>
 
-<textarea id="input" placeholder="PDF에서 전체 복사해서 여기 붙여넣기"></textarea>
+<div id="dropZone"
+  onclick="fileInput.click()"
+  ondragover="event.preventDefault()"
+  ondrop="onDrop(event)">
+  PDF 드롭 또는 클릭
+  <input type="file" id="fileInput" hidden accept=".pdf" onchange="onFilePick(event)">
+</div>
 
-<br>
-<button onclick="parseText()">표 생성</button>
-<button onclick="downloadExcel()">엑셀 다운로드</button>
+<div id="status"></div>
 
 <table>
 <thead id="thead"></thead>
 <tbody id="tbody"></tbody>
 </table>
 
+<button onclick="downloadExcel()">엑셀 다운로드</button>
+
 <script>
 
 let tableData = [];
 
-function parseText(){
-
-  const text = document.getElementById('input').value.trim();
-
-  // 줄 기준 분리
-  const lines = text.split('\n').map(l=>l.trim()).filter(Boolean);
-
-  tableData = lines.map(line => {
-
-    // 🔥 핵심: 여러 구분자 자동 처리
-    let cols;
-
-    if(line.includes('\t')){
-      cols = line.split('\t');
-    }
-    else if(line.includes(',')){
-      cols = line.split(',');
-    }
-    else{
-      cols = line.split(/\s{2,}/); // 공백 2칸 이상
-    }
-
-    return cols.map(c=>c.trim());
-  });
-
-  render();
+function onDrop(e){
+  e.preventDefault();
+  run(e.dataTransfer.files[0]);
+}
+function onFilePick(e){
+  run(e.target.files[0]);
 }
 
+async function run(file){
+
+  document.getElementById('status').innerText='PDF 분석 중...';
+
+  const buf = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({data:buf}).promise;
+
+  const rows = [];
+
+  for(let p=1;p<=pdf.numPages;p++){
+
+    const page = await pdf.getPage(p);
+    const content = await page.getTextContent();
+
+    const lines = {};
+
+    content.items.forEach(item => {
+
+      const y = Math.round(item.transform[5] / 10) * 10;
+
+      if(!lines[y]) lines[y] = [];
+
+      lines[y].push({
+        text: item.str,
+        x: item.transform[4]
+      });
+
+    });
+
+    Object.values(lines).forEach(line => {
+
+      line.sort((a,b)=>a.x - b.x);
+
+      const row = [];
+      let current = '';
+      let prevX = null;
+
+      line.forEach(w => {
+
+        if(prevX !== null && (w.x - prevX) > 50){
+          row.push(current.trim());
+          current = '';
+        }
+
+        current += w.text + ' ';
+        prevX = w.x;
+      });
+
+      if(current.trim()) row.push(current.trim());
+
+      rows.push(row);
+    });
+
+  }
+
+  tableData = normalize(rows);
+  render();
+
+  document.getElementById('status').innerText='완료';
+}
+
+// 🔥 행 길이 맞추기
+function normalize(rows){
+
+  const max = Math.max(...rows.map(r=>r.length));
+
+  return rows.map(r=>{
+    while(r.length < max) r.push('');
+    return r;
+  });
+}
+
+// 🔥 렌더
 function render(){
 
   const thead = document.getElementById('thead');
   const tbody = document.getElementById('tbody');
 
-  thead.innerHTML = '';
-  tbody.innerHTML = '';
+  thead.innerHTML='';
+  tbody.innerHTML='';
 
-  if(tableData.length === 0) return;
+  if(tableData.length===0) return;
 
-  const maxCols = Math.max(...tableData.map(r=>r.length));
+  let head='<tr>';
+  tableData[0].forEach(h=>{
+    head+=`<th>${h || ''}</th>`;
+  });
+  head+='</tr>';
 
-  // 헤더
-  let headRow = '<tr>';
-  for(let i=0;i<maxCols;i++){
-    headRow += `<th>${tableData[0][i] || '컬럼'+(i+1)}</th>`;
-  }
-  headRow += '</tr>';
+  thead.innerHTML=head;
 
-  thead.innerHTML = headRow;
-
-  // 바디
-  tableData.slice(1).forEach(row=>{
-    const tr = document.createElement('tr');
+  tableData.slice(1).forEach(r=>{
+    const tr=document.createElement('tr');
 
     let html='';
-    for(let i=0;i<maxCols;i++){
-      html += `<td>${row[i] || ''}</td>`;
-    }
+    r.forEach(c=>{
+      html+=`<td>${c}</td>`;
+    });
 
-    tr.innerHTML = html;
+    tr.innerHTML=html;
     tbody.appendChild(tr);
   });
 }
 
+// 🔥 엑셀 다운로드
 function downloadExcel(){
 
   const ws = XLSX.utils.aoa_to_sheet(tableData);
