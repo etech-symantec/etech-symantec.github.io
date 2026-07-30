@@ -115,7 +115,7 @@ h1 {
 }
 /* ✨헤더 타이틀 상단 여백 — 각 페이지의 로컬 CSS가 margin을 리셋해도 유지되도록 고정 */
 .header-wrap h1 {
-  margin-top: 8px !important;
+  margin-top: 10px !important;
 }
 .header-wrap {
   position: sticky !important;
