@@ -83,8 +83,15 @@ body {
   font-family: "Segoe UI", Arial, sans-serif !important;
   background: #f3f4f6 !important;
   margin: 0 !important;
-  padding: 6px 40px 10px 40px !important;
+  padding: 0 40px 10px 40px !important;
   color: #333 !important;
+}
+
+/* header-wrap 다음에 오는 요소에 상단 여백을 줘서
+   body의 top padding 대신 사용 — sticky 헤더가 처음부터
+   top:0 위치에 있어서 스크롤 시 '살짝 밀려 올라가는' 현상을 방지 */
+.header-wrap + * {
+  margin-top: 6px !important;
 }
 
 /* ✨헤더 */
