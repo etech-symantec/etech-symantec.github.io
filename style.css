@@ -83,7 +83,7 @@ body {
   font-family: "Segoe UI", Arial, sans-serif !important;
   background: #f3f4f6 !important;
   margin: 0 !important;
-  padding: 6px 40px 10px 40px !important;
+  padding: 0 40px 10px 40px !important;
   color: #333 !important;
 }
 
@@ -119,10 +119,11 @@ h1 {
 }
 .header-wrap {
   position: sticky !important;
-  top: 6px !important;
+  top: 0 !important;
   z-index: 1000 !important;
   background: #f3f4f6 !important;
   transition: all 0.25s ease !important;
+  padding-top: 6px !important;
   padding-bottom: 0px !important;
 }
 .title-left {
