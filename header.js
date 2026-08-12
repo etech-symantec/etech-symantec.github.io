@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function() {
             Broadcom
           </a>
           <a href="https://etech-symantec.github.io/case" class="nav-btn">⚠️ Case 관리</a>
-          <a href="https://etech-symantec.github.io/" class="nav-btn">☑️ 유지보수</a>
+          <a href="https://etech-symantec.github.io/ma" class="nav-btn">☑️ 유지보수</a>
           <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn">🧩 Sysinfo 분석</a>
           <a href="https://etech-symantec.github.io/mib" class="nav-btn">🪬 MIB</a>
           <a href="https://etech-symantec.github.io/archive" class="nav-btn">✂️ Archive 편집</a>
