@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
                  style="width:14px;height:14px;margin-right:2px;margin-bottom:3px;vertical-align:middle;">
             Broadcom
           </a>
-          <a href="https://etech-symantec.github.io/case" class="nav-btn">⚠️ Case 관리</a>
+          <a href="https://etech-sym-case.vercel.app/" class="nav-btn">⚠️ Case 관리</a>
           <a href="https://etech-sym-ma.vercel.app/" class="nav-btn">☑️ 유지보수</a>
           <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn">🧩 Sysinfo 분석</a>
           <a href="https://etech-symantec.github.io/mib" class="nav-btn">🪬 MIB</a>
