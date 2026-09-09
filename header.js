@@ -15,7 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
           <span class="brand-divider" aria-hidden="true"></span>
           <div class="brand-copy">
             <span class="header-title do-hyeon-regular">${title}</span>
-            <span class="header-subtitle">by 이테크시스템</span>
+          
+            <div class="brand-meta">
+              <span class="header-version">${version}</span>
+              <span class="header-subtitle">by 이테크시스템</span>
+            </div>
           </div>
         </div>
 
@@ -36,8 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="https://etech-symantec.github.io/elk" class="nav-btn"><span class="nav-icon">🧬</span><span>ELK 로그 설정</span></a>
           <a href="https://etech-symantec.github.io/pac" class="nav-btn nav-btn-soon"><span class="nav-icon">🚦</span><span>PAC</span></a>
         </nav>
-
-        <div class="header-version">${version}</div>
       </div>
     </div>
   `;
