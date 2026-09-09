@@ -9,17 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="brand-area">
           <a href="https://etech-symantec.github.io/" class="home-btn" aria-label="홈으로 이동" title="홈">
             <span class="home-icon" aria-hidden="true">
-              <svg class="home-logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4.5" y="6.5" width="23" height="21" rx="6" class="logo-panel"/>
-                <path d="M10 4.75V8.25M22 4.75V8.25" class="logo-bind"/>
-                <path d="M5.5 12H26.5" class="logo-line"/>
-                <rect x="9" y="15.5" width="3.3" height="3.3" rx="1" class="logo-dot"/>
-                <rect x="14.35" y="15.5" width="3.3" height="3.3" rx="1" class="logo-dot"/>
-                <rect x="19.7" y="15.5" width="3.3" height="3.3" rx="1" class="logo-dot"/>
-                <rect x="9" y="20.65" width="3.3" height="3.3" rx="1" class="logo-dot"/>
-                <rect x="14.35" y="20.65" width="3.3" height="3.3" rx="1" class="logo-dot logo-dot-accent"/>
-                <rect x="19.7" y="20.65" width="3.3" height="3.3" rx="1" class="logo-dot"/>
-              </svg>
+              <img class="home-logo-img" src="brand-logo-premium.png" alt="">
             </span>
           </a>
           <span class="brand-divider" aria-hidden="true"></span>
