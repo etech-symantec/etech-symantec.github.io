@@ -16,6 +16,14 @@ a {
   --pad: 14px;
   --shadow: 0 6px 22px rgba(0, 0, 0, .08);
   --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+  /* compact premium header */
+  --header-bg-1: #0b1d3a;
+  --header-bg-2: #123a69;
+  --header-chip: rgba(255, 255, 255, 0.065);
+  --header-chip-border: rgba(255, 255, 255, 0.11);
+  --header-text: #f8fbff;
+  --header-muted: #9fb4d2;
 }
 
 * {
@@ -27,55 +35,12 @@ a {
   font-family: "Do Hyeon", sans-serif !important;
   font-weight: 400 !important;
   font-style: normal !important;
-  font-size: 16px !important;
 }
+
 .dongle-regular {
   font-family: "Dongle", sans-serif !important;
   font-weight: 400 !important;
   font-style: normal !important;
-}
-
-/* ✨상단 네비게이션 */
-.top-nav {
-  display: flex !important;
-  justify-content: space-between !important;
-  gap: 4px !important;
-  margin-bottom: -10px !important;
-}
-.nav-right {
-  display: flex !important;
-  gap: 4px !important;
-}
-.nav-btn {
-  background: #1e3a5f !important;
-  color: white !important;
-  border: none !important;
-  border-radius: 8px !important;
-  padding: 4px 8px !important;
-  height: 20px !important;
-  line-height: 10px !important;
-  cursor: pointer !important;
-  font-weight: 400 !important;
-  font-size: 0.75rem !important;
-  text-decoration: none !important;
-  transition: background 0.2s !important;
-}
-.nav-btn-soon {
-  background: #98A1BC !important;
-  color: #555879 !important;
-  border: none !important;
-  border-radius: 8px !important;
-  padding: 4px 8px !important;
-  height: 20px !important;
-  line-height: 10px !important;
-  cursor: pointer !important;
-  font-weight: 400 !important;
-  font-size: 0.75rem !important;
-  text-decoration: none !important;
-  transition: background 0.2s !important;
-}
-.nav-btn:hover {
-  background: linear-gradient(135deg, #FF0066, #0046FF) !important;
 }
 
 /* ✨바디 */
@@ -87,7 +52,7 @@ body {
   color: #333 !important;
 }
 
-/* ✨헤더 */
+/* 기존 페이지의 일반 header / h1 스타일은 유지 */
 header {
   display: flex !important;
   align-items: center !important;
@@ -101,7 +66,6 @@ header {
   z-index: 5 !important;
 }
 
-/* ✨h1 */
 h1 {
   font-size: 1.5em !important;
   background: #1e3a5f !important;
@@ -113,40 +77,284 @@ h1 {
   align-items: flex-end !important;
   margin-bottom: 10pt !important;
 }
-/* ✨헤더 타이틀 상단 여백 — 각 페이지의 로컬 CSS가 margin을 리셋해도 유지되도록 고정 */
-.header-wrap h1 {
-  margin-top: 10px !important;
-}
+
+/* =========================================================
+   ✨ Compact Premium Header - 시안 1
+   기존 2단 구조를 1단으로 합쳐 세로 높이를 약 절반으로 축소
+   ========================================================= */
 .header-wrap {
   position: sticky !important;
   top: 0 !important;
   z-index: 1000 !important;
-  background: #f3f4f6 !important;
+  background: linear-gradient(180deg, rgba(243, 244, 246, 0.98) 0%, rgba(243, 244, 246, 0.91) 72%, rgba(243, 244, 246, 0) 100%) !important;
+  padding: 6px 0 7px !important;
   transition: all 0.25s ease !important;
-  padding-top: 6px !important;
-  padding-bottom: 0px !important;
 }
-.title-left {
-  font-size: 1.6em !important;
-  line-height: 0.78 !important;
-  margin-bottom: 0 !important;
+
+.dashboard-header {
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  width: 100% !important;
+  min-height: 52px !important;
+  padding: 6px 10px 6px 12px !important;
+  overflow: hidden !important;
+
+  background:
+    radial-gradient(circle at 18% -40%, rgba(66, 144, 255, 0.24), transparent 34%),
+    linear-gradient(105deg, var(--header-bg-1) 0%, #0d284c 43%, var(--header-bg-2) 100%) !important;
+  border: 1px solid rgba(138, 184, 255, 0.18) !important;
+  border-radius: 12px !important;
+  box-shadow:
+    0 8px 22px rgba(14, 31, 58, 0.18),
+    0 2px 6px rgba(14, 31, 58, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07) !important;
 }
-.subtitle {
-  font-size: 0.7em !important;
-  font-weight: normal !important;
-  color: #bcd0f7 !important;
-  opacity: 0.9 !important;
-  margin-top: 2px !important;
-  display: block !important;
+
+.dashboard-header::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 36%;
+  pointer-events: none;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.05), transparent 58%);
 }
-.version {
-  font-size: 12px !important;
-  font-weight: 100 !important;
-  color: #bcd0f7 !important;
-  opacity: 0.7 !important;
+
+/* 왼쪽 브랜드 */
+.brand-area {
+  position: relative !important;
+  z-index: 1 !important;
+  display: flex !important;
+  align-items: center !important;
+  flex: 0 0 auto !important;
+  min-width: 315px !important;
+  padding-right: 14px !important;
 }
+
+.home-btn {
+  width: 34px !important;
+  height: 34px !important;
+  flex: 0 0 34px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 9px !important;
+  color: #fff !important;
+  font-family: "Segoe UI Symbol", "Segoe UI", sans-serif !important;
+  font-size: 21px !important;
+  line-height: 1 !important;
+  background: linear-gradient(145deg, #6fc8ff 0%, #6272ff 55%, #7e5cff 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.24) !important;
+  box-shadow:
+    0 4px 12px rgba(44, 102, 220, 0.36),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
+  transition: transform 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+.home-btn:hover {
+  transform: translateY(-1px) !important;
+  box-shadow:
+    0 7px 16px rgba(44, 102, 220, 0.44),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38) !important;
+}
+
+.home-icon {
+  transform: translateY(-1px);
+}
+
+.brand-divider {
+  width: 1px !important;
+  height: 25px !important;
+  margin: 0 13px !important;
+  background: linear-gradient(180deg, transparent, rgba(189, 214, 247, 0.55), transparent) !important;
+}
+
+.brand-copy {
+  display: flex !important;
+  align-items: baseline !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+}
+
+.header-title {
+  color: var(--header-text) !important;
+  font-size: 22px !important;
+  line-height: 1 !important;
+  letter-spacing: -0.2px !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.16) !important;
+}
+
+.header-subtitle {
+  color: var(--header-muted) !important;
+  font-size: 11px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.1px !important;
+}
+
+/* 오른쪽 메뉴 */
+.header-nav {
+  position: relative !important;
+  z-index: 1 !important;
+  flex: 1 1 auto !important;
+  min-width: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 6px !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  padding: 2px 4px !important;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+.header-nav::-webkit-scrollbar {
+  display: none !important;
+}
+
+.nav-btn,
+.nav-btn-soon {
+  flex: 0 0 auto !important;
+  height: 29px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  padding: 0 10px !important;
+  border-radius: 999px !important;
+
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.085), var(--header-chip)) !important;
+  color: #f7fbff !important;
+  border: 1px solid var(--header-chip-border) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 2px 5px rgba(0, 0, 0, 0.11) !important;
+
+  cursor: pointer !important;
+  font-family: "Segoe UI", "Noto Sans KR", Arial, sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 11.5px !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+  text-decoration: none !important;
+  transition:
+    transform 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease,
+    box-shadow 0.18s ease !important;
+}
+
+.nav-btn:hover,
+.nav-btn-soon:hover {
+  transform: translateY(-1px) !important;
+  background: linear-gradient(135deg, rgba(43, 118, 255, 0.72), rgba(75, 72, 226, 0.72)) !important;
+  border-color: rgba(144, 194, 255, 0.5) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    0 4px 10px rgba(20, 73, 168, 0.25) !important;
+}
+
+.nav-btn:active,
+.nav-btn-soon:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.nav-icon {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+}
+
+.nav-favicon {
+  width: 14px !important;
+  height: 14px !important;
+  object-fit: contain !important;
+  flex: 0 0 14px !important;
+}
+
+.nav-btn-soon {
+  color: #dce8fb !important;
+  opacity: 0.92 !important;
+}
+
+/* 버전 */
+.header-version {
+  position: relative !important;
+  z-index: 1 !important;
+  flex: 0 0 auto !important;
+  margin-left: 8px !important;
+  padding: 0 5px 0 12px !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.10) !important;
+  color: #90a8c9 !important;
+  font-family: "Segoe UI", Arial, sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 500 !important;
+  white-space: nowrap !important;
+}
+
+/* 기존 공용 date-header 유지 */
 .date-header {
   font-size: 12px !important;
   color: #fff !important;
   margin: 0 !important;
+}
+
+/* 작은 화면에서는 브랜드 폭과 글자를 조금 더 줄여 메뉴 공간 확보 */
+@media (max-width: 1500px) {
+  .brand-area {
+    min-width: 270px !important;
+    padding-right: 8px !important;
+  }
+
+  .header-title {
+    font-size: 20px !important;
+  }
+
+  .header-subtitle {
+    display: none !important;
+  }
+
+  .nav-btn,
+  .nav-btn-soon {
+    padding: 0 8px !important;
+    font-size: 11px !important;
+  }
+}
+
+@media (max-width: 900px) {
+  body {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .dashboard-header {
+    min-height: 48px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .brand-area {
+    min-width: auto !important;
+  }
+
+  .home-btn {
+    width: 31px !important;
+    height: 31px !important;
+    flex-basis: 31px !important;
+  }
+
+  .brand-divider {
+    margin: 0 8px !important;
+  }
+
+  .header-title {
+    font-size: 18px !important;
+  }
+
+  .header-version {
+    display: none !important;
+  }
 }
