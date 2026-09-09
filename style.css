@@ -249,6 +249,15 @@ h1 {
   white-space: nowrap !important;
 }
 
+.brand-meta {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: flex-start !important;
+  gap: 2px !important;
+  line-height: 1 !important;
+}
+
 .header-title {
   color: var(--header-text) !important;
   font-size: 21px !important;
@@ -350,18 +359,12 @@ h1 {
   opacity: 0.92 !important;
 }
 
-.header-version {
-  position: relative !important;
-  z-index: 1 !important;
-  flex: 0 0 auto !important;
-  margin-left: 8px !important;
-  padding: 0 5px 0 12px !important;
-  border-left: 1px solid rgba(255, 255, 255, 0.10) !important;
-  color: #90a8c9 !important;
-  font-family: "Paperlogy", "Noto Sans KR", "Segoe UI", Arial, sans-serif !important;
-  font-size: 9px !important;
+.header-subtitle {
+  color: var(--header-muted) !important;
+  font-size: 10.5px !important;
   font-weight: 400 !important;
-  white-space: nowrap !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
 }
 
 .date-header {
@@ -378,10 +381,6 @@ h1 {
 
   .header-title {
     font-size: 20px !important;
-  }
-
-  .header-subtitle {
-    display: none !important;
   }
 
   .nav-btn,
@@ -426,9 +425,5 @@ h1 {
 
   .header-title {
     font-size: 18px !important;
-  }
-
-  .header-version {
-    display: none !important;
   }
 }
