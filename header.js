@@ -49,9 +49,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ── 화면이 좁아지면, 메뉴 버튼들이 왼쪽의 "제목/버전" 영역과 맞닿는 순간부터
   //     왼쪽 버튼부터 순서대로 아이콘만 남기고 축소 ──
+  const dashboardHeader = document.querySelector(".dashboard-header");
   const navEl = document.querySelector(".header-nav");
   const brandArea = document.querySelector(".brand-area");
-  if (!navEl || !brandArea) return;
+  if (!dashboardHeader || !navEl || !brandArea) return;
 
   // 실제 메뉴 버튼들만 마크업에 등장한 순서(왼쪽→오른쪽) 그대로 수집
   const navButtons = Array.from(navEl.querySelectorAll(".nav-btn"));
@@ -61,22 +62,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let rafId = null;
 
+  // header-nav 안의 모든 요소(숨김 캘린더 링크 포함)를 지금 상태 그대로
+  // 실제 렌더링된 너비 기준으로 합산 (겹침/스크롤 상태와 무관하게 정확한 값)
+  function getRequiredNavWidth() {
+    const children = Array.from(navEl.children);
+    const gap = parseFloat(getComputedStyle(navEl).columnGap || getComputedStyle(navEl).gap) || 0;
+    const navPadding =
+      parseFloat(getComputedStyle(navEl).paddingLeft) +
+      parseFloat(getComputedStyle(navEl).paddingRight);
+
+    let total = navPadding;
+    children.forEach((child, idx) => {
+      total += child.getBoundingClientRect().width;
+      if (idx > 0) total += gap;
+    });
+    return total;
+  }
+
   function collapseNavButtons() {
     // 1) 우선 전부 라벨을 보이는 상태로 되돌린 뒤 다시 계산 (화면이 넓어지면 복원되도록)
     navButtons.forEach((btn) => btn.classList.remove("icon-only"));
 
-    // 2) 버튼 영역(제일 왼쪽 지점)이 브랜드(제목/버전) 영역의 오른쪽 끝과
-    //    맞닿거나 겹칠 때까지, 왼쪽 버튼부터 순서대로 라벨을 숨김
-    let i = 0;
-    while (i < navButtons.length) {
-      const brandRight = brandArea.getBoundingClientRect().right;
-      const navRect = navEl.getBoundingClientRect();
-      // header-nav는 오른쪽 정렬(justify-content: flex-end)이라
-      // 실제 콘텐츠(모든 버튼)의 시작 지점 = 오른쪽 끝 - 전체 콘텐츠 너비
-      const navContentLeft = navRect.right - navEl.scrollWidth;
+    const headerPadding =
+      parseFloat(getComputedStyle(dashboardHeader).paddingLeft) +
+      parseFloat(getComputedStyle(dashboardHeader).paddingRight);
 
-      const isTouching = navContentLeft <= brandRight + MIN_GAP;
-      if (!isTouching) break;
+    // 2) "브랜드(제목/버전) 실제 너비 + 메뉴 전체 실제 너비"가
+    //    헤더 전체 너비보다 커서 서로 맞닿을 때까지, 왼쪽 버튼부터 순서대로 라벨을 숨김
+    let i = 0;
+    while (i <= navButtons.length) {
+      const availableWidth = dashboardHeader.getBoundingClientRect().width - headerPadding;
+      const brandWidth = brandArea.getBoundingClientRect().width;
+      const requiredNavWidth = getRequiredNavWidth();
+
+      const fits = brandWidth + requiredNavWidth + MIN_GAP <= availableWidth;
+      if (fits || i >= navButtons.length) break;
 
       navButtons[i].classList.add("icon-only");
       i++;
@@ -91,12 +111,16 @@ document.addEventListener("DOMContentLoaded", function () {
   // 최초 렌더 이후 1회 계산
   scheduleCollapse();
 
+  // 폰트/이미지 로딩이 끝나 실제 텍스트·아이콘 너비가 확정된 후 다시 한 번 계산
+  window.addEventListener("load", scheduleCollapse);
+
   // 창 크기 변경 시 재계산
   window.addEventListener("resize", scheduleCollapse);
 
-  // 폰트 로딩 완료, 레이아웃 변화 등도 감지 (지원 브라우저 한정)
+  // 헤더/브랜드 영역 폭이 바뀌는 모든 경우(폰트 로딩, 레이아웃 변화 등)도 감지
   if (window.ResizeObserver) {
     const ro = new ResizeObserver(scheduleCollapse);
-    ro.observe(navEl);
+    ro.observe(dashboardHeader);
+    ro.observe(brandArea);
   }
 });
