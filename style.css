@@ -324,12 +324,12 @@ h1 {
 .nav-btn,
 .nav-btn-soon {
   flex: 0 0 auto !important;
-  height: 23px !important;
+  height: 26px !important;
   display: inline-flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 4px !important;
-  padding: 0 8px !important;
+  gap: 5px !important;
+  padding: 0 9px !important;
   border-radius: 999px !important;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.045)) !important;
   color: #f7fbff !important;
@@ -340,7 +340,7 @@ h1 {
   cursor: pointer !important;
   font-family: "Paperlogy", "Noto Sans KR", "Segoe UI", Arial, sans-serif !important;
   font-weight: 400 !important;
-  font-size: 9.2px !important;
+  font-size: 10px !important;
   line-height: 1 !important;
   white-space: nowrap !important;
   text-decoration: none !important;
