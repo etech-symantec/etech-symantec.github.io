@@ -47,12 +47,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
-  // ── 화면이 좁아지면 메뉴 버튼을 왼쪽부터 순서대로 "아이콘만" 남기고 축소 ──
+  // ── 화면이 좁아지면, 메뉴 버튼들이 왼쪽의 "제목/버전" 영역과 맞닿는 순간부터
+  //     왼쪽 버튼부터 순서대로 아이콘만 남기고 축소 ──
   const navEl = document.querySelector(".header-nav");
-  if (!navEl) return;
+  const brandArea = document.querySelector(".brand-area");
+  if (!navEl || !brandArea) return;
 
   // 실제 메뉴 버튼들만 마크업에 등장한 순서(왼쪽→오른쪽) 그대로 수집
   const navButtons = Array.from(navEl.querySelectorAll(".nav-btn"));
+
+  // 완전히 맞닿기 직전, 최소한의 여백(px). 필요에 맞게 조절 가능
+  const MIN_GAP = 12;
 
   let rafId = null;
 
@@ -60,9 +65,19 @@ document.addEventListener("DOMContentLoaded", function () {
     // 1) 우선 전부 라벨을 보이는 상태로 되돌린 뒤 다시 계산 (화면이 넓어지면 복원되도록)
     navButtons.forEach((btn) => btn.classList.remove("icon-only"));
 
-    // 2) 메뉴 영역이 넘치는 동안, 왼쪽 버튼부터 순서대로 라벨을 숨김
+    // 2) 버튼 영역(제일 왼쪽 지점)이 브랜드(제목/버전) 영역의 오른쪽 끝과
+    //    맞닿거나 겹칠 때까지, 왼쪽 버튼부터 순서대로 라벨을 숨김
     let i = 0;
-    while (navEl.scrollWidth > navEl.clientWidth && i < navButtons.length) {
+    while (i < navButtons.length) {
+      const brandRight = brandArea.getBoundingClientRect().right;
+      const navRect = navEl.getBoundingClientRect();
+      // header-nav는 오른쪽 정렬(justify-content: flex-end)이라
+      // 실제 콘텐츠(모든 버튼)의 시작 지점 = 오른쪽 끝 - 전체 콘텐츠 너비
+      const navContentLeft = navRect.right - navEl.scrollWidth;
+
+      const isTouching = navContentLeft <= brandRight + MIN_GAP;
+      if (!isTouching) break;
+
       navButtons[i].classList.add("icon-only");
       i++;
     }
