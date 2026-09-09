@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="brand-area">
           <a href="https://etech-symantec.github.io/" class="home-btn" aria-label="홈으로 이동" title="홈">
             <span class="home-icon" aria-hidden="true">
-              <img class="home-logo-img" src="brand-logo-premium.png" alt="">
+              <img class="home-logo-img" src="https://etech-symantec.github.io/brand-logo-premium.png" alt="">
             </span>
           </a>
           <span class="brand-divider" aria-hidden="true"></span>
