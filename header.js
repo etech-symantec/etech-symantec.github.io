@@ -39,7 +39,6 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="https://etech-symantec.github.io/trace" class="nav-btn" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
           <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing-SG 보기</span></a>
           <a href="https://etech-symantec.github.io/elk" class="nav-btn" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK 로그 설정</span></a>
-          <a href="https://etech-symantec.github.io/pac" class="nav-btn nav-btn-soon" title="PAC"><span class="nav-icon">🚦</span><span class="nav-label">PAC</span></a>
         </nav>
       </div>
     </div>
