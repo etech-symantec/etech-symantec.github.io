@@ -37,6 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="https://etech-symantec.github.io/xml" class="nav-btn" title="XML 편집"><span class="nav-icon">🗂️</span><span class="nav-label">XML 편집</span></a>
           <a href="https://etech-symantec.github.io/isg" class="nav-btn" title="ISG 분석"><span class="nav-icon">🔎</span><span class="nav-label">ISG 분석</span></a>
           <a href="https://etech-symantec.github.io/trace" class="nav-btn" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
+          <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
           <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing-SG 보기</span></a>
           <a href="https://etech-symantec.github.io/elk" class="nav-btn" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
           <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합검색</span></a>
