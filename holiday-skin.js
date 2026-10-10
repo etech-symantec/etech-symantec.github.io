@@ -249,10 +249,10 @@
       }
     },
     {
-      /* 이테크시스템 창립기념일 — 매년 6/1 (주년 계산 기준 연도 founded: 2009 — 실제 창립 연도와 다르면 수정)
+      /* 에티버스 창립기념일 — 매년 6/1 (주년 계산 기준 연도 founded: 1993 — 실제 창립 연도와 다르면 수정)
          priority:true 로 바꾸면 다른 스킨과 기간이 겹쳐도 항상 창립기념일 스킨이 우선합니다. */
-      id: "founding", name: "창립기념일", fixed: [6, 1], founded: 2009, priority: false,
-      message: function (year) { return "이테크시스템 창립 " + (year - 2009) + "주년을 축하합니다!"; },
+      id: "founding", name: "창립기념일", fixed: [6, 1], founded: 1993, priority: false,
+      message: function (year) { return "에티버스 창립 " + (year - 1993) + "주년을 축하합니다!"; },
       favicon: "🎉", ornament: " 🎉",
       particles: ["🎉", "🎊", "🥳", "🎂", "✨", "🏆"], fall: "slow",
       vars: {
