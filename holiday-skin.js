@@ -247,6 +247,22 @@
         headerBg: "linear-gradient(90deg,#3f2216,#7a2230)",
         headerTitle: "#ffd2a8", headerText: "#ffe0c2", headerSub: "#d9a98c"
       }
+    },
+    {
+      /* 이테크시스템 창립기념일 — 매년 6/1 (주년 계산 기준 연도 founded: 2009 — 실제 창립 연도와 다르면 수정)
+         priority:true 로 바꾸면 다른 스킨과 기간이 겹쳐도 항상 창립기념일 스킨이 우선합니다. */
+      id: "founding", name: "창립기념일", fixed: [6, 1], founded: 2009, priority: false,
+      message: function (year) { return "이테크시스템 창립 " + (year - 2009) + "주년을 축하합니다!"; },
+      favicon: "🎉", ornament: " 🎉",
+      particles: ["🎉", "🎊", "🥳", "🎂", "✨", "🏆"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#eef4ff,#dbe8ff,#fff1c9)",
+        text: "#0b2a5b",
+        card: "rgba(255,255,255,0.7)", cardText: "#123a8a", cardBorder: "rgba(30,91,216,0.35)",
+        a: "#1e5bd8", b: "#f2b705", shadow: "rgba(11,42,91,0.2)",
+        headerBg: "linear-gradient(90deg,#0b1d3a,#123a69,#6b5210)",
+        headerTitle: "#ffd76a", headerText: "#fff3c9", headerSub: "#a9bde0"
+      }
     }
   ];
 
@@ -284,12 +300,13 @@
         var day = occurrence(h, y);
         if (day == null) continue;
         var diff = day - today;
-        if (diff <= BEFORE_DAYS && diff >= -AFTER_DAYS) found.push({ holiday: h, diff: diff });
+        if (diff <= BEFORE_DAYS && diff >= -AFTER_DAYS) found.push({ holiday: h, diff: diff, year: y });
       }
     });
     if (!found.length) return null;
     found.sort(function (a, b) {
-      return Math.abs(a.diff) - Math.abs(b.diff) || b.diff - a.diff;
+      var pa = a.holiday.priority ? 1 : 0, pb = b.holiday.priority ? 1 : 0;
+      return (pb - pa) || (Math.abs(a.diff) - Math.abs(b.diff)) || (b.diff - a.diff);
     });
     return found[0];
   }
@@ -312,7 +329,7 @@
   var result = null;
   if (forced) {
     var fh = HOLIDAYS.filter(function (h) { return h.id === forced; })[0];
-    if (fh) result = { holiday: fh, diff: 0 };
+    if (fh) result = { holiday: fh, diff: 0, year: yearOf(seoulToday()) };
   } else {
     var fake = parseYMD(qs.get("date"));
     result = pickHoliday(fake != null ? fake : seoulToday());
@@ -408,6 +425,8 @@
 
     /* 떨어지는 효과 */
     "#hs-fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9998;}",
+    "#hs-fx{transition:opacity 1.6s ease;}#hs-fx.hs-out{opacity:0;}",
+    "#hs-badge.hs-out{opacity:0 !important;transform:translateY(10px) scale(.96);pointer-events:none;}",
     "#hs-fx span{position:absolute;top:-12vh;opacity:.85;will-change:transform;",
     "animation:hs-fall linear infinite;text-shadow:0 0 6px rgba(255,255,255,.35);}",
     "#hs-fx span.rise{top:auto;bottom:-12vh;animation-name:hs-rise;}",
@@ -420,7 +439,7 @@
     "#hs-badge{position:fixed;right:16px;bottom:16px;z-index:9999;cursor:pointer;",
     "padding:8px 14px;border-radius:999px;font:14px/1.2 'Do Hyeon',sans-serif;",
     "color:#fff;background:linear-gradient(135deg,var(--hs-a),var(--hs-b));",
-    "box-shadow:0 6px 18px rgba(0,0,0,.3);animation:hs-pop .6s ease both;}",
+    "box-shadow:0 6px 18px rgba(0,0,0,.3);animation:hs-pop .6s ease both;transition:opacity .8s ease,transform .8s ease;}",
     "@keyframes hs-pop{from{opacity:0;transform:translateY(12px) scale(.9);}to{opacity:1;transform:none;}}",
     "@media (prefers-reduced-motion:reduce){#hs-fx{display:none;}}"
   ].join("");
@@ -470,9 +489,16 @@
     var dText = diff > 0 ? "D-" + diff : diff === 0 ? "D-Day" : "D+" + -diff;
     var badge = document.createElement("div");
     badge.id = "hs-badge";
-    badge.title = "클릭하면 닫힙니다";
-    badge.textContent = skin.favicon + " " + skin.message + " · " + skin.name + " " + dText;
-    badge.addEventListener("click", function () { badge.remove(); });
+    badge.title = "클릭하면 떨어지는 효과가 사라집니다";
+    var msg = typeof skin.message === "function" ? skin.message(result.year) : skin.message;
+    badge.textContent = skin.favicon + " " + msg + " · " + skin.name + " " + dText;
+    badge.addEventListener("click", function () {
+      if (badge.dataset.closing) return;
+      badge.dataset.closing = "1";
+      badge.classList.add("hs-out");   // 배지도 부드럽게 사라짐
+      fx.classList.add("hs-out");      // 떨어지는 효과 전체가 서서히 투명해짐
+      setTimeout(function () { badge.remove(); fx.remove(); }, 1800);
+    });
     document.body.appendChild(badge);
   });
 })();
