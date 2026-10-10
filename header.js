@@ -1,3 +1,11 @@
+// 기념일 스킨 로드 (기념일 기간이 아니면 아무 변화 없음)
+(function () {
+  if (window.__holidaySkinLoaded) return;
+  var s = document.createElement("script");
+  s.src = "https://etech-symantec.github.io/holiday-skin.js";
+  document.head.appendChild(s);
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
   // HTML에서 설정한 변수가 있으면 사용하고, 없으면 기본값 사용
   const title = window.pageTitle || "기본 타이틀";
