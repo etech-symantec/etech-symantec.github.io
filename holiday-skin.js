@@ -329,6 +329,28 @@
   var isHome = /\/(index\.html)?$/.test(location.pathname);
   if (isHome) root.setAttribute("data-hs-home", "");
 
+  // 헤더 글자색이 어두우면 "밝은 헤더" 스킨으로 간주 (알약 버튼/그림자 톤을 자동 조정)
+  function hexLum(hex) {
+    var h = hex.replace("#", "");
+    if (h.length === 3) h = h.replace(/(.)/g, "$1$1");
+    var r = parseInt(h.substr(0, 2), 16), g = parseInt(h.substr(2, 2), 16), b = parseInt(h.substr(4, 2), 16);
+    return (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  }
+  var lightHeader = hexLum(v.headerText) < 0.5;
+  var pillBg = lightHeader
+    ? "linear-gradient(180deg,rgba(255,255,255,.88),rgba(255,255,255,.58))"
+    : "linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.05))";
+  var pillBorder = lightHeader
+    ? "color-mix(in srgb,var(--hs-a) 40%,transparent)"
+    : "rgba(255,255,255,.2)";
+  var titleShadow = lightHeader
+    ? "0 1px 0 rgba(255,255,255,.7)"
+    : "0 1px 1px rgba(0,0,0,.25),0 0 14px color-mix(in srgb,var(--hs-a) 45%,transparent)";
+  // 헤더 하단을 따라 흐르는 장식 띠 (이모지/글자 반복)
+  var stripItems = [];
+  for (var k = 0; k < 140; k++) stripItems.push(skin.particles[k % skin.particles.length]);
+  var strip = stripItems.join(" ");
+
   var S = "html[data-holiday-skin]";
   var css = [
     S + "{",
@@ -338,6 +360,8 @@
     "--hs-header-bg:" + v.headerBg + ";--hs-header-title:" + v.headerTitle + ";",
     "--hs-header-text:" + v.headerText + ";--hs-header-sub:" + v.headerSub + ";",
     '--hs-orn:"' + skin.ornament + '";',
+    "--hs-pill-bg:" + pillBg + ";--hs-pill-border:" + pillBorder + ";--hs-title-shadow:" + titleShadow + ";",
+    '--hs-strip:"' + strip + '";',
     "}",
 
     /* 메인(index) 배경 — 기존 bgMove 애니메이션은 그대로 유지 */
@@ -352,14 +376,35 @@
     S + " .menu-btn::after{background:linear-gradient(135deg,var(--hs-a),var(--hs-b));}",
     S + " .menu-btn:hover::after{box-shadow:0 0 14px color-mix(in srgb,var(--hs-a) 70%,transparent);}",
 
-    /* 공통 헤더 (header.js) */
-    S + " .dashboard-header{background:var(--hs-header-bg);border-bottom:2px solid var(--hs-a);",
-    "box-shadow:0 2px 14px var(--hs-shadow);}",
-    S + " .header-title{color:var(--hs-header-title);}",
+    /* 공통 헤더 (header.js + style.css) — style.css 가 전부 !important 라 여기도 !important 필요 */
+    S + " .dashboard-header{",
+    "background:radial-gradient(circle at 18% -40%,color-mix(in srgb,var(--hs-a) 32%,transparent),transparent 34%),var(--hs-header-bg) !important;",
+    "border:1px solid color-mix(in srgb,var(--hs-a) 50%,transparent) !important;",
+    "box-shadow:0 8px 22px color-mix(in srgb,var(--hs-a) 28%,transparent),0 2px 6px var(--hs-shadow),",
+    "inset 0 -2px 0 color-mix(in srgb,var(--hs-a) 75%,transparent),inset 0 1px 0 rgba(255,255,255,.14) !important;}",
+    S + " .dashboard-header::after{content:var(--hs-strip);position:absolute;left:0;right:0;bottom:2px;",
+    "height:11px;line-height:11px;font-size:9px;letter-spacing:9px;white-space:nowrap;overflow:hidden;",
+    "opacity:.4;pointer-events:none;z-index:0;}",
+
+    /* 홈(로고) 버튼: 스킨 포인트 컬러, 로고는 style.css 의 흰색 필터 그대로 */
+    S + " .home-btn{background:linear-gradient(145deg,color-mix(in srgb,var(--hs-a) 82%,#000),",
+    "color-mix(in srgb,var(--hs-b) 68%,#000)) !important;",
+    "border-color:rgba(255,255,255,.38) !important;",
+    "box-shadow:0 8px 18px color-mix(in srgb,var(--hs-a) 42%,transparent),inset 0 1px 0 rgba(255,255,255,.3) !important;}",
+    S + " .brand-divider{background:linear-gradient(180deg,transparent,var(--hs-header-sub),transparent) !important;}",
+
+    /* 제목 / 버전 / 서브타이틀 */
+    S + " .header-title{color:var(--hs-header-title) !important;text-shadow:var(--hs-title-shadow) !important;}",
     S + " .header-title::after{content:var(--hs-orn);}",
-    S + " .header-version,html[data-holiday-skin] .header-subtitle{color:var(--hs-header-sub);}",
-    S + " .nav-btn{color:var(--hs-header-text);}",
-    S + " .nav-btn:hover{background:color-mix(in srgb,var(--hs-a) 28%,transparent);}",
+    S + " .header-version,html[data-holiday-skin] .header-subtitle{color:var(--hs-header-sub) !important;opacity:1 !important;}",
+
+    /* 메뉴 알약 버튼 */
+    S + " .nav-btn,html[data-holiday-skin] .nav-btn-soon{background:var(--hs-pill-bg) !important;",
+    "color:var(--hs-header-text) !important;border-color:var(--hs-pill-border) !important;}",
+    S + " .nav-btn:hover,html[data-holiday-skin] .nav-btn-soon:hover{",
+    "background:linear-gradient(135deg,var(--hs-a),var(--hs-b)) !important;color:#fff !important;",
+    "border-color:rgba(255,255,255,.55) !important;",
+    "box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 12px color-mix(in srgb,var(--hs-a) 50%,transparent) !important;}",
 
     /* 떨어지는 효과 */
     "#hs-fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9998;}",
