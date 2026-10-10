@@ -103,6 +103,150 @@
         headerBg: "linear-gradient(90deg,#ffedc9,#f7cf9b)",
         headerTitle: "#9a4a0c", headerText: "#5b3a12", headerSub: "#8a6a3c"
       }
+    },
+    /* ===================== 추가 스킨 ===================== */
+    {
+      id: "whiteday", name: "화이트데이", fixed: [3, 14],
+      message: "Happy White Day!", favicon: "🍬", ornament: " 🍬",
+      particles: ["🍬", "🍭", "🤍", "🫧", "💙"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#ffffff,#e8f4ff,#d6ebff)",
+        text: "#2b5a8a",
+        card: "rgba(255,255,255,0.7)", cardText: "#2f6fb0", cardBorder: "rgba(90,160,230,0.4)",
+        a: "#5aa9f0", b: "#b48cf2", shadow: "rgba(60,110,170,0.18)",
+        headerBg: "linear-gradient(90deg,#f4faff,#d9ecff)",
+        headerTitle: "#2f6fb0", headerText: "#2b5a8a", headerSub: "#6a8fb5"
+      }
+    },
+    {
+      id: "arborday", name: "식목일", fixed: [4, 5],
+      message: "나무를 심어요!", favicon: "🌳", ornament: " 🌳",
+      particles: ["🌱", "🍃", "🌿", "🌳", "🦋"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#f3fbe9,#dff3c8,#c6e8a8)",
+        text: "#2e5a1c",
+        card: "rgba(255,255,255,0.6)", cardText: "#2f6b1f", cardBorder: "rgba(80,160,60,0.4)",
+        a: "#4caf50", b: "#9ccc3c", shadow: "rgba(46,90,28,0.2)",
+        headerBg: "linear-gradient(90deg,#eaf8d8,#cfeab0)",
+        headerTitle: "#2f7d1f", headerText: "#2e5a1c", headerSub: "#6f9a58"
+      }
+    },
+    {
+      id: "earthday", name: "지구의 날", fixed: [4, 22],
+      message: "Happy Earth Day!", favicon: "🌍", ornament: " 🌍",
+      particles: ["🌍", "🌱", "💧", "♻️", "🍃"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#e6f7ff,#d2f1e2,#bfe8cf)",
+        text: "#1f5a4a",
+        card: "rgba(255,255,255,0.6)", cardText: "#1d6b57", cardBorder: "rgba(40,160,130,0.4)",
+        a: "#1e9bd7", b: "#2eb872", shadow: "rgba(30,90,74,0.2)",
+        headerBg: "linear-gradient(90deg,#dff4ff,#c6ecd8)",
+        headerTitle: "#1a7d62", headerText: "#1f5a4a", headerSub: "#5f9a88"
+      }
+    },
+    {
+      id: "childrensday", name: "어린이날", fixed: [5, 5],
+      message: "즐거운 어린이날!", favicon: "🎈", ornament: " 🎈",
+      particles: ["🎈", "🎈", "🧸", "🌈", "🎠", "🎂"], fall: "rise",
+      vars: {
+        bg: "linear-gradient(135deg,#fff9d6,#ffe3f0,#d9f0ff)",
+        text: "#6a3d9a",
+        card: "rgba(255,255,255,0.7)", cardText: "#7b3fbf", cardBorder: "rgba(255,140,200,0.5)",
+        a: "#ff5fa2", b: "#33a1fd", shadow: "rgba(120,80,170,0.2)",
+        headerBg: "linear-gradient(90deg,#fff3b8,#ffd3ea,#cfeaff)",
+        headerTitle: "#e0408a", headerText: "#6a3d9a", headerSub: "#8a7ab5"
+      }
+    },
+    {
+      id: "parentsday", name: "어버이날", fixed: [5, 8],
+      message: "감사합니다, 사랑합니다", favicon: "💐", ornament: " 💐",
+      particles: ["🌸", "💐", "❤️", "🌷", "🌹"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#fff5f5,#ffe0e0,#ffcfd2)",
+        text: "#8c1f2d",
+        card: "rgba(255,255,255,0.65)", cardText: "#a3202f", cardBorder: "rgba(220,60,80,0.4)",
+        a: "#e0334c", b: "#ff8fa3", shadow: "rgba(140,31,45,0.18)",
+        headerBg: "linear-gradient(90deg,#ffeaea,#ffcdd2)",
+        headerTitle: "#c2182f", headerText: "#8c1f2d", headerSub: "#b26a74"
+      }
+    },
+    {
+      id: "teachersday", name: "스승의 날", fixed: [5, 15],
+      message: "스승의 은혜에 감사드립니다", favicon: "🌻", ornament: " 🌻",
+      particles: ["🌻", "📚", "✏️", "🍎", "🌼"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#fffbe6,#fff0b8,#e6f2c2)",
+        text: "#5a4a10",
+        card: "rgba(255,255,255,0.65)", cardText: "#6b5710", cardBorder: "rgba(230,180,20,0.45)",
+        a: "#f2b705", b: "#6fb33a", shadow: "rgba(90,74,16,0.18)",
+        headerBg: "linear-gradient(90deg,#fff6c9,#e4f1b8)",
+        headerTitle: "#b88400", headerText: "#5a4a10", headerSub: "#8f8550"
+      }
+    },
+    {
+      id: "memorialday", name: "현충일", fixed: [6, 6],
+      message: "호국영령을 기립니다", favicon: "🎗️", ornament: " 🎗️",
+      particles: ["🕊️", "🎗️", "🌺"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#f4f4f4,#e4e4e6,#d2d3d8)",
+        text: "#2a2a2e",
+        card: "rgba(255,255,255,0.6)", cardText: "#2a2a2e", cardBorder: "rgba(60,60,70,0.35)",
+        a: "#3a3a42", b: "#8a8a96", shadow: "rgba(0,0,0,0.18)",
+        headerBg: "linear-gradient(90deg,#ececee,#d4d5da)",
+        headerTitle: "#1f1f24", headerText: "#2a2a2e", headerSub: "#6b6b75"
+      }
+    },
+    {
+      id: "summer", name: "여름휴가", fixed: [7, 25],
+      message: "시원한 여름 보내세요!", favicon: "🏖️", ornament: " 🏖️",
+      particles: ["🌴", "🐚", "🍉", "☀️", "🌊", "🍦"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#e0f7ff,#b8ecff,#ffe9b0)",
+        text: "#0b5c7a",
+        card: "rgba(255,255,255,0.6)", cardText: "#0b6d92", cardBorder: "rgba(20,160,210,0.4)",
+        a: "#00a8e8", b: "#ff9f1c", shadow: "rgba(11,92,122,0.2)",
+        headerBg: "linear-gradient(90deg,#d6f4ff,#ffe6a8)",
+        headerTitle: "#0877a0", headerText: "#0b5c7a", headerSub: "#5f98ad"
+      }
+    },
+    {
+      id: "liberationday", name: "광복절", fixed: [8, 15],
+      message: "광복절을 기념합니다", favicon: "🌺", ornament: " 🌺",
+      particles: ["🌺", "🕊️", "✨", "🎉"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#ffffff,#eef3fb,#fbeaec)",
+        text: "#0d2f6b",
+        card: "rgba(255,255,255,0.75)", cardText: "#0b3a8a", cardBorder: "rgba(0,71,160,0.35)",
+        a: "#cd2e3a", b: "#0047a0", shadow: "rgba(13,47,107,0.18)",
+        headerBg: "linear-gradient(90deg,#ffffff,#e6edf9)",
+        headerTitle: "#0047a0", headerText: "#0d2f6b", headerSub: "#cd2e3a"
+      }
+    },
+    {
+      id: "hangul", name: "한글날", fixed: [10, 9],
+      message: "한글날을 축하합니다", favicon: "한", ornament: " 한글",
+      particles: ["ㄱ", "ㅏ", "ㅎ", "ㅁ", "ㅅ", "ㅣ", "ㅗ"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#fbf6e9,#f3ead2,#e9dcb9)",
+        text: "#1f2a44",
+        card: "rgba(255,255,255,0.6)", cardText: "#1f2a44", cardBorder: "rgba(43,76,126,0.35)",
+        a: "#2b4c7e", b: "#c0392b", shadow: "rgba(31,42,68,0.2)",
+        headerBg: "linear-gradient(90deg,#f7efd9,#eadfc0)",
+        headerTitle: "#1f3a6e", headerText: "#1f2a44", headerSub: "#7a7560"
+      }
+    },
+    {
+      id: "pepero", name: "빼빼로데이", fixed: [11, 11],
+      message: "Happy Pepero Day!", favicon: "🍫", ornament: " 🍫",
+      particles: ["🍫", "🍪", "🍓", "🥨", "🤎"], fall: "slow",
+      vars: {
+        bg: "linear-gradient(135deg,#3b1f14,#5a3020,#8a1c2b)",
+        text: "#ffe0c2",
+        card: "rgba(255,255,255,0.12)", cardText: "#ffe0c2", cardBorder: "rgba(255,200,160,0.4)",
+        a: "#e63946", b: "#b5651d", shadow: "rgba(0,0,0,0.45)",
+        headerBg: "linear-gradient(90deg,#3f2216,#7a2230)",
+        headerTitle: "#ffd2a8", headerText: "#ffe0c2", headerSub: "#d9a98c"
+      }
     }
   ];
 
@@ -130,8 +274,8 @@
   /**
    * today(일 정수)에 적용할 {holiday, diff} 반환. 없으면 null.
    * diff = 기념일 - 오늘  (3 → D-3, 0 → 당일, -1 → D+1)
-   * 기간이 겹치면: 아직 안 지난 기념일 중 가장 가까운 것 우선
-   *   (예: 12/22~12/26 은 크리스마스, 12/26 에는 새해로 넘어감)
+   * 기간이 겹치면: 기념일에 날짜상 가장 가까운 것 우선 (동률이면 아직 안 지난 쪽)
+   *   (예: 12/26 은 크리스마스 D+1 이 새해 D-6 보다 가까우므로 크리스마스 유지)
    */
   function pickHoliday(today) {
     var Y = yearOf(today), found = [];
@@ -145,9 +289,7 @@
     });
     if (!found.length) return null;
     found.sort(function (a, b) {
-      var au = a.diff >= 0, bu = b.diff >= 0;
-      if (au !== bu) return au ? -1 : 1;           // 아직 안 지난 쪽 우선
-      return au ? a.diff - b.diff : b.diff - a.diff; // 더 가까운 쪽
+      return Math.abs(a.diff) - Math.abs(b.diff) || b.diff - a.diff;
     });
     return found[0];
   }
@@ -223,6 +365,9 @@
     "#hs-fx{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:9998;}",
     "#hs-fx span{position:absolute;top:-12vh;opacity:.85;will-change:transform;",
     "animation:hs-fall linear infinite;text-shadow:0 0 6px rgba(255,255,255,.35);}",
+    "#hs-fx span.rise{top:auto;bottom:-12vh;animation-name:hs-rise;}",
+    "@keyframes hs-rise{from{transform:translate3d(0,0,0) rotate(0deg);}",
+    "to{transform:translate3d(var(--hs-sway),-115vh,0) rotate(var(--hs-rot));}}",
     "@keyframes hs-fall{from{transform:translate3d(0,0,0) rotate(0deg);}",
     "to{transform:translate3d(var(--hs-sway),115vh,0) rotate(var(--hs-rot));}}",
 
@@ -264,6 +409,7 @@
     for (var i = 0; i < count; i++) {
       var s = document.createElement("span");
       s.textContent = skin.particles[i % skin.particles.length];
+      if (skin.fall === "rise") s.className = "rise";
       var dur = (snow ? 9 : 12) + Math.random() * (snow ? 8 : 10);
       s.style.left = Math.random() * 100 + "%";
       s.style.fontSize = 14 + Math.random() * 18 + "px";
