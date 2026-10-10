@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <nav class="header-nav" aria-label="공통 메뉴">
           <a href="https://etech-calendar.vercel.app/">　</a>
+          <a href="https://etech-symantec.github.io/base64" class="nav-btn" title="base64 변환기"><span class="nav-icon">🏁</span><span class="nav-label">base64</span></a>
           <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom">
             <img class="nav-favicon" src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico" alt="">
             <span class="nav-label">Broadcom</span>
