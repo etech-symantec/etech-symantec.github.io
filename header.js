@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수"><span class="nav-icon">☑️</span><span class="nav-label">유지 보수</span></a>
           <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG GUI 가이드</span></a>
           <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
-          <a href="https://etech-symantec.github.io/edge-connect" class="nav-btn" data-new="true" title="Edge Connector"><span class="nav-icon">▶️</span><span class="nav-label">Edge Connector</span></a>
           <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
           <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
           <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
@@ -155,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navRoot = document.querySelector('.header-nav');
   const groupDefs = [
     { name: '업무 · 관리', tone: 'blue', titles: ['Broadcom', 'Case 관리', '유지보수'] },
-    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링', 'Edge Connector'] },
+    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링'] },
     { name: '분석 · 모니터', tone: 'violet', titles: ['Sysinfo 분석', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'MIB', 'ELK 로그 설정'] },
     { name: '유틸리티', tone: 'amber', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집', 'Sizing-SG 보기', '통합검색'] }
   ];
@@ -310,26 +309,66 @@ document.addEventListener("DOMContentLoaded", function () {
     .header-nav .nav-menu-group[data-group-tone] .nav-btn:focus-visible {
       border-color: rgba(var(--group-rgb), .53) !important;
     }
-    /* 신규 메뉴: 배지는 제거하고 그룹 색상에 맞는 아주 부드러운 테두리 광채 */
+    /* 신규 메뉴: 바깥으로 새어 나오는 잔광 + 테두리를 따라 도는 빛 */
+    @property --new-orbit-angle {
+      syntax: '<angle>';
+      initial-value: 0deg;
+      inherits: false;
+    }
     .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"] {
-      border-color: rgba(var(--group-rgb), .65) !important;
+      isolation: isolate;
+      border-color: rgba(var(--group-rgb), .53) !important;
+      /* 바깥 잔광은 shadow로 처리해 버튼 레이아웃을 변경하지 않습니다. */
       box-shadow: 0 0 0 1px rgba(var(--group-rgb), .10),
-                  0 0 6px 1px rgba(var(--group-rgb), .17) !important;
-      animation: newMenuBorderGlow 3.8s ease-in-out infinite;
+                  0 0 7px 1px rgba(var(--group-rgb), .21),
+                  0 0 13px 2px rgba(var(--group-rgb), .09) !important;
+      animation: newMenuOuterGlow 5.4s ease-in-out infinite;
+    }
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"]::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.6px;
+      z-index: 1;
+      pointer-events: none;
+      /* conic-gradient의 밝은 구간이 모서리를 포함한 실제 테두리를 따라 회전 */
+      background: conic-gradient(from var(--new-orbit-angle),
+        transparent 0deg, transparent 266deg,
+        rgba(var(--group-rgb), .08) 290deg,
+        rgba(var(--group-rgb), .70) 321deg,
+        rgba(255,255,255,.95) 337deg,
+        rgba(var(--group-rgb), .68) 351deg,
+        transparent 360deg);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      animation: newMenuOrbit 7s linear infinite;
     }
     .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"]:hover,
     .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"]:focus-visible {
-      border-color: rgba(var(--group-rgb), .88) !important;
+      border-color: rgba(var(--group-rgb), .75) !important;
+      box-shadow: 0 0 0 1px rgba(var(--group-rgb), .20),
+                  0 0 9px 2px rgba(var(--group-rgb), .34),
+                  0 0 17px 3px rgba(var(--group-rgb), .13) !important;
       animation-play-state: paused;
-      box-shadow: 0 0 0 1px rgba(var(--group-rgb), .22),
-                  0 0 9px 2px rgba(var(--group-rgb), .30) !important;
     }
-    @keyframes newMenuBorderGlow {
-      0%, 100% { box-shadow: 0 0 0 1px rgba(var(--group-rgb), .08), 0 0 4px 1px rgba(var(--group-rgb), .12); }
-      50% { box-shadow: 0 0 0 1px rgba(var(--group-rgb), .18), 0 0 8px 2px rgba(var(--group-rgb), .25); }
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"]:hover::before,
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"]:focus-visible::before {
+      animation-duration: 5.5s;
+    }
+    @keyframes newMenuOrbit {
+      from { --new-orbit-angle: 0deg; }
+      to   { --new-orbit-angle: 360deg; }
+    }
+    @keyframes newMenuOuterGlow {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(var(--group-rgb), .08), 0 0 5px 1px rgba(var(--group-rgb), .15), 0 0 11px 2px rgba(var(--group-rgb), .07); }
+      50% { box-shadow: 0 0 0 1px rgba(var(--group-rgb), .15), 0 0 9px 2px rgba(var(--group-rgb), .26), 0 0 17px 3px rgba(var(--group-rgb), .10); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"] { animation: none !important; }
+      .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"],
+      .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"]::before { animation: none !important; }
     }
   `;
   document.head.appendChild(compactGroupStyle);
