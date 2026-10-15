@@ -91,102 +91,114 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-  // 두툼한 2단 메뉴: 첫 줄은 아이콘(+ NEW), 아래는 최대 2줄의 메뉴 이름
-  const tallMenuStyle = document.createElement("style");
-  tallMenuStyle.textContent = `
+  // 메뉴 이름: 첫 번째 공백을 기준으로 최대 두 줄로 표시
+  document.querySelectorAll('.header-nav .nav-btn .nav-label').forEach((label) => {
+    const name = label.textContent.trim();
+    const firstSpace = name.search(/\s/);
+    if (firstSpace < 0) return;
+    const firstLine = name.slice(0, firstSpace);
+    const secondLine = name.slice(firstSpace).trim();
+    label.textContent = "";
+    const top = document.createElement("span");
+    top.className = "nav-text-line";
+    top.textContent = firstLine;
+    const bottom = document.createElement("span");
+    bottom.className = "nav-text-line";
+    bottom.textContent = secondLine;
+    label.append(top, bottom);
+  });
+
+  // 아이콘은 왼쪽, 글씨는 오른쪽 2줄. NEW는 텍스트 옆의 독립된 공간에 둡니다.
+  const twoLineStyle = document.createElement("style");
+  twoLineStyle.textContent = `
     .dashboard-header:has(.header-nav .nav-btn) {
       height: auto !important;
-      min-height: 76px !important;
+      min-height: 67px !important;
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
       box-sizing: border-box;
       align-items: center !important;
-      padding-top: 9px !important;
-      padding-bottom: 9px !important;
     }
     .header-nav:has(.nav-btn) {
       display: flex !important;
       align-items: center !important;
       gap: 4px !important;
-      overflow: visible !important;
-      min-width: 0 !important;
+      min-width: 0;
     }
-    .header-nav .nav-btn {
-      display: grid !important;
-      grid-template-columns: minmax(0, 1fr) !important;
-      grid-template-rows: 21px minmax(29px, auto) !important;
-      align-items: center !important;
-      justify-items: center !important;
-      align-content: center !important;
+    .header-nav .nav-btn,
+    .header-nav .nav-btn.has-new {
+      display: inline-flex !important;
       flex: 0 0 auto !important;
-      width: 74px !important;
-      min-width: 74px !important;
-      height: 58px !important;
-      min-height: 58px !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 6px !important;
+      min-height: 49px !important;
+      height: 49px !important;
+      padding: 6px 9px !important;
       box-sizing: border-box !important;
-      padding: 5px 5px 4px !important;
-      gap: 0 !important;
-      white-space: normal !important;
+      white-space: nowrap !important;
       position: relative !important;
       overflow: hidden !important;
-      text-align: center !important;
     }
-    .header-nav .nav-btn .nav-icon,
+    .header-nav .nav-btn.has-new { padding-right: 30px !important; }
+    .header-nav .nav-btn .nav-icon {
+      font-size: 23px !important;
+      line-height: 1 !important;
+      flex: 0 0 auto !important;
+      margin: 0 !important;
+    }
     .header-nav .nav-btn .nav-favicon {
-      grid-column: 1 !important;
-      grid-row: 1 !important;
-      align-self: center !important;
-      justify-self: center !important;
+      width: 23px !important;
+      height: 23px !important;
+      flex: 0 0 23px !important;
       margin: 0 !important;
     }
     .header-nav .nav-btn .nav-label {
-      grid-column: 1 !important;
-      grid-row: 2 !important;
-      display: -webkit-box !important;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden !important;
-      width: 100%;
-      text-align: center;
-      white-space: normal !important;
-      overflow-wrap: anywhere;
-      word-break: keep-all;
-      font-size: 10px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: flex-start !important;
+      gap: 1px !important;
       line-height: 1.25 !important;
-      max-height: 27px;
+      font-size: 11px !important;
+      white-space: nowrap !important;
+      text-align: left !important;
+      margin: 0 !important;
     }
-    /* NEW는 글자 위가 아닌 아이콘 행 오른쪽 모서리에 별도 배치 */
+    .header-nav .nav-btn .nav-text-line { display: block; white-space: nowrap; }
     .header-nav .nav-btn.has-new .nav-new-badge {
       position: absolute !important;
-      top: 3px !important;
-      right: 3px !important;
-      left: auto !important;
+      top: 50% !important;
+      right: 5px !important;
+      transform: translateY(-50%) !important;
       margin: 0 !important;
-      min-width: 20px !important;
-      height: 11px !important;
       padding: 0 3px !important;
+      height: 12px !important;
+      min-width: 20px !important;
       font-size: 7px !important;
-      line-height: 11px !important;
       z-index: 1;
     }
-    /* 원래의 좁은 화면 자동 축소 동작도 보존 */
-    .header-nav .nav-btn.icon-only {
-      display: flex !important;
-      justify-content: center !important;
-      align-items: center !important;
-      width: 34px !important;
-      min-width: 34px !important;
-      height: 40px !important;
-      min-height: 40px !important;
-      padding: 4px !important;
+    .header-nav .nav-btn.icon-only,
+    .header-nav .nav-btn.has-new.icon-only {
+      min-width: 37px !important;
+      width: 37px !important;
+      padding: 5px !important;
+      gap: 0 !important;
     }
     .header-nav .nav-btn.icon-only .nav-label { display: none !important; }
     .header-nav .nav-btn.has-new.icon-only .nav-new-badge {
-      top: 4px !important; right: 4px !important;
-      width: 6px !important; min-width: 6px !important;
-      height: 6px !important; padding: 0 !important;
+      width: 6px !important;
+      min-width: 6px !important;
+      height: 6px !important;
+      padding: 0 !important;
+      top: 6px !important;
+      right: 3px !important;
+      transform: none !important;
       font-size: 0 !important;
     }
   `;
-  document.head.appendChild(tallMenuStyle);
+  document.head.appendChild(twoLineStyle);
 
   // ── 화면이 좁아지면, 메뉴 버튼들이 왼쪽의 "제목/버전" 영역과 맞닿는 순간부터
   //     왼쪽 버튼부터 순서대로 아이콘만 남기고 축소 ──
