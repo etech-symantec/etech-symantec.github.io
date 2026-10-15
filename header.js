@@ -48,10 +48,10 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="https://etech-symantec.github.io/xml" class="nav-btn" title="XML 편집"><span class="nav-icon">🗂️</span><span class="nav-label">XML 편집</span></a>
           <a href="https://etech-symantec.github.io/isg" class="nav-btn" title="ISG 분석"><span class="nav-icon">🔎</span><span class="nav-label">ISG 분석</span></a>
           <a href="https://etech-symantec.github.io/trace" class="nav-btn" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
-          <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
+          <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" data-new="true" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
           <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing-SG 보기</span></a>
           <a href="https://etech-symantec.github.io/elk" class="nav-btn" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
-          <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합검색</span></a>
+          <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" data-new="true" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합검색</span></a>
         </nav>
       </div>
     </div>
@@ -59,9 +59,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
-  // NEW 표시 메뉴: href 경로의 마지막 부분을 등록/삭제하면 됩니다.
-  // 예: "pcap", "search.html", "monitoring", "trace"
-  const NEW_MENU_KEYS = new Set(["pcap", "search.html"]);
+  // NEW 배지: 메뉴 링크에 data-new="true" 속성을 지정합니다.
   const newBadgeStyle = document.createElement("style");
   newBadgeStyle.textContent = `
     /* NEW는 메뉴 글자와 같은 줄에 배치하여 가림/잘림을 모두 방지 */
@@ -86,12 +84,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   `;
   document.head.appendChild(newBadgeStyle);
-  function menuKey(href) {
-    try { return new URL(href, location.href).pathname.replace(/\/$/, "").split("/").pop(); }
-    catch (_) { return ""; }
-  }
-  document.querySelectorAll(".header-nav .nav-btn").forEach((btn) => {
-    if (!NEW_MENU_KEYS.has(menuKey(btn.getAttribute("href")))) return;
+  document.querySelectorAll('.header-nav .nav-btn[data-new="true"]').forEach((btn) => {
     btn.classList.add("has-new");
     btn.insertAdjacentHTML("beforeend", '<span class="nav-new-badge" aria-label="새 메뉴">NEW</span>');
   });
