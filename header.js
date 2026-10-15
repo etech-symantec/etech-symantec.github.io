@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수"><span class="nav-icon">☑️</span><span class="nav-label">유지 보수</span></a>
           <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG GUI 가이드</span></a>
           <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
+          <a href="https://etech-symantec.github.io/edge-connect" class="nav-btn" data-new="true" title="Edge Connector"><span class="nav-icon">▶️</span><span class="nav-label">Edge Connector</span></a>
           <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
           <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
           <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
@@ -154,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navRoot = document.querySelector('.header-nav');
   const groupDefs = [
     { name: '업무 · 관리', tone: 'blue', titles: ['Broadcom', 'Case 관리', '유지보수'] },
-    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링'] },
+    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링', 'Edge Connector'] },
     { name: '분석 · 모니터', tone: 'violet', titles: ['Sysinfo 분석', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'MIB', 'ELK 로그 설정'] },
     { name: '유틸리티', tone: 'amber', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집', 'Sizing-SG 보기', '통합검색'] }
   ];
