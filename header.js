@@ -59,6 +59,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
+  // NEW 표시 메뉴: href 경로의 마지막 부분을 등록/삭제하면 됩니다.
+  // 예: "pcap", "search.html", "monitoring", "trace"
+  const NEW_MENU_KEYS = new Set(["pcap", "search.html"]);
+  const newBadgeStyle = document.createElement("style");
+  newBadgeStyle.textContent = `
+    .header-nav .nav-btn.has-new { position: relative; }
+    .header-nav .nav-new-badge {
+      position: absolute; top: -7px; right: -5px; z-index: 3;
+      display: inline-flex; align-items: center; justify-content: center;
+      min-width: 25px; height: 14px; padding: 0 4px;
+      border-radius: 7px; box-sizing: border-box;
+      font: 700 9px/1 Arial, sans-serif; letter-spacing: .35px;
+      color: #fff; background: linear-gradient(120deg, #ff476e, #ff7757);
+      box-shadow: 0 2px 6px rgba(229, 60, 91, .25);
+      pointer-events: none;
+    }
+    /* 아이콘 전용 축소 상태에서도 배지를 유지합니다. */
+    .header-nav .nav-btn.icon-only .nav-new-badge { display: inline-flex; }
+  `;
+  document.head.appendChild(newBadgeStyle);
+  function menuKey(href) {
+    try { return new URL(href, location.href).pathname.replace(/\/$/, "").split("/").pop(); }
+    catch (_) { return ""; }
+  }
+  document.querySelectorAll(".header-nav .nav-btn").forEach((btn) => {
+    if (!NEW_MENU_KEYS.has(menuKey(btn.getAttribute("href")))) return;
+    btn.classList.add("has-new");
+    btn.insertAdjacentHTML("beforeend", '<span class="nav-new-badge" aria-label="새 메뉴">NEW</span>');
+  });
+
+
+
   // ── 화면이 좁아지면, 메뉴 버튼들이 왼쪽의 "제목/버전" 영역과 맞닿는 순간부터
   //     왼쪽 버튼부터 순서대로 아이콘만 남기고 축소 ──
   const dashboardHeader = document.querySelector(".dashboard-header");
