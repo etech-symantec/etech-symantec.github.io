@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수" data-tip-description="고객사 장비 유지보수 점검 자료와 통계를 관리" data-tip-features="정기 점검|점검 통계|고객사 관리"><span class="nav-icon">☑️</span><span class="nav-label">유지 보수</span></a>
           <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드" data-tip-description="ProxySG(SWG) 웹 관리 콘솔의 메뉴별 사용 가이드" data-tip-features="콘솔 메뉴 안내|설정 가이드|운영 참고"><span class="nav-icon">🕹️</span><span class="nav-label">SWG GUI 가이드</span></a>
           <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링" data-tip-description="SWG 장비의 연결 상태와 운영 정보를 점검" data-tip-features="장비 상태|운영 정보|상태 점검"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
+          <a href="https://etech-symantec.github.io/edge-connect" class="nav-btn" data-new="true" title="Edge Connector"><span class="nav-icon">▶️</span><span class="nav-label">Edge Connector</span></a>
           <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석" data-tip-description="ProxySG Sysinfo 정보를 확인하고 주요 설정을 분석" data-tip-features="설정 확인|시스템 정보|구성 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
           <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB" data-tip-description="SNMP MIB 관련 정보를 검색하고 확인" data-tip-features="SNMP MIB|항목 검색|OID 확인"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
           <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집" data-tip-description="아카이브 파일의 내용을 확인하고 편집" data-tip-features="파일 내용 확인|아카이브 편집|데이터 정리"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
@@ -154,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navRoot = document.querySelector('.header-nav');
   const groupDefs = [
     { name: '업무 · 관리', tone: 'blue', titles: ['Broadcom', 'Case 관리', '유지보수'] },
-    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링'] },
+    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링', 'Edge Connector'] },
     { name: '분석 · 모니터', tone: 'violet', titles: ['Sysinfo 분석', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'MIB', 'ELK 로그 설정'] },
     { name: '유틸리티', tone: 'amber', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집', 'Sizing-SG 보기', '통합검색'] }
   ];
