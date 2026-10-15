@@ -225,6 +225,27 @@
     }
   }
 
+
+  /* NEW 아이콘: 메뉴 카드의 오른쪽 상단 */
+  .menu-btn.has-new { overflow: visible; }
+  .menu-btn .menu-new-badge {
+    position: absolute; top: -9px; right: -10px; z-index: 5;
+    display: inline-flex; align-items: center; justify-content: center;
+    min-width: 40px; height: 22px; padding: 0 8px;
+    box-sizing: border-box; border-radius: 11px;
+    background: linear-gradient(120deg, #ff476e, #ff7757);
+    color: #fff; font: 700 11px/1 Arial, sans-serif;
+    letter-spacing: .6px; box-shadow: 0 3px 9px rgba(229,60,91,.28);
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .menu-btn .menu-new-badge { animation: newBadgeGlow 2.6s ease-in-out infinite; }
+  }
+  @keyframes newBadgeGlow {
+    0%, 100% { box-shadow: 0 3px 9px rgba(229,60,91,.28); }
+    50% { box-shadow: 0 3px 15px rgba(255,76,105,.5); }
+  }
+
 </style>
 <script src="./holiday-skin.js"></script>
 </head>
@@ -257,6 +278,19 @@
 </div>
 
 <script>
+  // NEW 표시 메뉴: 아래 배열에 URL 마지막 경로를 추가/삭제하세요.
+  // header_NEW.js와 동일한 기준을 사용합니다.
+  const NEW_MENU_KEYS = new Set(["pcap", "search.html"]);
+  function menuKey(href) {
+    try { return new URL(href, location.href).pathname.replace(/\/$/, "").split("/").pop(); }
+    catch (_) { return ""; }
+  }
+  document.querySelectorAll(".menu-grid .menu-btn").forEach((btn) => {
+    if (!NEW_MENU_KEYS.has(menuKey(btn.getAttribute("href")))) return;
+    btn.classList.add("has-new");
+    btn.insertAdjacentHTML("beforeend", '<span class="menu-new-badge" aria-label="새 메뉴">NEW</span>');
+  });
+
   // Ripple 효과
   document.querySelectorAll(".menu-btn").forEach(btn => {
     btn.addEventListener("click", function(e) {
