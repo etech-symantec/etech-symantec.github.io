@@ -201,6 +201,103 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(twoLineStyle);
 
+  // 메뉴 그룹: 기존 nav-btn의 크기/클릭/NEW 속성은 수정하지 않고 컨테이너만 추가
+  // 그룹 내 버튼은 한 줄이며 그룹명은 상단에 작게 표시합니다.
+  const navRoot = document.querySelector('.header-nav');
+  const groupDefs = [
+    { name: '업무 · 관리', titles: ['Broadcom', 'Case 관리', '유지보수', '통합검색'] },
+    { name: 'SWG', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링', 'Sizing-SG 보기'] },
+    { name: '분석 · 모니터링', titles: ['Sysinfo 분석', 'MIB', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'ELK 로그 설정'] },
+    { name: '유틸리티', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집'] }
+  ];
+  if (navRoot) {
+    const buttons = Array.from(navRoot.querySelectorAll(':scope > .nav-btn'));
+    const originalItems = Array.from(navRoot.children);
+    // 기존의 캘린더 링크 등 일반 링크는 그룹 외부에 그대로 둡니다.
+    const otherItems = originalItems.filter(el => !el.classList.contains('nav-btn'));
+    navRoot.replaceChildren(...otherItems);
+    const used = new Set();
+    groupDefs.forEach(def => {
+      const selected = def.titles.map(t => buttons.find(b => b.title === t)).filter(Boolean);
+      if (!selected.length) return;
+      const group = document.createElement('div');
+      group.className = 'nav-menu-group';
+      const caption = document.createElement('span');
+      caption.className = 'nav-group-caption';
+      caption.textContent = def.name;
+      const items = document.createElement('div');
+      items.className = 'nav-group-items';
+      selected.forEach(btn => { items.appendChild(btn); used.add(btn); });
+      group.append(caption, items);
+      navRoot.appendChild(group);
+    });
+    // 신규 메뉴가 추가되어 그룹에 등록되지 않아도 표시가 사라지지 않도록 합니다.
+    const remainder = buttons.filter(btn => !used.has(btn));
+    if (remainder.length) {
+      const group = document.createElement('div');
+      group.className = 'nav-menu-group';
+      const caption = document.createElement('span');
+      caption.className = 'nav-group-caption';
+      caption.textContent = '기타';
+      const items = document.createElement('div');
+      items.className = 'nav-group-items';
+      items.append(...remainder);
+      group.append(caption, items);
+      navRoot.appendChild(group);
+    }
+  }
+
+  const compactGroupStyle = document.createElement('style');
+  compactGroupStyle.textContent = `
+    /* 로고-제목 압축: 구분선 제거, 홈 버튼만 약간 축소 */
+    .dashboard-header .brand-area {
+      gap: 3px !important;
+      padding-left: 0 !important;
+      margin-left: 0 !important;
+      flex: 0 0 auto !important;
+    }
+    .dashboard-header .brand-divider { display: none !important; }
+    .dashboard-header .home-btn {
+      width: 28px !important; height: 28px !important;
+      min-width: 28px !important; min-height: 28px !important;
+      padding: 3px !important; margin: 0 !important;
+      box-sizing: border-box !important;
+    }
+    .dashboard-header .home-icon {
+      width: 21px !important; height: 21px !important;
+      display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    }
+    .dashboard-header .home-logo-img {
+      max-width: 21px !important; max-height: 21px !important;
+      width: 100% !important; height: 100% !important;
+      object-fit: contain !important;
+    }
+    .dashboard-header .brand-copy { margin-left: 0 !important; padding-left: 0 !important; }
+    .dashboard-header { padding-left: 5px !important; padding-right: 5px !important; }
+    .header-nav { gap: 5px !important; align-items: center !important; }
+    .header-nav .nav-menu-group {
+      flex: 0 0 auto !important; display: flex !important; flex-direction: column !important;
+      align-items: stretch !important; justify-content: flex-end !important;
+      gap: 1px !important; margin: 0 !important; padding: 0 3px 0 3px !important;
+      position: relative !important; box-sizing: border-box !important;
+      border-left: 1px solid rgba(195,215,240,.19);
+    }
+    .header-nav .nav-menu-group:first-of-type { border-left: none; }
+    .header-nav .nav-group-caption {
+      display: block !important; height: 9px !important; line-height: 9px !important;
+      font: 600 8px/9px Arial, sans-serif !important;
+      color: rgba(216,230,247,.70) !important;
+      text-align: center !important; letter-spacing: 0 !important;
+      white-space: nowrap !important; pointer-events: none !important;
+    }
+    .header-nav .nav-group-items {
+      display: flex !important; flex-direction: row !important; gap: 4px !important;
+      align-items: center !important; flex-wrap: nowrap !important; white-space: nowrap !important;
+    }
+    /* 메뉴 버튼 크기, 패딩, 글자, NEW 배지는 앞서 설정한 값을 그대로 사용 */
+  `;
+  document.head.appendChild(compactGroupStyle);
+
   // ── 화면이 좁아지면, 메뉴 버튼들이 왼쪽의 "제목/버전" 영역과 맞닿는 순간부터
   //     왼쪽 버튼부터 순서대로 아이콘만 남기고 축소 ──
   const dashboardHeader = document.querySelector(".dashboard-header");
