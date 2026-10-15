@@ -268,25 +268,18 @@
   <a href="./xml" class="menu-btn"><span class="emoji">🗂️</span>XML 편집<div class="shimmer"></div></a>
   <a href="./isg" class="menu-btn"><span class="emoji">🔎</span>ISG 분석<div class="shimmer"></div></a>
   <a href="./trace" class="menu-btn"><span class="emoji">📄</span>Trace 분석<div class="shimmer"></div></a>
-  <a href="https://etech-sym-pcap.vercel.app/" class="menu-btn"><span class="emoji">🧮</span>pcap 분석<div class="shimmer"></div></a>
+  <a href="https://etech-sym-pcap.vercel.app/" class="menu-btn" data-new="true"><span class="emoji">🧮</span>pcap 분석<div class="shimmer"></div></a>
   
   <a href="./sizing-sg" class="menu-btn"><span class="emoji">📊</span>Sizing-SG<div class="shimmer"></div></a>
   <a href="./elk" class="menu-btn"><span class="emoji">🧬</span>ELK<div class="shimmer"></div></a>
-  <a href="https://jandi-search.vercel.app/search.html" class="menu-btn"><span class="emoji">📑</span>통합검색<div class="shimmer"></div></a>
+  <a href="https://jandi-search.vercel.app/search.html" class="menu-btn" data-new="true"><span class="emoji">📑</span>통합검색<div class="shimmer"></div></a>
 
   <div></div><div></div>
 </div>
 
 <script>
-  // NEW 표시 메뉴: 아래 배열에 URL 마지막 경로를 추가/삭제하세요.
-  // header_NEW.js와 동일한 기준을 사용합니다.
-  const NEW_MENU_KEYS = new Set(["etech-sym-pcap.vercel.app/", "search.html"]);
-  function menuKey(href) {
-    try { return new URL(href, location.href).pathname.replace(/\/$/, "").split("/").pop(); }
-    catch (_) { return ""; }
-  }
-  document.querySelectorAll(".menu-grid .menu-btn").forEach((btn) => {
-    if (!NEW_MENU_KEYS.has(menuKey(btn.getAttribute("href")))) return;
+  // NEW 배지: 메뉴 링크에 data-new="true" 속성을 지정합니다.
+  document.querySelectorAll('.menu-grid .menu-btn[data-new="true"]').forEach((btn) => {
     btn.classList.add("has-new");
     btn.insertAdjacentHTML("beforeend", '<span class="menu-new-badge" aria-label="새 메뉴">NEW</span>');
   });
