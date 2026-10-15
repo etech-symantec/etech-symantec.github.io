@@ -76,128 +76,125 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
-  // 기능별 그룹: 메뉴는 모두 상시 표시하고, 그룹명만 위에 작게 표기합니다.
-  // NEW 표시 여부는 각 링크의 data-new="true" 속성으로만 제어합니다.
-  const groupedStyle = document.createElement("style");
-  groupedStyle.textContent = `
-    /* 기존 헤더 대비 그룹 이름 한 줄(약 12px)만 추가 */
+  // 기능별 메뉴를 두 줄로 정렬합니다. NEW는 data-new="true"로 지정합니다.
+  const style = document.createElement("style");
+  style.textContent = `
+    /* 오른쪽 영역만 2행: 왼쪽 페이지 제목은 원래 위치 유지 */
     .dashboard-header:has(.grouped-nav) {
       height: auto !important;
-      min-height: 62px;
+      min-height: 72px !important;
+      padding-top: 5px !important;
+      padding-bottom: 5px !important;
+      align-items: center !important;
       box-sizing: border-box;
     }
     .header-nav.grouped-nav {
-      display: flex !important;
-      flex-wrap: nowrap !important;
+      display: grid !important;
+      grid-template-columns: max-content max-content !important;
+      grid-template-rows: max-content max-content !important;
       align-items: center !important;
-      gap: 0 !important;
-      min-width: 0;
+      justify-content: end !important;
+      align-content: center !important;
+      gap: 3px 10px !important;
+      flex: 0 1 auto !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow: visible !important;
       box-sizing: border-box;
-      overflow: visible;
     }
     .grouped-nav .calendar-legacy-link {
-      position: absolute !important; width: 1px !important; height: 1px !important;
-      overflow: hidden !important; clip-path: inset(50%); white-space: nowrap;
-    }
-    .grouped-nav .nav-group {
-      display: flex; flex-direction: column; align-items: stretch;
-      flex: 0 0 auto; min-width: 0;
-      padding: 0 8px; box-sizing: border-box;
-      position: relative;
-    }
-    .grouped-nav .nav-group:first-of-type { padding-left: 0; }
-    .grouped-nav .nav-group:last-of-type { padding-right: 0; }
-    .grouped-nav .nav-group + .nav-group::before {
-      content: ""; position: absolute; left: 0; top: 14px; bottom: 4px;
-      width: 1px; background: rgba(172, 202, 242, .28);
+      position: absolute !important;
+      width: 1px !important; height: 1px !important;
+      overflow: hidden !important; clip-path: inset(50%);
       pointer-events: none;
     }
+    .grouped-nav .nav-group {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      min-width: max-content !important;
+      gap: 6px !important;
+      padding: 0 6px !important;
+      position: relative;
+      box-sizing: border-box;
+    }
+    .grouped-nav .nav-group + .nav-group::before {
+      content: ""; position: absolute; left: -5px;
+      top: 4px; bottom: 4px; width: 1px;
+      background: rgba(177,207,242,.30); pointer-events:none;
+    }
     .grouped-nav .nav-group-title {
-      display: block; text-align: center; height: 12px; line-height: 12px;
-      font: 600 9px/12px Arial, 'Malgun Gothic', sans-serif;
-      letter-spacing: .25px; color: #a7c6ec; white-space: nowrap;
-      pointer-events: none; user-select: none; margin-bottom: 2px;
+      flex: 0 0 auto;
+      font: 700 9px/1.15 'Malgun Gothic',Arial,sans-serif;
+      color: #a9c9ec; white-space: nowrap;
+      pointer-events: none; user-select: none;
+      padding-right: 3px;
     }
     .grouped-nav .nav-group-items {
-      display: flex; flex-flow: row nowrap; justify-content: center;
-      align-items: center; gap: 5px; white-space: nowrap;
+      display: flex !important;
+      flex-flow: row nowrap !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      gap: 4px !important;
+      white-space: nowrap !important;
     }
-    .grouped-nav .nav-btn { flex: 0 0 auto; white-space: nowrap; }
-    .grouped-nav .nav-btn.has-new {
-      display: inline-flex; align-items: center; justify-content: center;
-      position: relative; box-sizing: border-box;
+    .grouped-nav .nav-btn {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex: 0 0 auto !important;
+      position: relative;
+      box-sizing: border-box !important;
+      padding: 4px 7px !important;
+      min-height: 23px !important;
+      min-width: 0 !important;
+      font-size: 11px !important;
+      line-height: 1.1 !important;
+      gap: 3px !important;
+      white-space: nowrap !important;
+    }
+    .grouped-nav .nav-btn .nav-label {
+      display: inline !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      width: auto !important;
+      max-width: none !important;
+      font-size: inherit !important;
     }
     .grouped-nav .nav-btn.has-new .nav-new-badge {
-      position: static; flex: 0 0 auto; align-self: center;
-      display: inline-flex; align-items: center; justify-content: center;
-      margin-left: 5px; min-width: 23px; height: 13px; padding: 0 4px;
+      position: static !important;
+      display: inline-flex !important;
+      align-items: center !important; justify-content: center !important;
+      flex: 0 0 auto !important;
+      margin-left: 2px !important;
+      min-width: 22px; height: 12px; padding: 0 3px;
       border-radius: 7px; box-sizing: border-box;
-      font: 700 8px/1 Arial, sans-serif; letter-spacing: .1px;
-      color: #fff; background: linear-gradient(120deg, #ff476e, #ff7757);
+      font: 700 8px/1 Arial,sans-serif; color: #fff;
+      background: linear-gradient(120deg,#ff476e,#ff7757);
       box-shadow: 0 1px 4px rgba(229,60,91,.25);
-      white-space: nowrap; pointer-events: none;
+      pointer-events: none; white-space: nowrap;
     }
-    .grouped-nav .nav-btn.has-new.icon-only .nav-new-badge {
-      font-size: 0; min-width: 0; width: 6px; height: 6px;
-      margin-left: 3px; padding: 0; border-radius: 50%;
-    }
-    @media (max-width: 900px) {
-      .grouped-nav .nav-group { padding-left: 5px; padding-right: 5px; }
-      .grouped-nav .nav-group-items { gap: 3px; }
+    /* 좁은 화면에서는 이름을 숨기지 않고 메뉴 영역만 좌우 스크롤 */
+    @media (max-width: 1170px) {
+      .header-nav.grouped-nav {
+        overflow-x: auto !important;
+        overflow-y: hidden !important;
+        scrollbar-width: thin;
+        scrollbar-color: rgba(150,185,235,.5) transparent;
+        padding-bottom: 2px;
+      }
+      .grouped-nav .nav-group { gap: 4px !important; padding: 0 4px !important; }
+      .grouped-nav .nav-btn { padding: 4px 5px !important; font-size: 10px !important; }
     }
   `;
-  document.head.appendChild(groupedStyle);
+  document.head.appendChild(style);
   document.querySelectorAll('.grouped-nav .nav-btn[data-new="true"]').forEach((btn) => {
-    btn.classList.add("has-new");
-    btn.insertAdjacentHTML("beforeend", '<span class="nav-new-badge" aria-label="새 메뉴">NEW</span>');
-  });
-
-  const dashboardHeader = document.querySelector(".dashboard-header");
-  const navEl = document.querySelector(".header-nav.grouped-nav");
-  const brandArea = document.querySelector(".brand-area");
-  if (!dashboardHeader || !navEl || !brandArea) return;
-
-  const navButtons = Array.from(navEl.querySelectorAll(".nav-btn"));
-  const groups = Array.from(navEl.querySelectorAll(".nav-group"));
-  const MIN_GAP = 12;
-  let rafId = 0;
-
-  // 그룹 안의 메뉴는 모두 남겨두고, 공간 부족 시 버튼 이름만 순차적으로 축소합니다.
-  function getRequiredNavWidth() {
-    const navCss = getComputedStyle(navEl);
-    let total = (parseFloat(navCss.paddingLeft) || 0) + (parseFloat(navCss.paddingRight) || 0);
-    const groupGap = parseFloat(navCss.columnGap || navCss.gap) || 0;
-    groups.forEach((group, i) => {
-      // group은 flex: 0 0 auto 로 구성돼 실제 내용 너비를 유지합니다.
-      total += group.getBoundingClientRect().width;
-      if (i) total += groupGap;
-    });
-    return total;
-  }
-
-  function collapseNavButtons() {
-    navButtons.forEach((btn) => btn.classList.remove("icon-only"));
-    const headerCss = getComputedStyle(dashboardHeader);
-    const padding = (parseFloat(headerCss.paddingLeft) || 0) + (parseFloat(headerCss.paddingRight) || 0);
-    const availableWidth = dashboardHeader.getBoundingClientRect().width - padding;
-    const brandWidth = brandArea.getBoundingClientRect().width;
-    let i = 0;
-    while (brandWidth + getRequiredNavWidth() + MIN_GAP > availableWidth && i < navButtons.length) {
-      navButtons[i++].classList.add("icon-only");
+    btn.classList.add('has-new');
+    if (!btn.querySelector('.nav-new-badge')) {
+      btn.insertAdjacentHTML('beforeend', '<span class="nav-new-badge" aria-label="새 메뉴">NEW</span>');
     }
-  }
-
-  function scheduleCollapse() {
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => { rafId = 0; collapseNavButtons(); });
-  }
-  scheduleCollapse();
-  window.addEventListener("load", scheduleCollapse);
-  window.addEventListener("resize", scheduleCollapse);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleCollapse);
-  if (window.ResizeObserver) {
-    const ro = new ResizeObserver(scheduleCollapse);
-    ro.observe(dashboardHeader);
-    ro.observe(brandArea);
-  }
+  });
+  // 기존 icon-only 축소 기능을 사용하지 않습니다.
 });
