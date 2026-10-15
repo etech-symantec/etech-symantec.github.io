@@ -280,7 +280,7 @@
 <script>
   // NEW 표시 메뉴: 아래 배열에 URL 마지막 경로를 추가/삭제하세요.
   // header_NEW.js와 동일한 기준을 사용합니다.
-  const NEW_MENU_KEYS = new Set(["etech-sym-pcap.vercel.app", "search.html"]);
+  const NEW_MENU_KEYS = new Set(["etech-sym-pcap.vercel.app/", "search.html"]);
   function menuKey(href) {
     try { return new URL(href, location.href).pathname.replace(/\/$/, "").split("/").pop(); }
     catch (_) { return ""; }
