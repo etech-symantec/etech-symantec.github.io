@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // NEW 표시 메뉴: href 경로의 마지막 부분을 등록/삭제하면 됩니다.
   // 예: "pcap", "search.html", "monitoring", "trace"
-  const NEW_MENU_KEYS = new Set(["pcap", "search.html"]);
+  const NEW_MENU_KEYS = new Set(["pcap.vercel.app/", "search.html"]);
   const newBadgeStyle = document.createElement("style");
   newBadgeStyle.textContent = `
     .header-nav .nav-btn.has-new { position: relative; }
