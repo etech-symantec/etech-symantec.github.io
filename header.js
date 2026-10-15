@@ -135,13 +135,13 @@ document.addEventListener("DOMContentLoaded", function () {
       gap: 5px !important;
       min-height: 34px !important;
       height: 34px !important;
-      padding: 2px 7px !important;
+      padding: 2px 9px !important;
       box-sizing: border-box !important;
       white-space: nowrap !important;
       position: relative !important;
       overflow: hidden !important;
     }
-    .header-nav .nav-btn.has-new { padding-right: 30px !important; }
+    .header-nav .nav-btn.has-new { padding-right: 32px !important; }
     .header-nav .nav-btn .nav-icon {
       font-size: 15px !important;
       line-height: 1 !important;
@@ -166,6 +166,7 @@ document.addEventListener("DOMContentLoaded", function () {
       text-align: left !important;
       margin: 0 !important;
     }
+    .header-nav .nav-btn .nav-label:has(.nav-text-line) { font-size: 10px !important; }
     .header-nav .nav-btn .nav-text-line { display: block; white-space: nowrap; }
     .header-nav .nav-btn.has-new .nav-new-badge {
       position: absolute !important;
