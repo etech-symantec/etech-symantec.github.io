@@ -64,19 +64,26 @@ document.addEventListener("DOMContentLoaded", function () {
   const NEW_MENU_KEYS = new Set(["pcap", "search.html"]);
   const newBadgeStyle = document.createElement("style");
   newBadgeStyle.textContent = `
-    .header-nav .nav-btn.has-new { position: relative; }
-    .header-nav .nav-new-badge {
-      position: absolute; top: 1px; right: 2px; z-index: 3;
+    /* NEW는 메뉴 글자와 같은 줄에 배치하여 가림/잘림을 모두 방지 */
+    .header-nav .nav-btn.has-new {
       display: inline-flex; align-items: center; justify-content: center;
-      min-width: 22px; height: 11px; padding: 0 3px;
-      border-radius: 6px; box-sizing: border-box;
+      position: relative; box-sizing: border-box;
+    }
+    .header-nav .nav-btn.has-new .nav-new-badge {
+      position: static; flex: 0 0 auto; align-self: center;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-left: 5px; min-width: 23px; height: 13px; padding: 0 4px;
+      border-radius: 7px; box-sizing: border-box;
       font: 700 8px/1 Arial, sans-serif; letter-spacing: .1px;
       color: #fff; background: linear-gradient(120deg, #ff476e, #ff7757);
-      box-shadow: 0 2px 6px rgba(229, 60, 91, .25);
-      pointer-events: none;
+      box-shadow: 0 1px 4px rgba(229,60,91,.25);
+      white-space: nowrap; pointer-events: none;
     }
-    /* 아이콘 전용 축소 상태에서도 배지를 유지합니다. */
-    .header-nav .nav-btn.icon-only .nav-new-badge { display: inline-flex; }
+    /* 좁은 화면은 NEW 텍스트 대신 오른쪽의 작은 새 메뉴 표시점 */
+    .header-nav .nav-btn.has-new.icon-only .nav-new-badge {
+      font-size: 0; min-width: 0; width: 6px; height: 6px;
+      margin-left: 3px; padding: 0; border-radius: 50%;
+    }
   `;
   document.head.appendChild(newBadgeStyle);
   function menuKey(href) {
