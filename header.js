@@ -113,9 +113,9 @@ document.addEventListener("DOMContentLoaded", function () {
   twoLineStyle.textContent = `
     .dashboard-header:has(.header-nav .nav-btn) {
       height: auto !important;
-      min-height: 67px !important;
-      padding-top: 8px !important;
-      padding-bottom: 8px !important;
+      min-height: 44px !important;
+      padding-top: 3px !important;
+      padding-bottom: 3px !important;
       box-sizing: border-box;
       align-items: center !important;
     }
@@ -132,10 +132,10 @@ document.addEventListener("DOMContentLoaded", function () {
       flex-direction: row !important;
       align-items: center !important;
       justify-content: center !important;
-      gap: 6px !important;
-      min-height: 49px !important;
-      height: 49px !important;
-      padding: 6px 9px !important;
+      gap: 5px !important;
+      min-height: 34px !important;
+      height: 34px !important;
+      padding: 2px 7px !important;
       box-sizing: border-box !important;
       white-space: nowrap !important;
       position: relative !important;
@@ -143,15 +143,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     .header-nav .nav-btn.has-new { padding-right: 30px !important; }
     .header-nav .nav-btn .nav-icon {
-      font-size: 23px !important;
+      font-size: 15px !important;
       line-height: 1 !important;
       flex: 0 0 auto !important;
       margin: 0 !important;
     }
     .header-nav .nav-btn .nav-favicon {
-      width: 23px !important;
-      height: 23px !important;
-      flex: 0 0 23px !important;
+      width: 15px !important;
+      height: 15px !important;
+      flex: 0 0 15px !important;
       margin: 0 !important;
     }
     .header-nav .nav-btn .nav-label {
@@ -159,8 +159,8 @@ document.addEventListener("DOMContentLoaded", function () {
       flex-direction: column !important;
       justify-content: center !important;
       align-items: flex-start !important;
-      gap: 1px !important;
-      line-height: 1.25 !important;
+      gap: 0 !important;
+      line-height: 1.12 !important;
       font-size: 11px !important;
       white-space: nowrap !important;
       text-align: left !important;
@@ -181,9 +181,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     .header-nav .nav-btn.icon-only,
     .header-nav .nav-btn.has-new.icon-only {
-      min-width: 37px !important;
-      width: 37px !important;
-      padding: 5px !important;
+      min-width: 30px !important;
+      width: 30px !important;
+      padding: 3px !important;
       gap: 0 !important;
     }
     .header-nav .nav-btn.icon-only .nav-label { display: none !important; }
