@@ -59,37 +59,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
-  // NEW 배지: 메뉴 링크에 data-new="true" 속성을 지정합니다.
-  const newBadgeStyle = document.createElement("style");
-  newBadgeStyle.textContent = `
-    /* NEW는 메뉴 글자와 같은 줄에 배치하여 가림/잘림을 모두 방지 */
-    .header-nav .nav-btn.has-new {
-      display: inline-flex; align-items: center; justify-content: center;
-      position: relative; box-sizing: border-box;
-    }
-    .header-nav .nav-btn.has-new .nav-new-badge {
-      position: static; flex: 0 0 auto; align-self: center;
-      display: inline-flex; align-items: center; justify-content: center;
-      margin-left: 5px; min-width: 23px; height: 13px; padding: 0 4px;
-      border-radius: 7px; box-sizing: border-box;
-      font: 700 8px/1 Arial, sans-serif; letter-spacing: .1px;
-      color: #fff; background: linear-gradient(120deg, #ff476e, #ff7757);
-      box-shadow: 0 1px 4px rgba(229,60,91,.25);
-      white-space: nowrap; pointer-events: none;
-    }
-    /* 좁은 화면은 NEW 텍스트 대신 오른쪽의 작은 새 메뉴 표시점 */
-    .header-nav .nav-btn.has-new.icon-only .nav-new-badge {
-      font-size: 0; min-width: 0; width: 6px; height: 6px;
-      margin-left: 3px; padding: 0; border-radius: 50%;
-    }
-  `;
-  document.head.appendChild(newBadgeStyle);
-  document.querySelectorAll('.header-nav .nav-btn[data-new="true"]').forEach((btn) => {
-    btn.classList.add("has-new");
-    btn.insertAdjacentHTML("beforeend", '<span class="nav-new-badge" aria-label="새 메뉴">N</span>');
-  });
-
-
+  // 신규 메뉴는 별도 배지 없이 테두리의 은은한 빛으로만 구분합니다.
+  // 표시 여부는 기존과 동일하게 data-new="true"로 관리합니다.
 
   // 메뉴 이름: 첫 번째 공백을 기준으로 최대 두 줄로 표시
   document.querySelectorAll('.header-nav .nav-btn .nav-label').forEach((label) => {
@@ -108,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
     label.append(top, bottom);
   });
 
-  // 아이콘은 왼쪽, 글씨는 오른쪽 2줄. NEW는 텍스트 옆의 독립된 공간에 둡니다.
+  // 아이콘은 왼쪽, 글씨는 오른쪽 2줄. 신규 메뉴는 테두리 광채로 구분합니다.
   const twoLineStyle = document.createElement("style");
   twoLineStyle.textContent = `
     .dashboard-header:has(.header-nav .nav-btn) {
@@ -141,7 +112,6 @@ document.addEventListener("DOMContentLoaded", function () {
       position: relative !important;
       overflow: hidden !important;
     }
-    .header-nav .nav-btn.has-new { padding-right: 32px !important; }
     .header-nav .nav-btn .nav-icon {
       font-size: 15px !important;
       line-height: 1 !important;
@@ -168,18 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     .header-nav .nav-btn .nav-label:has(.nav-text-line) { font-size: 10px !important; }
     .header-nav .nav-btn .nav-text-line { display: block; white-space: nowrap; }
-    .header-nav .nav-btn.has-new .nav-new-badge {
-      position: absolute !important;
-      top: 50% !important;
-      right: 5px !important;
-      transform: translateY(-50%) !important;
-      margin: 0 !important;
-      padding: 0 3px !important;
-      height: 12px !important;
-      min-width: 20px !important;
-      font-size: 7px !important;
-      z-index: 1;
-    }
     .header-nav .nav-btn.icon-only,
     .header-nav .nav-btn.has-new.icon-only {
       min-width: 30px !important;
@@ -188,20 +146,10 @@ document.addEventListener("DOMContentLoaded", function () {
       gap: 0 !important;
     }
     .header-nav .nav-btn.icon-only .nav-label { display: none !important; }
-    .header-nav .nav-btn.has-new.icon-only .nav-new-badge {
-      width: 6px !important;
-      min-width: 6px !important;
-      height: 6px !important;
-      padding: 0 !important;
-      top: 6px !important;
-      right: 3px !important;
-      transform: none !important;
-      font-size: 0 !important;
-    }
   `;
   document.head.appendChild(twoLineStyle);
 
-  // 메뉴 그룹: 기존 nav-btn의 크기/클릭/NEW 속성은 수정하지 않고 컨테이너만 추가
+  // 메뉴 그룹: 기존 nav-btn의 크기/클릭/data-new 속성은 수정하지 않고 컨테이너만 추가
   // 그룹 내 버튼은 한 줄이며 그룹명을 왼쪽에 작게 표시합니다.
   const navRoot = document.querySelector('.header-nav');
   const groupDefs = [
@@ -361,7 +309,27 @@ document.addEventListener("DOMContentLoaded", function () {
     .header-nav .nav-menu-group[data-group-tone] .nav-btn:focus-visible {
       border-color: rgba(var(--group-rgb), .53) !important;
     }
-    /* 메뉴 버튼 크기, 패딩, 글자, NEW 배지는 앞서 설정한 값을 그대로 사용 */
+    /* 신규 메뉴: 배지는 제거하고 그룹 색상에 맞는 아주 부드러운 테두리 광채 */
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"] {
+      border-color: rgba(var(--group-rgb), .65) !important;
+      box-shadow: 0 0 0 1px rgba(var(--group-rgb), .10),
+                  0 0 6px 1px rgba(var(--group-rgb), .17) !important;
+      animation: newMenuBorderGlow 3.8s ease-in-out infinite;
+    }
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"]:hover,
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"]:focus-visible {
+      border-color: rgba(var(--group-rgb), .88) !important;
+      animation-play-state: paused;
+      box-shadow: 0 0 0 1px rgba(var(--group-rgb), .22),
+                  0 0 9px 2px rgba(var(--group-rgb), .30) !important;
+    }
+    @keyframes newMenuBorderGlow {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(var(--group-rgb), .08), 0 0 4px 1px rgba(var(--group-rgb), .12); }
+      50% { box-shadow: 0 0 0 1px rgba(var(--group-rgb), .18), 0 0 8px 2px rgba(var(--group-rgb), .25); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new="true"] { animation: none !important; }
+    }
   `;
   document.head.appendChild(compactGroupStyle);
 
