@@ -251,7 +251,7 @@ document.addEventListener("DOMContentLoaded", function () {
   compactGroupStyle.textContent = `
     /* 로고-제목 압축: 구분선 제거, 홈 버튼만 약간 축소 */
     .dashboard-header .brand-area {
-      gap: 3px !important;
+      gap: 8px !important;
       padding-left: 0 !important;
       margin-left: 0 !important;
       flex: 0 0 auto !important;
@@ -277,11 +277,39 @@ document.addEventListener("DOMContentLoaded", function () {
       object-fit: contain !important;
     }
     .dashboard-header .brand-copy { margin-left: 0 !important; padding-left: 0 !important; }
+    /* 제목 길이만큼만 브랜드 폭을 사용하고, 남은 너비는 메뉴에 배분 */
+    .dashboard-header {
+      display: flex !important;
+      flex-direction: row !important;
+      justify-content: flex-start !important;
+      align-items: center !important;
+      column-gap: 7px !important;
+    }
+    .dashboard-header .brand-area {
+      width: max-content !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      flex: 0 0 auto !important;
+      justify-content: flex-start !important;
+    }
+    .dashboard-header .brand-copy { width: max-content !important; flex: 0 0 auto !important; }
+    .dashboard-header .header-nav {
+      width: auto !important;
+      min-width: 0 !important;
+      max-width: none !important;
+      flex: 0 1 auto !important;
+      margin-left: auto !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      justify-content: flex-end !important;
+      flex-wrap: nowrap !important;
+    }
     .dashboard-header { padding-left: 5px !important; padding-right: 5px !important; }
     .header-nav { gap: 5px !important; align-items: center !important; }
     /* 그룹은 얇고 은은한 라운드 테두리로만 묶고 그룹명을 왼쪽에 배치 */
     .header-nav .nav-menu-group {
       flex: 0 0 auto !important;
+      width: max-content !important;
       display: inline-flex !important; flex-direction: row !important;
       align-items: center !important; justify-content: flex-start !important;
       gap: 4px !important; margin: 0 !important;
@@ -315,6 +343,91 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(compactGroupStyle);
 
+  // 즉시 표시되는 커스텀 메뉴 툴팁 (브라우저 기본 title 툴팁은 제거)
+  const tipStyle = document.createElement('style');
+  tipStyle.textContent = `
+    .header-nav-tooltip {
+      position: fixed; z-index: 2147483000; left: 0; top: 0;
+      max-width: min(280px, calc(100vw - 20px));
+      padding: 9px 12px; border-radius: 10px;
+      color: #f6faff; background: linear-gradient(140deg, #173a65, #102848);
+      border: 1px solid rgba(175,210,255,.35);
+      box-shadow: 0 10px 28px rgba(3,18,41,.29), inset 0 1px rgba(255,255,255,.08);
+      font-family: Arial, 'Malgun Gothic', sans-serif;
+      pointer-events: none; opacity: 0; visibility: hidden;
+      transition: opacity .12s ease, visibility .12s ease;
+      line-height: 1.4; box-sizing: border-box; text-align: left;
+    }
+    .header-nav-tooltip.visible { opacity: 1; visibility: visible; }
+    .header-nav-tooltip-title { font-weight: 700; font-size: 12px; letter-spacing: -.1px; }
+    .header-nav-tooltip-desc { margin-top: 3px; color: #bed5ee; font-size: 10px; }
+    .header-nav-tooltip::after {
+      content: ''; position: absolute; left: var(--tip-arrow-x, 50%);
+      width: 9px; height: 9px; background: #17365e;
+      border: 1px solid rgba(175,210,255,.35);
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .header-nav-tooltip.below::after { top: -6px; border-right: 0; border-bottom: 0; }
+    .header-nav-tooltip.above::after { bottom: -6px; border-left: 0; border-top: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .header-nav-tooltip { transition: none; }
+    }
+  `;
+  document.head.appendChild(tipStyle);
+  const tooltip = document.createElement('div');
+  tooltip.className = 'header-nav-tooltip below';
+  tooltip.setAttribute('role', 'tooltip');
+  const tipTitle = document.createElement('div');
+  tipTitle.className = 'header-nav-tooltip-title';
+  const tipDesc = document.createElement('div');
+  tipDesc.className = 'header-nav-tooltip-desc';
+  tooltip.append(tipTitle, tipDesc);
+  document.body.appendChild(tooltip);
+
+  let activeTipButton = null;
+  function placeTooltip(btn) {
+    const r = btn.getBoundingClientRect();
+    const w = tooltip.offsetWidth;
+    const h = tooltip.offsetHeight;
+    const mid = r.left + r.width / 2;
+    const x = Math.max(10, Math.min(mid - w / 2, window.innerWidth - w - 10));
+    const below = r.bottom + 10 + h <= window.innerHeight || r.top < h + 12;
+    const y = below ? r.bottom + 10 : r.top - h - 10;
+    tooltip.style.left = x + 'px';
+    tooltip.style.top = Math.max(6, y) + 'px';
+    tooltip.style.setProperty('--tip-arrow-x', Math.max(12, Math.min(w - 12, mid - x)) + 'px');
+    tooltip.classList.toggle('below', below);
+    tooltip.classList.toggle('above', !below);
+  }
+  function showTooltip(btn) {
+    activeTipButton = btn;
+    tipTitle.textContent = btn.dataset.tipTitle || btn.dataset.originalTitle || btn.textContent.trim();
+    tipDesc.textContent = btn.dataset.tipDescription || '클릭하여 이동';
+    tooltip.classList.add('visible');
+    placeTooltip(btn);
+  }
+  function hideTooltip(btn) {
+    if (btn && btn !== activeTipButton) return;
+    activeTipButton = null;
+    tooltip.classList.remove('visible');
+  }
+  document.querySelectorAll('.header-nav .nav-btn').forEach((btn) => {
+    const originalTitle = btn.getAttribute('title') || '';
+    btn.dataset.originalTitle = originalTitle;
+    btn.removeAttribute('title');
+    btn.addEventListener('pointerenter', (e) => {
+      if (e.pointerType !== 'touch') showTooltip(btn);
+    });
+    btn.addEventListener('pointerleave', () => hideTooltip(btn));
+    btn.addEventListener('focus', () => showTooltip(btn));
+    btn.addEventListener('blur', () => hideTooltip(btn));
+    btn.addEventListener('click', () => hideTooltip(btn));
+  });
+  window.addEventListener('scroll', () => hideTooltip(), true);
+  window.addEventListener('resize', () => {
+    if (activeTipButton) placeTooltip(activeTipButton);
+  });
+
   // ── 화면이 좁아지면, 메뉴 버튼들이 왼쪽의 "제목/버전" 영역과 맞닿는 순간부터
   //     왼쪽 버튼부터 순서대로 아이콘만 남기고 축소 ──
   const dashboardHeader = document.querySelector(".dashboard-header");
@@ -325,48 +438,41 @@ document.addEventListener("DOMContentLoaded", function () {
   // 실제 메뉴 버튼들만 마크업에 등장한 순서(왼쪽→오른쪽) 그대로 수집
   const navButtons = Array.from(navEl.querySelectorAll(".nav-btn"));
 
-  // 완전히 맞닿기 직전, 최소한의 여백(px). 필요에 맞게 조절 가능
-  const MIN_GAP = 12;
-
+  // 실제 텍스트 너비와 화면 여유 공간에 맞춰 최소 수의 메뉴만 접습니다.
+  const MIN_GAP = 7;
   let rafId = null;
 
-  // header-nav 안의 모든 요소(숨김 캘린더 링크 포함)를 지금 상태 그대로
-  // 실제 렌더링된 너비 기준으로 합산 (겹침/스크롤 상태와 무관하게 정확한 값)
-  function getRequiredNavWidth() {
-    const children = Array.from(navEl.children);
-    const gap = parseFloat(getComputedStyle(navEl).columnGap || getComputedStyle(navEl).gap) || 0;
-    const navPadding =
-      parseFloat(getComputedStyle(navEl).paddingLeft) +
-      parseFloat(getComputedStyle(navEl).paddingRight);
+  function px(value) { return parseFloat(value) || 0; }
 
-    let total = navPadding;
-    children.forEach((child, idx) => {
-      total += child.getBoundingClientRect().width;
-      if (idx > 0) total += gap;
-    });
-    return total;
+  function contentWidth(node) {
+    const style = getComputedStyle(node);
+    return node.getBoundingClientRect().width + px(style.marginLeft) + px(style.marginRight);
+  }
+
+  function getRequiredNavWidth() {
+    const style = getComputedStyle(navEl);
+    const children = Array.from(navEl.children).filter(el => getComputedStyle(el).display !== 'none');
+    const gap = px(style.columnGap !== 'normal' ? style.columnGap : style.gap);
+    return px(style.paddingLeft) + px(style.paddingRight) +
+      children.reduce((sum, el) => sum + contentWidth(el), 0) +
+      Math.max(0, children.length - 1) * gap;
   }
 
   function collapseNavButtons() {
-    // 1) 우선 전부 라벨을 보이는 상태로 되돌린 뒤 다시 계산 (화면이 넓어지면 복원되도록)
-    navButtons.forEach((btn) => btn.classList.remove("icon-only"));
+    // 모두 펼친 상태에서 실측해야 제목이 짧은 페이지의 남는 공간까지 사용할 수 있습니다.
+    navButtons.forEach(btn => btn.classList.remove('icon-only'));
 
-    const headerPadding =
-      parseFloat(getComputedStyle(dashboardHeader).paddingLeft) +
-      parseFloat(getComputedStyle(dashboardHeader).paddingRight);
+    const headStyle = getComputedStyle(dashboardHeader);
+    const headInnerWidth = dashboardHeader.clientWidth -
+      px(headStyle.paddingLeft) - px(headStyle.paddingRight);
+    const headerGap = px(headStyle.columnGap !== 'normal' ? headStyle.columnGap : headStyle.gap);
+    const availableNavWidth = Math.max(0,
+      headInnerWidth - contentWidth(brandArea) - Math.max(MIN_GAP, headerGap));
 
-    // 2) "브랜드(제목/버전) 실제 너비 + 메뉴 전체 실제 너비"가
-    //    헤더 전체 너비보다 커서 서로 맞닿을 때까지, 왼쪽 버튼부터 순서대로 라벨을 숨김
+    // 메뉴별 아이콘 축소 시 그룹 테두리 폭도 매번 다시 계산됩니다.
     let i = 0;
-    while (i <= navButtons.length) {
-      const availableWidth = dashboardHeader.getBoundingClientRect().width - headerPadding;
-      const brandWidth = brandArea.getBoundingClientRect().width;
-      const requiredNavWidth = getRequiredNavWidth();
-
-      const fits = brandWidth + requiredNavWidth + MIN_GAP <= availableWidth;
-      if (fits || i >= navButtons.length) break;
-
-      navButtons[i].classList.add("icon-only");
+    while (getRequiredNavWidth() > availableNavWidth + 0.5 && i < navButtons.length) {
+      navButtons[i].classList.add('icon-only');
       i++;
     }
   }
