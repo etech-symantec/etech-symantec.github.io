@@ -33,26 +33,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <nav class="header-nav" aria-label="공통 메뉴">
           <a href="https://etech-calendar.vercel.app/">　</a>
-          <a href="https://etech-symantec.github.io/base64" class="nav-btn" title="base64/OCR 변환기"><span class="nav-icon">🏁</span><span class="nav-label">base64 OCR</span></a>
-          <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom">
+          <a href="https://etech-symantec.github.io/base64" class="nav-btn" title="base64/OCR 변환기" data-tip-description="Base64 인코딩·디코딩과 이미지 문자 인식을 지원하는 변환 도구" data-tip-features="Base64 변환|이미지 OCR|텍스트 처리"><span class="nav-icon">🏁</span><span class="nav-label">base64 OCR</span></a>
+          <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom" data-tip-description="Broadcom 기술지원 및 관련 자료로 이동하는 링크 모음" data-tip-features="기술지원 링크|제품 자료|지원 포털">
             <img class="nav-favicon" src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico" alt="">
             <span class="nav-label">Broadcom</span>
           </a>
-          <a href="https://etech-sym-case.vercel.app/" class="nav-btn" title="Case 관리"><span class="nav-icon">⚠️</span><span class="nav-label">Case 관리</span></a>
-          <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수"><span class="nav-icon">☑️</span><span class="nav-label">유지 보수</span></a>
-          <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG GUI 가이드</span></a>
-          <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
-          <a href="https://etech-symantec.github.io/edge-connect" class="nav-btn" data-new="true" title="Edge Connector"><span class="nav-icon">▶️</span><span class="nav-label">Edge Connector</span></a>
-          <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
-          <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
-          <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
-          <a href="https://etech-symantec.github.io/xml" class="nav-btn" title="XML 편집"><span class="nav-icon">🗂️</span><span class="nav-label">XML 편집</span></a>
-          <a href="https://etech-symantec.github.io/isg" class="nav-btn" title="ISG 분석"><span class="nav-icon">🔎</span><span class="nav-label">ISG 분석</span></a>
-          <a href="https://etech-symantec.github.io/trace" class="nav-btn" data-new="true" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
-          <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" data-new="true" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
-          <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing</span></a>
-          <a href="https://etech-symantec.github.io/elk" class="nav-btn" data-new="true" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
-          <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" data-new="true" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합 검색</span></a>
+          <a href="https://etech-sym-case.vercel.app/" class="nav-btn" title="Case 관리" data-tip-description="기술지원 케이스의 등록 내용과 처리 현황을 관리" data-tip-features="케이스 조회|진행 현황|이력 관리"><span class="nav-icon">⚠️</span><span class="nav-label">Case 관리</span></a>
+          <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수" data-tip-description="고객사 장비 유지보수 점검 자료와 통계를 관리" data-tip-features="정기 점검|점검 통계|고객사 관리"><span class="nav-icon">☑️</span><span class="nav-label">유지 보수</span></a>
+          <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드" data-tip-description="ProxySG(SWG) 웹 관리 콘솔의 메뉴별 사용 가이드" data-tip-features="콘솔 메뉴 안내|설정 가이드|운영 참고"><span class="nav-icon">🕹️</span><span class="nav-label">SWG GUI 가이드</span></a>
+          <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링" data-tip-description="SWG 장비의 연결 상태와 운영 정보를 점검" data-tip-features="장비 상태|운영 정보|상태 점검"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
+          <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석" data-tip-description="ProxySG Sysinfo 정보를 확인하고 주요 설정을 분석" data-tip-features="설정 확인|시스템 정보|구성 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
+          <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB" data-tip-description="SNMP MIB 관련 정보를 검색하고 확인" data-tip-features="SNMP MIB|항목 검색|OID 확인"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
+          <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집" data-tip-description="아카이브 파일의 내용을 확인하고 편집" data-tip-features="파일 내용 확인|아카이브 편집|데이터 정리"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
+          <a href="https://etech-symantec.github.io/xml" class="nav-btn" title="XML 편집" data-tip-description="XML 데이터를 열어 구조를 확인하고 편집" data-tip-features="XML 구조|내용 편집|데이터 확인"><span class="nav-icon">🗂️</span><span class="nav-label">XML 편집</span></a>
+          <a href="https://etech-symantec.github.io/isg" class="nav-btn" title="ISG 분석" data-tip-description="ISG 관련 장비 정보를 분석하는 도구" data-tip-features="장비 정보|ISG 분석|상태 파악"><span class="nav-icon">🔎</span><span class="nav-label">ISG 분석</span></a>
+          <a href="https://etech-symantec.github.io/trace" class="nav-btn" data-new="true" title="Trace 분석" data-tip-description="ProxySG Trace 로그를 조회하고 정책·세션을 분석" data-tip-features="Trace 조회|정책 확인|세션 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
+          <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" data-new="true" title="pcap 분석" data-tip-description="패킷 캡처 파일을 분석해 통신 오류의 근거를 확인" data-tip-features="TCP 분석|세션 진단|장애 근거"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
+          <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기" data-tip-description="SWG 장비 용량 산정에 필요한 정보와 기준을 확인" data-tip-features="용량 산정|규모 검토|기준 확인"><span class="nav-icon">📊</span><span class="nav-label">Sizing</span></a>
+          <a href="https://etech-symantec.github.io/elk" class="nav-btn" data-new="true" title="ELK 로그 설정" data-tip-description="ELK 로그 수집과 분석 환경의 구성·설정을 지원" data-tip-features="로그 수집|구성 설정|분석 환경"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
+          <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" data-new="true" title="통합검색" data-tip-description="기술 문서와 지식 자료를 한곳에서 통합 검색" data-tip-features="기술 문서|지식 검색|자료 탐색"><span class="nav-icon">📑</span><span class="nav-label">통합 검색</span></a>
         </nav>
       </div>
     </div>
@@ -155,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navRoot = document.querySelector('.header-nav');
   const groupDefs = [
     { name: '업무 · 관리', tone: 'blue', titles: ['Broadcom', 'Case 관리', '유지보수'] },
-    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링', 'Edge Connector'] },
+    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링'] },
     { name: '분석 · 모니터', tone: 'violet', titles: ['Sysinfo 분석', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'MIB', 'ELK 로그 설정'] },
     { name: '유틸리티', tone: 'amber', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집', 'Sizing-SG 보기', '통합검색'] }
   ];
@@ -379,7 +378,7 @@ document.addEventListener("DOMContentLoaded", function () {
   tipStyle.textContent = `
     .header-nav-tooltip {
       position: fixed; z-index: 2147483000; left: 0; top: 0;
-      max-width: min(280px, calc(100vw - 20px));
+      width: max-content; min-width: 205px; max-width: min(315px, calc(100vw - 20px));
       padding: 9px 12px; border-radius: 10px;
       color: #f6faff; background: linear-gradient(140deg, #173a65, #102848);
       border: 1px solid rgba(175,210,255,.35);
@@ -391,7 +390,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     .header-nav-tooltip.visible { opacity: 1; visibility: visible; }
     .header-nav-tooltip-title { font-weight: 700; font-size: 12px; letter-spacing: -.1px; }
-    .header-nav-tooltip-desc { margin-top: 3px; color: #bed5ee; font-size: 10px; }
+    .header-nav-tooltip-desc { margin-top: 5px; color: #bed5ee; font-size: 11px; }
+    .header-nav-tooltip-category { margin-bottom: 5px; color: #91b9df; font-size: 9px; font-weight: 600; letter-spacing: .2px; }
+    .header-nav-tooltip-features { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
+    .header-nav-tooltip-feature { padding: 4px 7px; border-radius: 5px; background: rgba(var(--tip-rgb, 137,188,246), .13); border: 1px solid rgba(var(--tip-rgb, 137,188,246), .25); color: #deebfa; font-size: 10px; line-height: 1.2; white-space: nowrap; }
+    .header-nav-tooltip-footer { margin-top: 9px; color: #84a5c8; font-size: 9px; text-align: right; }
     .header-nav-tooltip::after {
       content: ''; position: absolute; left: var(--tip-arrow-x, 50%);
       width: 9px; height: 9px; background: #17365e;
@@ -410,9 +413,16 @@ document.addEventListener("DOMContentLoaded", function () {
   tooltip.setAttribute('role', 'tooltip');
   const tipTitle = document.createElement('div');
   tipTitle.className = 'header-nav-tooltip-title';
+  const tipCategory = document.createElement('div');
+  tipCategory.className = 'header-nav-tooltip-category';
+  const tipFeatures = document.createElement('div');
+  tipFeatures.className = 'header-nav-tooltip-features';
+  const tipFooter = document.createElement('div');
+  tipFooter.className = 'header-nav-tooltip-footer';
+  tipFooter.textContent = '클릭하여 이동 →';
   const tipDesc = document.createElement('div');
   tipDesc.className = 'header-nav-tooltip-desc';
-  tooltip.append(tipTitle, tipDesc);
+  tooltip.append(tipCategory, tipTitle, tipDesc, tipFeatures, tipFooter);
   document.body.appendChild(tooltip);
 
   let activeTipButton = null;
@@ -433,7 +443,19 @@ document.addEventListener("DOMContentLoaded", function () {
   function showTooltip(btn) {
     activeTipButton = btn;
     tipTitle.textContent = btn.dataset.tipTitle || btn.dataset.originalTitle || btn.textContent.trim();
-    tipDesc.textContent = btn.dataset.tipDescription || '클릭하여 이동';
+    tipDesc.textContent = btn.dataset.tipDescription || '메뉴 열기';
+    const parentGroup = btn.closest('.nav-menu-group');
+    tipCategory.textContent = parentGroup?.querySelector('.nav-group-caption')?.textContent.replace(/\s+/g, ' ').trim() || '바로가기';
+    const toneRgb = {blue: '137,188,246', mint: '115,214,190', violet: '191,161,239', amber: '236,199,132'};
+    tooltip.style.setProperty('--tip-rgb', toneRgb[parentGroup?.dataset.groupTone] || toneRgb.blue);
+    tipFeatures.replaceChildren();
+    // data-tip-features에서 | 기호로 구분하며, 최대 3개의 기능 태그를 표시합니다.
+    (btn.dataset.tipFeatures || '').split('|').map(x => x.trim()).filter(Boolean).slice(0, 3).forEach(feature => {
+      const tag = document.createElement('span');
+      tag.className = 'header-nav-tooltip-feature';
+      tag.textContent = feature;
+      tipFeatures.appendChild(tag);
+    });
     tooltip.classList.add('visible');
     placeTooltip(btn);
   }
