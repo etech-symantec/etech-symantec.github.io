@@ -31,27 +31,44 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </div>
 
-        <nav class="header-nav" aria-label="공통 메뉴">
-          <a href="https://etech-calendar.vercel.app/">　</a>
-          <a href="https://etech-symantec.github.io/base64" class="nav-btn" data-new="true" title="base64/OCR 변환기"><span class="nav-icon">🏁</span><span class="nav-label">base64/OCR</span></a>
-          <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom">
-            <img class="nav-favicon" src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico" alt="">
-            <span class="nav-label">Broadcom</span>
-          </a>
-          <a href="https://etech-sym-case.vercel.app/" class="nav-btn" title="Case 관리"><span class="nav-icon">⚠️</span><span class="nav-label">Case 관리</span></a>
-          <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수"><span class="nav-icon">☑️</span><span class="nav-label">유지보수</span></a>
-          <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG 웹콘솔 가이드</span></a>
-          <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
-          <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
-          <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
-          <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
-          <a href="https://etech-symantec.github.io/xml" class="nav-btn" title="XML 편집"><span class="nav-icon">🗂️</span><span class="nav-label">XML 편집</span></a>
-          <a href="https://etech-symantec.github.io/isg" class="nav-btn" title="ISG 분석"><span class="nav-icon">🔎</span><span class="nav-label">ISG 분석</span></a>
-          <a href="https://etech-symantec.github.io/trace" class="nav-btn" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
-          <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" data-new="true" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
-          <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing-SG 보기</span></a>
-          <a href="https://etech-symantec.github.io/elk" class="nav-btn" data-new="true" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
-          <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" data-new="true" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합검색</span></a>
+        <nav class="header-nav grouped-nav" aria-label="공통 메뉴">
+          <a href="https://etech-calendar.vercel.app/" class="calendar-legacy-link" aria-label="캘린더">　</a>
+          <div class="nav-group" role="group" aria-label="보안 운영">
+            <span class="nav-group-title">보안 운영</span>
+            <div class="nav-group-items">
+              <a href="https://etech-sym-case.vercel.app/" class="nav-btn" title="Case 관리"><span class="nav-icon">⚠️</span><span class="nav-label">Case 관리</span></a>
+              <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수"><span class="nav-icon">☑️</span><span class="nav-label">유지보수</span></a>
+              <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG 웹콘솔 가이드</span></a>
+              <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
+            </div>
+          </div>
+          <div class="nav-group" role="group" aria-label="트래픽·로그 분석">
+            <span class="nav-group-title">트래픽·로그 분석</span>
+            <div class="nav-group-items">
+              <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
+              <a href="https://etech-symantec.github.io/isg" class="nav-btn" title="ISG 분석"><span class="nav-icon">🔎</span><span class="nav-label">ISG 분석</span></a>
+              <a href="https://etech-symantec.github.io/trace" class="nav-btn" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
+              <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" data-new="true" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
+              <a href="https://etech-symantec.github.io/elk" class="nav-btn" data-new="true" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
+            </div>
+          </div>
+          <div class="nav-group" role="group" aria-label="관리 도구">
+            <span class="nav-group-title">관리 도구</span>
+            <div class="nav-group-items">
+              <a href="https://etech-symantec.github.io/base64" class="nav-btn" data-new="true" title="base64/OCR 변환기"><span class="nav-icon">🏁</span><span class="nav-label">base64/OCR</span></a>
+              <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
+              <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
+              <a href="https://etech-symantec.github.io/xml" class="nav-btn" title="XML 편집"><span class="nav-icon">🗂️</span><span class="nav-label">XML 편집</span></a>
+            </div>
+          </div>
+          <div class="nav-group" role="group" aria-label="기술 자료·검색">
+            <span class="nav-group-title">기술 자료·검색</span>
+            <div class="nav-group-items">
+              <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom"> <img class="nav-favicon" src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico" alt=""> <span class="nav-label">Broadcom</span> </a>
+              <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing-SG 보기</span></a>
+              <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" data-new="true" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합검색</span></a>
+            </div>
+          </div>
         </nav>
       </div>
     </div>
@@ -59,15 +76,58 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
-  // NEW 배지: 메뉴 링크에 data-new="true" 속성을 지정합니다.
-  const newBadgeStyle = document.createElement("style");
-  newBadgeStyle.textContent = `
-    /* NEW는 메뉴 글자와 같은 줄에 배치하여 가림/잘림을 모두 방지 */
-    .header-nav .nav-btn.has-new {
+  // 기능별 그룹: 메뉴는 모두 상시 표시하고, 그룹명만 위에 작게 표기합니다.
+  // NEW 표시 여부는 각 링크의 data-new="true" 속성으로만 제어합니다.
+  const groupedStyle = document.createElement("style");
+  groupedStyle.textContent = `
+    /* 기존 헤더 대비 그룹 이름 한 줄(약 12px)만 추가 */
+    .dashboard-header:has(.grouped-nav) {
+      height: auto !important;
+      min-height: 62px;
+      box-sizing: border-box;
+    }
+    .header-nav.grouped-nav {
+      display: flex !important;
+      flex-wrap: nowrap !important;
+      align-items: center !important;
+      gap: 0 !important;
+      min-width: 0;
+      box-sizing: border-box;
+      overflow: visible;
+    }
+    .grouped-nav .calendar-legacy-link {
+      position: absolute !important; width: 1px !important; height: 1px !important;
+      overflow: hidden !important; clip-path: inset(50%); white-space: nowrap;
+    }
+    .grouped-nav .nav-group {
+      display: flex; flex-direction: column; align-items: stretch;
+      flex: 0 0 auto; min-width: 0;
+      padding: 0 8px; box-sizing: border-box;
+      position: relative;
+    }
+    .grouped-nav .nav-group:first-of-type { padding-left: 0; }
+    .grouped-nav .nav-group:last-of-type { padding-right: 0; }
+    .grouped-nav .nav-group + .nav-group::before {
+      content: ""; position: absolute; left: 0; top: 14px; bottom: 4px;
+      width: 1px; background: rgba(172, 202, 242, .28);
+      pointer-events: none;
+    }
+    .grouped-nav .nav-group-title {
+      display: block; text-align: center; height: 12px; line-height: 12px;
+      font: 600 9px/12px Arial, 'Malgun Gothic', sans-serif;
+      letter-spacing: .25px; color: #a7c6ec; white-space: nowrap;
+      pointer-events: none; user-select: none; margin-bottom: 2px;
+    }
+    .grouped-nav .nav-group-items {
+      display: flex; flex-flow: row nowrap; justify-content: center;
+      align-items: center; gap: 5px; white-space: nowrap;
+    }
+    .grouped-nav .nav-btn { flex: 0 0 auto; white-space: nowrap; }
+    .grouped-nav .nav-btn.has-new {
       display: inline-flex; align-items: center; justify-content: center;
       position: relative; box-sizing: border-box;
     }
-    .header-nav .nav-btn.has-new .nav-new-badge {
+    .grouped-nav .nav-btn.has-new .nav-new-badge {
       position: static; flex: 0 0 auto; align-self: center;
       display: inline-flex; align-items: center; justify-content: center;
       margin-left: 5px; min-width: 23px; height: 13px; padding: 0 4px;
@@ -77,91 +137,64 @@ document.addEventListener("DOMContentLoaded", function () {
       box-shadow: 0 1px 4px rgba(229,60,91,.25);
       white-space: nowrap; pointer-events: none;
     }
-    /* 좁은 화면은 NEW 텍스트 대신 오른쪽의 작은 새 메뉴 표시점 */
-    .header-nav .nav-btn.has-new.icon-only .nav-new-badge {
+    .grouped-nav .nav-btn.has-new.icon-only .nav-new-badge {
       font-size: 0; min-width: 0; width: 6px; height: 6px;
       margin-left: 3px; padding: 0; border-radius: 50%;
     }
+    @media (max-width: 900px) {
+      .grouped-nav .nav-group { padding-left: 5px; padding-right: 5px; }
+      .grouped-nav .nav-group-items { gap: 3px; }
+    }
   `;
-  document.head.appendChild(newBadgeStyle);
-  document.querySelectorAll('.header-nav .nav-btn[data-new="true"]').forEach((btn) => {
+  document.head.appendChild(groupedStyle);
+  document.querySelectorAll('.grouped-nav .nav-btn[data-new="true"]').forEach((btn) => {
     btn.classList.add("has-new");
     btn.insertAdjacentHTML("beforeend", '<span class="nav-new-badge" aria-label="새 메뉴">NEW</span>');
   });
 
-
-
-  // ── 화면이 좁아지면, 메뉴 버튼들이 왼쪽의 "제목/버전" 영역과 맞닿는 순간부터
-  //     왼쪽 버튼부터 순서대로 아이콘만 남기고 축소 ──
   const dashboardHeader = document.querySelector(".dashboard-header");
-  const navEl = document.querySelector(".header-nav");
+  const navEl = document.querySelector(".header-nav.grouped-nav");
   const brandArea = document.querySelector(".brand-area");
   if (!dashboardHeader || !navEl || !brandArea) return;
 
-  // 실제 메뉴 버튼들만 마크업에 등장한 순서(왼쪽→오른쪽) 그대로 수집
   const navButtons = Array.from(navEl.querySelectorAll(".nav-btn"));
-
-  // 완전히 맞닿기 직전, 최소한의 여백(px). 필요에 맞게 조절 가능
+  const groups = Array.from(navEl.querySelectorAll(".nav-group"));
   const MIN_GAP = 12;
+  let rafId = 0;
 
-  let rafId = null;
-
-  // header-nav 안의 모든 요소(숨김 캘린더 링크 포함)를 지금 상태 그대로
-  // 실제 렌더링된 너비 기준으로 합산 (겹침/스크롤 상태와 무관하게 정확한 값)
+  // 그룹 안의 메뉴는 모두 남겨두고, 공간 부족 시 버튼 이름만 순차적으로 축소합니다.
   function getRequiredNavWidth() {
-    const children = Array.from(navEl.children);
-    const gap = parseFloat(getComputedStyle(navEl).columnGap || getComputedStyle(navEl).gap) || 0;
-    const navPadding =
-      parseFloat(getComputedStyle(navEl).paddingLeft) +
-      parseFloat(getComputedStyle(navEl).paddingRight);
-
-    let total = navPadding;
-    children.forEach((child, idx) => {
-      total += child.getBoundingClientRect().width;
-      if (idx > 0) total += gap;
+    const navCss = getComputedStyle(navEl);
+    let total = (parseFloat(navCss.paddingLeft) || 0) + (parseFloat(navCss.paddingRight) || 0);
+    const groupGap = parseFloat(navCss.columnGap || navCss.gap) || 0;
+    groups.forEach((group, i) => {
+      // group은 flex: 0 0 auto 로 구성돼 실제 내용 너비를 유지합니다.
+      total += group.getBoundingClientRect().width;
+      if (i) total += groupGap;
     });
     return total;
   }
 
   function collapseNavButtons() {
-    // 1) 우선 전부 라벨을 보이는 상태로 되돌린 뒤 다시 계산 (화면이 넓어지면 복원되도록)
     navButtons.forEach((btn) => btn.classList.remove("icon-only"));
-
-    const headerPadding =
-      parseFloat(getComputedStyle(dashboardHeader).paddingLeft) +
-      parseFloat(getComputedStyle(dashboardHeader).paddingRight);
-
-    // 2) "브랜드(제목/버전) 실제 너비 + 메뉴 전체 실제 너비"가
-    //    헤더 전체 너비보다 커서 서로 맞닿을 때까지, 왼쪽 버튼부터 순서대로 라벨을 숨김
+    const headerCss = getComputedStyle(dashboardHeader);
+    const padding = (parseFloat(headerCss.paddingLeft) || 0) + (parseFloat(headerCss.paddingRight) || 0);
+    const availableWidth = dashboardHeader.getBoundingClientRect().width - padding;
+    const brandWidth = brandArea.getBoundingClientRect().width;
     let i = 0;
-    while (i <= navButtons.length) {
-      const availableWidth = dashboardHeader.getBoundingClientRect().width - headerPadding;
-      const brandWidth = brandArea.getBoundingClientRect().width;
-      const requiredNavWidth = getRequiredNavWidth();
-
-      const fits = brandWidth + requiredNavWidth + MIN_GAP <= availableWidth;
-      if (fits || i >= navButtons.length) break;
-
-      navButtons[i].classList.add("icon-only");
-      i++;
+    while (brandWidth + getRequiredNavWidth() + MIN_GAP > availableWidth && i < navButtons.length) {
+      navButtons[i++].classList.add("icon-only");
     }
   }
 
   function scheduleCollapse() {
     if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(collapseNavButtons);
+    rafId = requestAnimationFrame(() => { rafId = 0; collapseNavButtons(); });
   }
-
-  // 최초 렌더 이후 1회 계산
   scheduleCollapse();
-
-  // 폰트/이미지 로딩이 끝나 실제 텍스트·아이콘 너비가 확정된 후 다시 한 번 계산
   window.addEventListener("load", scheduleCollapse);
-
-  // 창 크기 변경 시 재계산
   window.addEventListener("resize", scheduleCollapse);
-
-  // 헤더/브랜드 영역 폭이 바뀌는 모든 경우(폰트 로딩, 레이아웃 변화 등)도 감지
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleCollapse);
   if (window.ResizeObserver) {
     const ro = new ResizeObserver(scheduleCollapse);
     ro.observe(dashboardHeader);
