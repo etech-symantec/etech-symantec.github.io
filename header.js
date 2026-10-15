@@ -205,10 +205,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // 그룹 내 버튼은 한 줄이며 그룹명을 왼쪽에 작게 표시합니다.
   const navRoot = document.querySelector('.header-nav');
   const groupDefs = [
-    { name: '업무 · 관리', titles: ['Broadcom', 'Case 관리', '유지보수'] },
-    { name: 'SWG', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링'] },
-    { name: '분석 · 모니터', titles: ['Sysinfo 분석', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'MIB', 'ELK 로그 설정'] },
-    { name: '유틸리티', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집', 'Sizing-SG 보기', '통합검색'] }
+    { name: '업무 · 관리', tone: 'blue', titles: ['Broadcom', 'Case 관리', '유지보수'] },
+    { name: 'SWG', tone: 'mint', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링'] },
+    { name: '분석 · 모니터', tone: 'violet', titles: ['Sysinfo 분석', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'MIB', 'ELK 로그 설정'] },
+    { name: '유틸리티', tone: 'amber', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집', 'Sizing-SG 보기', '통합검색'] }
   ];
   if (navRoot) {
     const buttons = Array.from(navRoot.querySelectorAll(':scope > .nav-btn'));
@@ -222,6 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
       if (!selected.length) return;
       const group = document.createElement('div');
       group.className = 'nav-menu-group';
+       group.dataset.groupTone = def.tone;
       const caption = document.createElement('span');
       caption.className = 'nav-group-caption';
       caption.textContent = ({ '업무 · 관리': '업무\n관리', '분석 · 모니터링': '분석\n모니터링', '유틸리티': '유틸\n리티' }[def.name] || def.name);
@@ -338,6 +339,27 @@ document.addEventListener("DOMContentLoaded", function () {
     .header-nav .nav-group-items {
       display: flex !important; flex-direction: row !important; gap: 4px !important;
       align-items: center !important; flex-wrap: nowrap !important; white-space: nowrap !important;
+    }
+    /* 그룹별로 매우 옅은 컬러 차이를 부여합니다 (크기/레이아웃 변경 없음). */
+    .header-nav .nav-menu-group[data-group-tone="blue"]   { --group-rgb: 137,188,246; }
+    .header-nav .nav-menu-group[data-group-tone="mint"]   { --group-rgb: 115,214,190; }
+    .header-nav .nav-menu-group[data-group-tone="violet"] { --group-rgb: 191,161,239; }
+    .header-nav .nav-menu-group[data-group-tone="amber"]  { --group-rgb: 236,199,132; }
+    .header-nav .nav-menu-group[data-group-tone] {
+      border-color: rgba(var(--group-rgb), .31) !important;
+      background: rgba(var(--group-rgb), .045) !important;
+      transition: border-color .16s ease, background-color .16s ease;
+    }
+    .header-nav .nav-menu-group[data-group-tone]:hover {
+      border-color: rgba(var(--group-rgb), .52) !important;
+      background: rgba(var(--group-rgb), .075) !important;
+    }
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn {
+      border-color: rgba(var(--group-rgb), .23) !important;
+    }
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn:hover,
+    .header-nav .nav-menu-group[data-group-tone] .nav-btn:focus-visible {
+      border-color: rgba(var(--group-rgb), .53) !important;
     }
     /* 메뉴 버튼 크기, 패딩, 글자, NEW 배지는 앞서 설정한 값을 그대로 사용 */
   `;
