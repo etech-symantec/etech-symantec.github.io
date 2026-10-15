@@ -33,15 +33,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         <nav class="header-nav" aria-label="공통 메뉴">
           <a href="https://etech-calendar.vercel.app/">　</a>
-          <a href="https://etech-symantec.github.io/base64" class="nav-btn" title="base64/OCR 변환기"><span class="nav-icon">🏁</span><span class="nav-label">base64/OCR</span></a>
+          <a href="https://etech-symantec.github.io/base64" class="nav-btn" data-new="true" title="base64/OCR 변환기"><span class="nav-icon">🏁</span><span class="nav-label">base64/OCR</span></a>
           <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom">
             <img class="nav-favicon" src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico" alt="">
             <span class="nav-label">Broadcom</span>
           </a>
           <a href="https://etech-sym-case.vercel.app/" class="nav-btn" title="Case 관리"><span class="nav-icon">⚠️</span><span class="nav-label">Case 관리</span></a>
           <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수"><span class="nav-icon">☑️</span><span class="nav-label">유지보수</span></a>
-          <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG 웹콘솔 가이드</span></a>
-          <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
+          <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG 웹콘솔 가이드</span></a>
+          <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
           <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
           <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
           <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <a href="https://etech-symantec.github.io/trace" class="nav-btn" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
           <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" data-new="true" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
           <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing-SG 보기</span></a>
-          <a href="https://etech-symantec.github.io/elk" class="nav-btn" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
+          <a href="https://etech-symantec.github.io/elk" class="nav-btn" data-new="true" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
           <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" data-new="true" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합검색</span></a>
         </nav>
       </div>
