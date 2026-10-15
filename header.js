@@ -205,10 +205,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // 그룹 내 버튼은 한 줄이며 그룹명을 왼쪽에 작게 표시합니다.
   const navRoot = document.querySelector('.header-nav');
   const groupDefs = [
-    { name: '업무 · 관리', titles: ['Broadcom', 'Case 관리', '유지보수', '통합검색'] },
-    { name: 'SWG', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링', 'Sizing-SG 보기'] },
-    { name: '분석 · 모니터링', titles: ['Sysinfo 분석', 'MIB', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'ELK 로그 설정'] },
-    { name: '유틸리티', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집'] }
+    { name: '업무 · 관리', titles: ['Broadcom', 'Case 관리', '유지보수'] },
+    { name: 'SWG', titles: ['SWG 웹콘솔 가이드', 'SWG 모니터링'] },
+    { name: '분석 · 모니터', titles: ['Sysinfo 분석', 'ISG 분석', 'Trace 분석', 'pcap 분석', 'MIB', 'ELK 로그 설정'] },
+    { name: '유틸리티', titles: ['base64/OCR 변환기', 'Archive 편집', 'XML 편집', 'Sizing-SG 보기', '통합검색'] }
   ];
   if (navRoot) {
     const buttons = Array.from(navRoot.querySelectorAll(':scope > .nav-btn'));
