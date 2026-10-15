@@ -202,7 +202,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.head.appendChild(twoLineStyle);
 
   // 메뉴 그룹: 기존 nav-btn의 크기/클릭/NEW 속성은 수정하지 않고 컨테이너만 추가
-  // 그룹 내 버튼은 한 줄이며 그룹명은 상단에 작게 표시합니다.
+  // 그룹 내 버튼은 한 줄이며 그룹명을 왼쪽에 작게 표시합니다.
   const navRoot = document.querySelector('.header-nav');
   const groupDefs = [
     { name: '업무 · 관리', titles: ['Broadcom', 'Case 관리', '유지보수', '통합검색'] },
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function () {
       group.className = 'nav-menu-group';
       const caption = document.createElement('span');
       caption.className = 'nav-group-caption';
-      caption.textContent = def.name;
+      caption.textContent = ({ '업무 · 관리': '업무\n관리', '분석 · 모니터링': '분석\n모니터링', '유틸리티': '유틸\n리티' }[def.name] || def.name);
       const items = document.createElement('div');
       items.className = 'nav-group-items';
       selected.forEach(btn => { items.appendChild(btn); used.add(btn); });
@@ -260,7 +260,11 @@ document.addEventListener("DOMContentLoaded", function () {
     .dashboard-header .home-btn {
       width: 28px !important; height: 28px !important;
       min-width: 28px !important; min-height: 28px !important;
+      max-width: 28px !important; max-height: 28px !important;
+      flex: 0 0 28px !important; aspect-ratio: 1 / 1 !important;
       padding: 3px !important; margin: 0 !important;
+      display: inline-flex !important; align-items: center !important; justify-content: center !important;
+      border-radius: 8px !important;
       box-sizing: border-box !important;
     }
     .dashboard-header .home-icon {
@@ -275,20 +279,33 @@ document.addEventListener("DOMContentLoaded", function () {
     .dashboard-header .brand-copy { margin-left: 0 !important; padding-left: 0 !important; }
     .dashboard-header { padding-left: 5px !important; padding-right: 5px !important; }
     .header-nav { gap: 5px !important; align-items: center !important; }
+    /* 그룹은 얇고 은은한 라운드 테두리로만 묶고 그룹명을 왼쪽에 배치 */
     .header-nav .nav-menu-group {
-      flex: 0 0 auto !important; display: flex !important; flex-direction: column !important;
-      align-items: stretch !important; justify-content: flex-end !important;
-      gap: 1px !important; margin: 0 !important; padding: 0 3px 0 3px !important;
+      flex: 0 0 auto !important;
+      display: inline-flex !important; flex-direction: row !important;
+      align-items: center !important; justify-content: flex-start !important;
+      gap: 4px !important; margin: 0 !important;
+      padding: 3px 5px 3px 4px !important;
+      border: 1px solid rgba(184,210,241,.24) !important;
+      border-radius: 11px !important;
+      background: rgba(222,236,255,.045) !important;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.035) !important;
       position: relative !important; box-sizing: border-box !important;
-      border-left: 1px solid rgba(195,215,240,.19);
+      white-space: nowrap !important;
     }
-    .header-nav .nav-menu-group:first-of-type { border-left: none; }
+    .header-nav .nav-menu-group:hover {
+      border-color: rgba(184,210,241,.38) !important;
+      background: rgba(222,236,255,.07) !important;
+    }
     .header-nav .nav-group-caption {
-      display: block !important; height: 9px !important; line-height: 9px !important;
-      font: 600 8px/9px Arial, sans-serif !important;
-      color: rgba(216,230,247,.70) !important;
-      text-align: center !important; letter-spacing: 0 !important;
-      white-space: nowrap !important; pointer-events: none !important;
+      display: flex !important; flex: 0 0 28px !important;
+      width: 28px !important; max-width: 28px !important;
+      align-items: center !important; justify-content: center !important;
+      font: 600 8px/1.25 Arial, sans-serif !important;
+      color: rgba(219,234,255,.78) !important;
+      text-align: center !important; letter-spacing: -.15px !important;
+      white-space: pre-line !important; pointer-events: none !important;
+      padding: 0 !important; margin: 0 !important;
     }
     .header-nav .nav-group-items {
       display: flex !important; flex-direction: row !important; gap: 4px !important;
