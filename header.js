@@ -31,44 +31,27 @@ document.addEventListener("DOMContentLoaded", function () {
           </div>
         </div>
 
-        <nav class="header-nav grouped-nav" aria-label="공통 메뉴">
-          <a href="https://etech-calendar.vercel.app/" class="calendar-legacy-link" aria-label="캘린더">　</a>
-          <div class="nav-group" role="group" aria-label="보안 운영">
-            <span class="nav-group-title">보안 운영</span>
-            <div class="nav-group-items">
-              <a href="https://etech-sym-case.vercel.app/" class="nav-btn" title="Case 관리"><span class="nav-icon">⚠️</span><span class="nav-label">Case 관리</span></a>
-              <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수"><span class="nav-icon">☑️</span><span class="nav-label">유지보수</span></a>
-              <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" data-new="true" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG 웹콘솔 가이드</span></a>
-              <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" data-new="true" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
-            </div>
-          </div>
-          <div class="nav-group" role="group" aria-label="트래픽·로그 분석">
-            <span class="nav-group-title">트래픽·로그 분석</span>
-            <div class="nav-group-items">
-              <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
-              <a href="https://etech-symantec.github.io/isg" class="nav-btn" title="ISG 분석"><span class="nav-icon">🔎</span><span class="nav-label">ISG 분석</span></a>
-              <a href="https://etech-symantec.github.io/trace" class="nav-btn" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
-              <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" data-new="true" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
-              <a href="https://etech-symantec.github.io/elk" class="nav-btn" data-new="true" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
-            </div>
-          </div>
-          <div class="nav-group" role="group" aria-label="관리 도구">
-            <span class="nav-group-title">관리 도구</span>
-            <div class="nav-group-items">
-              <a href="https://etech-symantec.github.io/base64" class="nav-btn" data-new="true" title="base64/OCR 변환기"><span class="nav-icon">🏁</span><span class="nav-label">base64/OCR</span></a>
-              <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
-              <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
-              <a href="https://etech-symantec.github.io/xml" class="nav-btn" title="XML 편집"><span class="nav-icon">🗂️</span><span class="nav-label">XML 편집</span></a>
-            </div>
-          </div>
-          <div class="nav-group" role="group" aria-label="기술 자료·검색">
-            <span class="nav-group-title">기술 자료·검색</span>
-            <div class="nav-group-items">
-              <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom"> <img class="nav-favicon" src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico" alt=""> <span class="nav-label">Broadcom</span> </a>
-              <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing-SG 보기</span></a>
-              <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" data-new="true" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합검색</span></a>
-            </div>
-          </div>
+        <nav class="header-nav" aria-label="공통 메뉴">
+          <a href="https://etech-calendar.vercel.app/">　</a>
+          <a href="https://etech-symantec.github.io/base64" class="nav-btn" title="base64/OCR 변환기"><span class="nav-icon">🏁</span><span class="nav-label">base64/OCR</span></a>
+          <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom">
+            <img class="nav-favicon" src="https://support.broadcom.com/o/ecx-standard-theme/images/favicon.ico" alt="">
+            <span class="nav-label">Broadcom</span>
+          </a>
+          <a href="https://etech-sym-case.vercel.app/" class="nav-btn" title="Case 관리"><span class="nav-icon">⚠️</span><span class="nav-label">Case 관리</span></a>
+          <a href="https://etech-sym-ma.vercel.app/" class="nav-btn" title="유지보수"><span class="nav-icon">☑️</span><span class="nav-label">유지보수</span></a>
+          <a href="https://etech-symantec.github.io/proxysg" class="nav-btn" title="SWG 웹콘솔 가이드"><span class="nav-icon">🕹️</span><span class="nav-label">SWG 웹콘솔 가이드</span></a>
+          <a href="https://etech-symantec.github.io/monitoring" class="nav-btn" title="SWG 모니터링"><span class="nav-icon">🚨</span><span class="nav-label">SWG 모니터링</span></a>
+          <a href="https://etech-symantec.github.io/sysinfo" class="nav-btn" title="Sysinfo 분석"><span class="nav-icon">🧩</span><span class="nav-label">Sysinfo 분석</span></a>
+          <a href="https://etech-symantec.github.io/mib" class="nav-btn" title="MIB"><span class="nav-icon">🪬</span><span class="nav-label">MIB</span></a>
+          <a href="https://etech-symantec.github.io/archive" class="nav-btn" title="Archive 편집"><span class="nav-icon">✂️</span><span class="nav-label">Archive 편집</span></a>
+          <a href="https://etech-symantec.github.io/xml" class="nav-btn" title="XML 편집"><span class="nav-icon">🗂️</span><span class="nav-label">XML 편집</span></a>
+          <a href="https://etech-symantec.github.io/isg" class="nav-btn" title="ISG 분석"><span class="nav-icon">🔎</span><span class="nav-label">ISG 분석</span></a>
+          <a href="https://etech-symantec.github.io/trace" class="nav-btn" title="Trace 분석"><span class="nav-icon">📄</span><span class="nav-label">Trace 분석</span></a>
+          <a href="https://etech-sym-pcap.vercel.app/" class="nav-btn" data-new="true" title="pcap 분석"><span class="nav-icon">🧮</span><span class="nav-label">pcap 분석</span></a>
+          <a href="https://etech-symantec.github.io/sizing-sg" class="nav-btn" title="Sizing-SG 보기"><span class="nav-icon">📊</span><span class="nav-label">Sizing-SG 보기</span></a>
+          <a href="https://etech-symantec.github.io/elk" class="nav-btn" title="ELK 로그 설정"><span class="nav-icon">🧬</span><span class="nav-label">ELK</span></a>
+          <a href="https://jandi-search.vercel.app/search.html" class="nav-btn" data-new="true" title="통합검색"><span class="nav-icon">📑</span><span class="nav-label">통합검색</span></a>
         </nav>
       </div>
     </div>
@@ -76,125 +59,209 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
 
-  // 기능별 메뉴를 두 줄로 정렬합니다. NEW는 data-new="true"로 지정합니다.
-  const style = document.createElement("style");
-  style.textContent = `
-    /* 오른쪽 영역만 2행: 왼쪽 페이지 제목은 원래 위치 유지 */
-    .dashboard-header:has(.grouped-nav) {
-      height: auto !important;
-      min-height: 72px !important;
-      padding-top: 5px !important;
-      padding-bottom: 5px !important;
-      align-items: center !important;
-      box-sizing: border-box;
+  // NEW 배지: 메뉴 링크에 data-new="true" 속성을 지정합니다.
+  const newBadgeStyle = document.createElement("style");
+  newBadgeStyle.textContent = `
+    /* NEW는 메뉴 글자와 같은 줄에 배치하여 가림/잘림을 모두 방지 */
+    .header-nav .nav-btn.has-new {
+      display: inline-flex; align-items: center; justify-content: center;
+      position: relative; box-sizing: border-box;
     }
-    .header-nav.grouped-nav {
-      display: grid !important;
-      grid-template-columns: max-content max-content !important;
-      grid-template-rows: max-content max-content !important;
-      align-items: center !important;
-      justify-content: end !important;
-      align-content: center !important;
-      gap: 3px 10px !important;
-      flex: 0 1 auto !important;
-      min-width: 0 !important;
-      max-width: 100% !important;
-      overflow: visible !important;
-      box-sizing: border-box;
-    }
-    .grouped-nav .calendar-legacy-link {
-      position: absolute !important;
-      width: 1px !important; height: 1px !important;
-      overflow: hidden !important; clip-path: inset(50%);
-      pointer-events: none;
-    }
-    .grouped-nav .nav-group {
-      display: flex !important;
-      flex-direction: row !important;
-      flex-wrap: nowrap !important;
-      align-items: center !important;
-      justify-content: flex-end !important;
-      min-width: max-content !important;
-      gap: 6px !important;
-      padding: 0 6px !important;
-      position: relative;
-      box-sizing: border-box;
-    }
-    .grouped-nav .nav-group + .nav-group::before {
-      content: ""; position: absolute; left: -5px;
-      top: 4px; bottom: 4px; width: 1px;
-      background: rgba(177,207,242,.30); pointer-events:none;
-    }
-    .grouped-nav .nav-group-title {
-      flex: 0 0 auto;
-      font: 700 9px/1.15 'Malgun Gothic',Arial,sans-serif;
-      color: #a9c9ec; white-space: nowrap;
-      pointer-events: none; user-select: none;
-      padding-right: 3px;
-    }
-    .grouped-nav .nav-group-items {
-      display: flex !important;
-      flex-flow: row nowrap !important;
-      justify-content: flex-start !important;
-      align-items: center !important;
-      gap: 4px !important;
-      white-space: nowrap !important;
-    }
-    .grouped-nav .nav-btn {
-      display: inline-flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      flex: 0 0 auto !important;
-      position: relative;
-      box-sizing: border-box !important;
-      padding: 4px 7px !important;
-      min-height: 23px !important;
-      min-width: 0 !important;
-      font-size: 11px !important;
-      line-height: 1.1 !important;
-      gap: 3px !important;
-      white-space: nowrap !important;
-    }
-    .grouped-nav .nav-btn .nav-label {
-      display: inline !important;
-      opacity: 1 !important;
-      visibility: visible !important;
-      width: auto !important;
-      max-width: none !important;
-      font-size: inherit !important;
-    }
-    .grouped-nav .nav-btn.has-new .nav-new-badge {
-      position: static !important;
-      display: inline-flex !important;
-      align-items: center !important; justify-content: center !important;
-      flex: 0 0 auto !important;
-      margin-left: 2px !important;
-      min-width: 22px; height: 12px; padding: 0 3px;
+    .header-nav .nav-btn.has-new .nav-new-badge {
+      position: static; flex: 0 0 auto; align-self: center;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-left: 5px; min-width: 23px; height: 13px; padding: 0 4px;
       border-radius: 7px; box-sizing: border-box;
-      font: 700 8px/1 Arial,sans-serif; color: #fff;
-      background: linear-gradient(120deg,#ff476e,#ff7757);
+      font: 700 8px/1 Arial, sans-serif; letter-spacing: .1px;
+      color: #fff; background: linear-gradient(120deg, #ff476e, #ff7757);
       box-shadow: 0 1px 4px rgba(229,60,91,.25);
-      pointer-events: none; white-space: nowrap;
+      white-space: nowrap; pointer-events: none;
     }
-    /* 좁은 화면에서는 이름을 숨기지 않고 메뉴 영역만 좌우 스크롤 */
-    @media (max-width: 1170px) {
-      .header-nav.grouped-nav {
-        overflow-x: auto !important;
-        overflow-y: hidden !important;
-        scrollbar-width: thin;
-        scrollbar-color: rgba(150,185,235,.5) transparent;
-        padding-bottom: 2px;
-      }
-      .grouped-nav .nav-group { gap: 4px !important; padding: 0 4px !important; }
-      .grouped-nav .nav-btn { padding: 4px 5px !important; font-size: 10px !important; }
+    /* 좁은 화면은 NEW 텍스트 대신 오른쪽의 작은 새 메뉴 표시점 */
+    .header-nav .nav-btn.has-new.icon-only .nav-new-badge {
+      font-size: 0; min-width: 0; width: 6px; height: 6px;
+      margin-left: 3px; padding: 0; border-radius: 50%;
     }
   `;
-  document.head.appendChild(style);
-  document.querySelectorAll('.grouped-nav .nav-btn[data-new="true"]').forEach((btn) => {
-    btn.classList.add('has-new');
-    if (!btn.querySelector('.nav-new-badge')) {
-      btn.insertAdjacentHTML('beforeend', '<span class="nav-new-badge" aria-label="새 메뉴">NEW</span>');
-    }
+  document.head.appendChild(newBadgeStyle);
+  document.querySelectorAll('.header-nav .nav-btn[data-new="true"]').forEach((btn) => {
+    btn.classList.add("has-new");
+    btn.insertAdjacentHTML("beforeend", '<span class="nav-new-badge" aria-label="새 메뉴">NEW</span>');
   });
-  // 기존 icon-only 축소 기능을 사용하지 않습니다.
+
+
+
+  // 두툼한 2단 메뉴: 첫 줄은 아이콘(+ NEW), 아래는 최대 2줄의 메뉴 이름
+  const tallMenuStyle = document.createElement("style");
+  tallMenuStyle.textContent = `
+    .dashboard-header:has(.header-nav .nav-btn) {
+      height: auto !important;
+      min-height: 76px !important;
+      box-sizing: border-box;
+      align-items: center !important;
+      padding-top: 9px !important;
+      padding-bottom: 9px !important;
+    }
+    .header-nav:has(.nav-btn) {
+      display: flex !important;
+      align-items: center !important;
+      gap: 4px !important;
+      overflow: visible !important;
+      min-width: 0 !important;
+    }
+    .header-nav .nav-btn {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      grid-template-rows: 21px minmax(29px, auto) !important;
+      align-items: center !important;
+      justify-items: center !important;
+      align-content: center !important;
+      flex: 0 0 auto !important;
+      width: 74px !important;
+      min-width: 74px !important;
+      height: 58px !important;
+      min-height: 58px !important;
+      box-sizing: border-box !important;
+      padding: 5px 5px 4px !important;
+      gap: 0 !important;
+      white-space: normal !important;
+      position: relative !important;
+      overflow: hidden !important;
+      text-align: center !important;
+    }
+    .header-nav .nav-btn .nav-icon,
+    .header-nav .nav-btn .nav-favicon {
+      grid-column: 1 !important;
+      grid-row: 1 !important;
+      align-self: center !important;
+      justify-self: center !important;
+      margin: 0 !important;
+    }
+    .header-nav .nav-btn .nav-label {
+      grid-column: 1 !important;
+      grid-row: 2 !important;
+      display: -webkit-box !important;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden !important;
+      width: 100%;
+      text-align: center;
+      white-space: normal !important;
+      overflow-wrap: anywhere;
+      word-break: keep-all;
+      font-size: 10px !important;
+      line-height: 1.25 !important;
+      max-height: 27px;
+    }
+    /* NEW는 글자 위가 아닌 아이콘 행 오른쪽 모서리에 별도 배치 */
+    .header-nav .nav-btn.has-new .nav-new-badge {
+      position: absolute !important;
+      top: 3px !important;
+      right: 3px !important;
+      left: auto !important;
+      margin: 0 !important;
+      min-width: 20px !important;
+      height: 11px !important;
+      padding: 0 3px !important;
+      font-size: 7px !important;
+      line-height: 11px !important;
+      z-index: 1;
+    }
+    /* 원래의 좁은 화면 자동 축소 동작도 보존 */
+    .header-nav .nav-btn.icon-only {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 34px !important;
+      min-width: 34px !important;
+      height: 40px !important;
+      min-height: 40px !important;
+      padding: 4px !important;
+    }
+    .header-nav .nav-btn.icon-only .nav-label { display: none !important; }
+    .header-nav .nav-btn.has-new.icon-only .nav-new-badge {
+      top: 4px !important; right: 4px !important;
+      width: 6px !important; min-width: 6px !important;
+      height: 6px !important; padding: 0 !important;
+      font-size: 0 !important;
+    }
+  `;
+  document.head.appendChild(tallMenuStyle);
+
+  // ── 화면이 좁아지면, 메뉴 버튼들이 왼쪽의 "제목/버전" 영역과 맞닿는 순간부터
+  //     왼쪽 버튼부터 순서대로 아이콘만 남기고 축소 ──
+  const dashboardHeader = document.querySelector(".dashboard-header");
+  const navEl = document.querySelector(".header-nav");
+  const brandArea = document.querySelector(".brand-area");
+  if (!dashboardHeader || !navEl || !brandArea) return;
+
+  // 실제 메뉴 버튼들만 마크업에 등장한 순서(왼쪽→오른쪽) 그대로 수집
+  const navButtons = Array.from(navEl.querySelectorAll(".nav-btn"));
+
+  // 완전히 맞닿기 직전, 최소한의 여백(px). 필요에 맞게 조절 가능
+  const MIN_GAP = 12;
+
+  let rafId = null;
+
+  // header-nav 안의 모든 요소(숨김 캘린더 링크 포함)를 지금 상태 그대로
+  // 실제 렌더링된 너비 기준으로 합산 (겹침/스크롤 상태와 무관하게 정확한 값)
+  function getRequiredNavWidth() {
+    const children = Array.from(navEl.children);
+    const gap = parseFloat(getComputedStyle(navEl).columnGap || getComputedStyle(navEl).gap) || 0;
+    const navPadding =
+      parseFloat(getComputedStyle(navEl).paddingLeft) +
+      parseFloat(getComputedStyle(navEl).paddingRight);
+
+    let total = navPadding;
+    children.forEach((child, idx) => {
+      total += child.getBoundingClientRect().width;
+      if (idx > 0) total += gap;
+    });
+    return total;
+  }
+
+  function collapseNavButtons() {
+    // 1) 우선 전부 라벨을 보이는 상태로 되돌린 뒤 다시 계산 (화면이 넓어지면 복원되도록)
+    navButtons.forEach((btn) => btn.classList.remove("icon-only"));
+
+    const headerPadding =
+      parseFloat(getComputedStyle(dashboardHeader).paddingLeft) +
+      parseFloat(getComputedStyle(dashboardHeader).paddingRight);
+
+    // 2) "브랜드(제목/버전) 실제 너비 + 메뉴 전체 실제 너비"가
+    //    헤더 전체 너비보다 커서 서로 맞닿을 때까지, 왼쪽 버튼부터 순서대로 라벨을 숨김
+    let i = 0;
+    while (i <= navButtons.length) {
+      const availableWidth = dashboardHeader.getBoundingClientRect().width - headerPadding;
+      const brandWidth = brandArea.getBoundingClientRect().width;
+      const requiredNavWidth = getRequiredNavWidth();
+
+      const fits = brandWidth + requiredNavWidth + MIN_GAP <= availableWidth;
+      if (fits || i >= navButtons.length) break;
+
+      navButtons[i].classList.add("icon-only");
+      i++;
+    }
+  }
+
+  function scheduleCollapse() {
+    if (rafId) cancelAnimationFrame(rafId);
+    rafId = requestAnimationFrame(collapseNavButtons);
+  }
+
+  // 최초 렌더 이후 1회 계산
+  scheduleCollapse();
+
+  // 폰트/이미지 로딩이 끝나 실제 텍스트·아이콘 너비가 확정된 후 다시 한 번 계산
+  window.addEventListener("load", scheduleCollapse);
+
+  // 창 크기 변경 시 재계산
+  window.addEventListener("resize", scheduleCollapse);
+
+  // 헤더/브랜드 영역 폭이 바뀌는 모든 경우(폰트 로딩, 레이아웃 변화 등)도 감지
+  if (window.ResizeObserver) {
+    const ro = new ResizeObserver(scheduleCollapse);
+    ro.observe(dashboardHeader);
+    ro.observe(brandArea);
+  }
 });
