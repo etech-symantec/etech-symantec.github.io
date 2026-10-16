@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
 
         <nav class="header-nav" aria-label="공통 메뉴">
+          <a href="https://etech-symantec.github.io/ce">　  </a>
           <a href="https://etech-calendar.vercel.app/">　</a>
           <a href="https://etech-symantec.github.io/base64" class="nav-btn" title="base64/OCR 변환기" data-tip-description="Base64 인코딩·디코딩과 이미지 문자 인식을 지원하는 변환 도구" data-tip-features="Base64 변환|이미지 OCR|텍스트 처리"><span class="nav-icon">🏁</span><span class="nav-label">base64 OCR</span></a>
           <a href="https://etech-symantec.github.io/broadcom" class="nav-btn" title="Broadcom" data-tip-description="Broadcom 기술지원 및 관련 자료로 이동하는 링크 모음" data-tip-features="기술지원 링크|제품 자료|지원 포털">
