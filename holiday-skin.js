@@ -67,7 +67,7 @@
     font: null,            // 구글 폰트 패밀리 이름 (null 이면 기존 폰트 유지)
     fontQuery: null,       // 구글 폰트 URL 의 family= 값 직접 지정(굵기 지정 등)
     titleSize: 21, titleWeight: 800, titleSpacing: "-0.018em",
-    navSize: 10, navWeight: 400, navSpacing: "0",
+    navSize: 11, navSize2: null, navWeight: 400, navSpacing: "0",
     navRadius: "999px", navBorderW: "1px", navBorderStyle: "solid", navBorderColor: null,
     navFill: null, navColor: null, navShadow: null,
     navPalette: null,      // 메뉴 버튼마다 돌아가며 쓰는 색 목록 (CSS 변수 --pc)
@@ -75,7 +75,7 @@
     hoverBg: null,         // null=포인트 그라데이션, "pc"=팔레트 색
     hoverColor: "#fff",
     headRadius: "12px", headBorderW: "1px", headBorderStyle: "solid", headBorderColor: null,
-    headBg: null, headShadow: null, homeRadius: "12px",
+    headBg: null, headShadow: null, homeRadius: "8px", groupRadius: null,
     edge: null,            // 헤더 하단 장식 E.xxx() / null 이면 이모지 띠
     strip: true,
     sweep: false,          // 헤더 위로 빛이 지나가는 효과
@@ -141,7 +141,7 @@
         "#ffb703", "#d62ea0", "rgba(0,0,0,0.5)", "linear-gradient(90deg,#0d1538,#2c2470)", "#ffd76a", "#ffeab8", "#b9b5e8"),
       look: {
         font: "Noto Serif KR", fontQuery: "Noto+Serif+KR:wght@600;800", titleSize: 21, titleWeight: 800, titleSpacing: "0.07em",
-        navSize: 10.5, navWeight: 600, navSpacing: "0.06em", menuSize: 20,
+        navSize: 11, navWeight: 600, navSpacing: "0.06em", menuSize: 20,
         navRadius: "2px", navBorderColor: "rgba(255,215,106,.75)", navFill: "rgba(255,215,106,.07)", navColor: "#ffe9a8",
         navHover: "none", hoverBg: "linear-gradient(135deg,#ffd76a,#ffb703)", hoverColor: "#1a1230",
         headRadius: "4px", headBorderW: "4px", headBorderStyle: "double", headBorderColor: "#ffd76a",
@@ -205,7 +205,7 @@
       vars: V("linear-gradient(135deg,#fff8e8,#ffe5b8,#f2c48c)", "#5b3a12", "rgba(255,255,255,0.6)", "#6b3f10", "rgba(184,116,42,0.75)",
         "#e07a1f", "#8c4a0f", "rgba(91,58,18,0.2)", "linear-gradient(90deg,#ffedc9,#f7cf9b)", "#9a4a0c", "#5b3a12", "#8a6a3c"),
       look: {
-        font: "Nanum Myeongjo", fontQuery: "Nanum+Myeongjo:wght@400;800", titleSize: 21, titleWeight: 800, navSize: 10.5, navWeight: 800, menuSize: 20,
+        font: "Nanum Myeongjo", fontQuery: "Nanum+Myeongjo:wght@400;800", titleSize: 21, titleWeight: 800, navSize: 11, navWeight: 800, menuSize: 20,
         navBorderW: "2px", navBorderColor: "#b8742a", navFill: "linear-gradient(180deg,#fff6dc,#f6dcaa)",
         navHover: "float", hoverBg: "linear-gradient(135deg,#e07a1f,#8c4a0f)",
         headRadius: "10px", headBorderW: "4px", headBorderColor: "#8a5a1a", edge: E.straw(),
@@ -266,7 +266,7 @@
       vars: V("linear-gradient(135deg,#e6f7ff,#d2f1e2,#bfe8cf)", "#1f5a4a", "rgba(255,255,255,0.65)", "#1d6b57", "rgba(30,155,215,0.7)",
         "#1e9bd7", "#2eb872", "rgba(30,90,74,0.2)", "linear-gradient(90deg,#dff4ff,#c6ecd8)", "#1a7d62", "#1f5a4a", "#5f9a88"),
       look: {
-        font: "Sunflower", fontQuery: "Sunflower:wght@300;700", titleSize: 21, titleWeight: 700, navSize: 10.5, navWeight: 700, menuSize: 21,
+        font: "Sunflower", fontQuery: "Sunflower:wght@300;700", titleSize: 21, titleWeight: 700, navSize: 11, navWeight: 700, menuSize: 21,
         navRadius: "8px", navBorderW: "2px", navBorderColor: "#1e9bd7", navFill: "linear-gradient(180deg,#ffffff,#d3f0ff)",
         navHover: "float", hoverBg: "linear-gradient(135deg,#1e9bd7,#2eb872)",
         headRadius: "16px", headBorderW: "2px", headBorderColor: "#1e9bd7", edge: E.wave("#1e9bd7"),
@@ -372,7 +372,7 @@
       vars: V("linear-gradient(135deg,#e0f7ff,#b8ecff,#ffe9b0)", "#0b5c7a", "rgba(255,255,255,0.7)", "#0b6d92", "rgba(255,159,28,0.8)",
         "#00a8e8", "#ff9f1c", "rgba(11,92,122,0.2)", "linear-gradient(90deg,#d6f4ff,#ffe6a8)", "#0877a0", "#0b5c7a", "#5f98ad"),
       look: {
-        font: "Black Han Sans", titleSize: 21, titleWeight: 400, titleSpacing: "0.01em", navSize: 10.5, menuSize: 21,
+        font: "Black Han Sans", titleSize: 21, titleWeight: 400, titleSpacing: "0.01em", navSize: 11, menuSize: 21,
         navBorderW: "2px", navBorderColor: "#ff9f1c", navFill: "linear-gradient(180deg,#ffffff,#ffe9b0)",
         navHover: "bounce", hoverBg: "linear-gradient(135deg,#00a8e8,#ff9f1c)",
         headRadius: "14px 14px 30px 30px", headBorderW: "2px", headBorderColor: "#00a8e8", edge: E.wave("#00a8e8"),
@@ -460,7 +460,7 @@
       vars: V("linear-gradient(135deg,#eef4ff,#dbe8ff,#fff1c9)", "#0b2a5b", "rgba(255,255,255,0.75)", "#123a8a", "rgba(242,183,5,0.9)",
         "#1e5bd8", "#f2b705", "rgba(11,42,91,0.2)", "linear-gradient(90deg,#0b1d3a,#123a69,#6b5210)", "#ffd76a", "#fff3c9", "#a9bde0"),
       look: {
-        titleSize: 22, titleWeight: 800, titleSpacing: "0.02em", navSize: 10.5, navWeight: 600, menuSize: 21,
+        titleSize: 22, titleWeight: 800, titleSpacing: "0.02em", navSize: 11, navWeight: 600, menuSize: 21,
         navRadius: "8px", navBorderColor: "rgba(255,215,106,.85)", navFill: "rgba(255,215,106,.1)", navColor: "#fff3c9",
         navHover: "pulse", hoverBg: "linear-gradient(135deg,#ffd76a,#f2b705)", hoverColor: "#1a1a2e",
         headRadius: "12px", headBorderW: "2px", headBorderColor: "#ffd76a",
@@ -474,6 +474,129 @@
       ]
     }
   ];
+
+
+  /* ------------------------------------------------------------------ */
+  /* 2-1. 메뉴 툴팁(.header-nav-tooltip) 스킨                             */
+  /*   anim: pop jelly fade float drop dropbounce bounce swing unroll    */
+  /*         sprout bubble heart splash stamp shake ink write            */
+  /*   arrow: diamond | ball | none                                      */
+  /*   deco/extra: 추가 CSS ( @T = 툴팁 선택자, & = html[data-holiday-skin] ) */
+  /* ------------------------------------------------------------------ */
+  var DEFAULT_TIP = {
+    titleSize: 13, descSize: 11, titleWeight: 700, titleSpacing: "-.1px",
+    bg: "var(--hs-header-bg)", color: "var(--hs-header-text)", titleColor: "var(--hs-header-title)", descColor: "var(--hs-header-sub)",
+    border: "1px solid color-mix(in srgb,var(--hs-a) 55%,transparent)", radius: "10px",
+    shadow: "0 10px 28px var(--hs-shadow)", pad: "9px 13px",
+    arrow: "diamond", arrowBg: "#17365e", arrowBorder: "rgba(175,210,255,.35)",
+    icon: "", descIcon: "", anim: "pop", animDur: ".38s", deco: "", extra: ""
+  };
+  var SHINE = "@T::before{content:\"\";position:absolute;inset:0;border-radius:inherit;pointer-events:none;" +
+    "background:linear-gradient(100deg,transparent 30%,rgba(255,235,160,.38) 50%,transparent 70%) -120% 0/60% 100% no-repeat;" +
+    "animation:hs-tip-shine 2.6s ease-in-out .35s infinite;}";
+  var TIPS = {
+    halloween: {
+      titleSize: 17, descSize: 13, titleWeight: 400, bg: "linear-gradient(140deg,#2a1145,#150826)", color: "#ffd9a8",
+      titleColor: "#ff9a3c", descColor: "#c9b3e6", border: "2px dashed #ff7518", radius: "4px 16px 4px 16px",
+      shadow: "0 0 18px rgba(255,117,24,.45),0 10px 24px rgba(0,0,0,.5)", arrowBg: "#2a1145", arrowBorder: "#ff7518",
+      icon: "🎃", descIcon: "🦇", anim: "shake", animDur: ".45s"
+    },
+    christmas: {
+      titleSize: 14, descSize: 12, titleWeight: 400, bg: "linear-gradient(140deg,#14573c,#0b3524)", color: "#ffffff",
+      titleColor: "#ffffff", descColor: "#ffe6b0", border: "3px solid #ffffff", radius: "18px", pad: "12px 14px 9px",
+      shadow: "0 10px 22px rgba(0,0,0,.4)", arrowBg: "#14573c", arrowBorder: "#ffffff", icon: "🎄", descIcon: "🎁", anim: "jelly", animDur: ".55s",
+      deco: "@T::before{content:\"\";position:absolute;left:10px;right:10px;top:-9px;height:9px;" +
+        "background:" + svgUrl(18, 9, "<path d='M0 9Q0 0 9 0Q18 0 18 9Z' fill='#fff'/>") + " repeat-x 0 100%/18px 9px;pointer-events:none;}"
+    },
+    newyear: {
+      titleSize: 13, descSize: 11, titleWeight: 800, titleSpacing: ".06em", bg: "linear-gradient(140deg,#0d1538,#2c2470)", color: "#ffeab8",
+      titleColor: "#ffd76a", descColor: "#b9b5e8", border: "3px double #ffd76a", radius: "2px",
+      shadow: "0 0 22px rgba(255,215,106,.35),0 10px 24px rgba(0,0,0,.5)", arrowBg: "#1b1c55", arrowBorder: "#ffd76a",
+      icon: "✨", descIcon: "🎆", anim: "fade", animDur: ".5s", deco: SHINE
+    },
+    seollal: {
+      titleSize: 14, descSize: 12, titleWeight: 700, bg: "linear-gradient(180deg,#fffaf0,#ffe9c6)", color: "#7a1f1f",
+      titleColor: "#b3171d", descColor: "#a35a2a", border: "3px double #b3171d", radius: "3px", pad: "13px 14px 9px",
+      shadow: "0 8px 20px rgba(122,31,31,.3)", arrowBg: "#fff3da", arrowBorder: "#b3171d", icon: "🧧", descIcon: "🏮", anim: "unroll", animDur: ".4s",
+      deco: "@T::before{content:\"\";position:absolute;left:-3px;right:-3px;top:-3px;height:5px;background:" + E.dancheong().bg + ";pointer-events:none;}"
+    },
+    valentine: {
+      titleSize: 15, descSize: 13, titleWeight: 700, bg: "linear-gradient(140deg,#ffffff,#ffe1ee)", color: "#8a1c4a",
+      titleColor: "#c2185b", descColor: "#b0577e", border: "2px dashed #ff6fa5", radius: "20px", pad: "10px 16px",
+      shadow: "0 8px 20px rgba(255,61,129,.3)", arrow: "ball", arrowBg: "#ffe1ee", arrowBorder: "#ff6fa5", icon: "💖", descIcon: "💌", anim: "heart", animDur: ".6s"
+    },
+    chuseok: {
+      titleSize: 13, descSize: 11, titleWeight: 800, bg: "linear-gradient(180deg,#fff6dc,#f6dcaa)", color: "#5b3a12",
+      titleColor: "#9a4a0c", descColor: "#8a6a3c", border: "3px solid #8a5a1a", radius: "14px",
+      shadow: "0 8px 20px rgba(91,58,18,.35)", arrowBg: "#f6dcaa", arrowBorder: "#8a5a1a", icon: "🌕", descIcon: "🍂", anim: "swing", animDur: ".75s"
+    },
+    whiteday: {
+      titleSize: 14, descSize: 12, titleWeight: 400, bg: "#ffffff", color: "#2b5a8a", titleColor: "#2f6fb0", descColor: "#6a8fb5",
+      border: "4px solid #bfe0ff", radius: "24px", pad: "10px 16px", shadow: "0 8px 22px rgba(90,169,240,.35)",
+      arrow: "ball", arrowBg: "#ffffff", arrowBorder: "#bfe0ff", icon: "🍬", descIcon: "🫧", anim: "bubble", animDur: ".5s"
+    },
+    arborday: {
+      titleSize: 16, descSize: 13, titleWeight: 400, bg: "linear-gradient(135deg,#f6ffe9,#d6f0b0)", color: "#2e5a1c",
+      titleColor: "#2f7d1f", descColor: "#5f8a48", border: "3px solid #5fae3a", radius: "18px 3px 18px 3px",
+      shadow: "0 8px 18px rgba(46,90,28,.3)", arrowBg: "#e2f6c4", arrowBorder: "#5fae3a", icon: "🌱", descIcon: "🍃", anim: "sprout", animDur: ".5s"
+    },
+    earthday: {
+      titleSize: 13, descSize: 11, titleWeight: 700, bg: "linear-gradient(180deg,#ffffff,#cfeeff)", color: "#1f5a4a",
+      titleColor: "#1a7d62", descColor: "#3f8a9a", border: "2px solid #1e9bd7", radius: "12px", pad: "9px 13px 13px",
+      shadow: "0 8px 20px rgba(30,155,215,.35)", arrowBg: "#e6f7ff", arrowBorder: "#1e9bd7", icon: "🌍", descIcon: "💧", anim: "drop", animDur: ".45s",
+      deco: "@T::before{content:\"\";position:absolute;left:0;right:0;bottom:0;height:10px;background:" + E.wave("#1e9bd7").bg + ";opacity:.45;border-radius:0 0 10px 10px;pointer-events:none;}"
+    },
+    childrensday: {
+      titleSize: 16, descSize: 13, titleWeight: 400, bg: "linear-gradient(140deg,#fff7b8,#ffd3ea)", color: "#6a3d9a",
+      titleColor: "#e0408a", descColor: "#7b3fbf", border: "4px solid #ffffff", radius: "20px", pad: "10px 15px",
+      shadow: "0 5px 0 #ff5fa2,0 12px 22px rgba(120,80,170,.3)", arrowBg: "#ffffff", arrowBorder: "#ffffff", icon: "🎈", descIcon: "🎠", anim: "bounce", animDur: ".6s"
+    },
+    parentsday: {
+      titleSize: 16, descSize: 13, titleWeight: 400, bg: "linear-gradient(140deg,#ffffff,#ffe3e8)", color: "#8c1f2d",
+      titleColor: "#c2182f", descColor: "#b26a74", border: "4px double #f2a1b0", radius: "12px 32px 12px 32px", pad: "10px 16px",
+      shadow: "0 8px 20px rgba(224,51,76,.28)", arrowBg: "#ffeef0", arrowBorder: "#f2a1b0", icon: "💐", descIcon: "❤️", anim: "float", animDur: ".6s"
+    },
+    teachersday: {
+      titleSize: 19, descSize: 15, titleWeight: 400, bg: "linear-gradient(135deg,#1e4a3a,#2a5a48)", color: "#f7f4e8",
+      titleColor: "#fff8d8", descColor: "#c8d8c0", border: "5px solid #9b6a35", radius: "6px", pad: "8px 14px",
+      shadow: "inset 0 0 18px rgba(0,0,0,.4),0 8px 18px rgba(0,0,0,.35)", arrowBg: "#9b6a35", arrowBorder: "#9b6a35",
+      icon: "✏️", descIcon: "📎", anim: "write", animDur: ".7s",
+      extra: "@T .header-nav-tooltip-desc{border-top:1px dashed rgba(255,255,255,.5);padding-top:3px;}"
+    },
+    memorialday: {
+      titleSize: 13, descSize: 11, titleWeight: 400, titleSpacing: ".08em", bg: "#141416", color: "#e8e8ea",
+      titleColor: "#f2f2f2", descColor: "#9a9aa5", border: "1px solid #55555d", radius: "2px",
+      shadow: "0 6px 16px rgba(0,0,0,.4)", arrowBg: "#141416", arrowBorder: "#55555d", anim: "fade", animDur: ".55s"
+    },
+    summer: {
+      titleSize: 13, descSize: 11, titleWeight: 400, bg: "linear-gradient(140deg,#d6f4ff,#ffe6a8)", color: "#0b5c7a",
+      titleColor: "#0877a0", descColor: "#5f98ad", border: "2px solid #00a8e8", radius: "14px 14px 24px 24px", pad: "9px 14px 11px",
+      shadow: "0 8px 20px rgba(0,168,232,.35)", arrowBg: "#d6f4ff", arrowBorder: "#00a8e8", icon: "🏖️", descIcon: "🌊", anim: "splash", animDur: ".5s"
+    },
+    liberationday: {
+      titleSize: 14, descSize: 12, titleWeight: 400, titleSpacing: ".02em", bg: "#ffffff", color: "#0d2f6b",
+      titleColor: "#0047a0", descColor: "#cd2e3a", border: "3px solid #0047a0", radius: "0",
+      shadow: "6px 6px 0 #cd2e3a", arrowBg: "#ffffff", arrowBorder: "#0047a0", icon: "🌺", descIcon: "🕊️", anim: "stamp", animDur: ".4s"
+    },
+    hangul: {
+      titleSize: 21, descSize: 16, titleWeight: 400, bg: "linear-gradient(135deg,#fbf6e9,#eadfc0)", color: "#1f2a44",
+      titleColor: "#1f3a6e", descColor: "#c0392b", border: "2px solid #c0392b", radius: "3px", pad: "8px 14px",
+      shadow: "0 8px 18px rgba(31,42,68,.3)", arrowBg: "#f5edd5", arrowBorder: "#c0392b", icon: "한", anim: "ink", animDur: ".6s"
+    },
+    pepero: {
+      titleSize: 14, descSize: 12, titleWeight: 400, pad: "13px 14px 9px", color: "#ffe0c2",
+      bg: "repeating-linear-gradient(90deg,rgba(0,0,0,.28) 0 2px,transparent 2px 46px),linear-gradient(135deg,#6b3a1d,#4a2412)",
+      titleColor: "#ffd2a8", descColor: "#e9b9a0", border: "3px solid #2b150c", radius: "6px",
+      shadow: "0 8px 18px rgba(0,0,0,.45)", arrowBg: "#4a2412", arrowBorder: "#2b150c", icon: "🍫", descIcon: "🍓", anim: "dropbounce", animDur: ".65s",
+      deco: "@T::before{content:\"\";position:absolute;left:-3px;right:-3px;top:-3px;height:10px;background:" + E.drip("#ff8fb1").bg + ";border-radius:6px 6px 0 0;pointer-events:none;}"
+    },
+    founding: {
+      titleSize: 13, descSize: 11, titleWeight: 800, bg: "linear-gradient(140deg,#0b1d3a,#123a69 60%,#6b5210)", color: "#fff3c9",
+      titleColor: "#ffd76a", descColor: "#a9bde0", border: "2px solid #ffd76a", radius: "10px",
+      shadow: "0 0 24px rgba(242,183,5,.4),0 10px 24px rgba(0,0,0,.4)", arrowBg: "#123a69", arrowBorder: "#ffd76a",
+      icon: "🎉", descIcon: "🏆", anim: "pop", animDur: ".4s", deco: SHINE
+    }
+  };
 
   /* ------------------------------------------------------------------ */
   /* 3. 날짜 계산 (전부 "일 단위 정수"로 비교 → 시간대/서머타임 영향 없음)  */
@@ -650,7 +773,6 @@
       c.push(S + " " + selector + ":nth-child(" + n + "n+" + ((i + offset) % n) + "){--pc:" + col + ";}");
     });
   }
-  if (L.navPalette) palette(".header-nav .nav-btn", L.navPalette, 2);
   if (L.cardPalette) palette(".menu-btn", L.cardPalette, 1);
 
   /* --- 헤더 바 --- */
@@ -694,6 +816,92 @@
   c.push(S + " .nav-btn:hover," + S + " .nav-btn-soon:hover{background:" + hoverBgOf(L.hoverBg) + " !important;color:" + L.hoverColor + " !important;" +
     "border-color:rgba(255,255,255,.55) !important;animation:" + HOVER[L.navHover] + ";" +
     "box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 4px 12px color-mix(in srgb,var(--hs-a) 50%,transparent) !important;}");
+
+
+  /* --- 새 header.js 대응 : 라벨 글자 크기(!important 고정) / 그룹 / 신규 메뉴 광채 / 그룹명 색 --- */
+  var navSize2 = L.navSize2 != null ? L.navSize2 : (L.navSize <= 11.5 ? 10 : Math.min(11.5, Math.round(L.navSize * 0.86 * 2) / 2));
+  c.push(S + " .header-nav .nav-btn .nav-label{font-family:" + FONT_STACK + " !important;font-size:" + px(L.navSize) + " !important;" +
+    "font-weight:" + L.navWeight + " !important;letter-spacing:" + L.navSpacing + " !important;}");
+  c.push(S + " .header-nav .nav-btn .nav-label:has(.nav-text-line){font-size:" + px(navSize2) + " !important;line-height:1.02 !important;}");
+  c.push(S + "[data-hs-font-fail] .header-nav .nav-btn .nav-label{font-size:11px !important;letter-spacing:0 !important;}",
+    S + "[data-hs-font-fail] .header-nav .nav-btn .nav-label:has(.nav-text-line){font-size:10px !important;}");
+
+  function hexRGB(h) {
+    h = h.replace("#", "");
+    if (h.length === 3) h = h.replace(/(.)/g, "$1$1");
+    return [parseInt(h.substr(0, 2), 16), parseInt(h.substr(2, 2), 16), parseInt(h.substr(4, 2), 16)];
+  }
+  function mixRGB(x, y, t) { return x.map(function (n, i) { return Math.round(n + (y[i] - n) * t); }); }
+  var rA = hexRGB(v.a), rB = hexRGB(v.b), rT = hexRGB(v.headerText);
+  var tones = [rA, rB, mixRGB(rA, rB, 0.5), mixRGB(rB, rA, 0.25)].map(function (col) {
+    return (lightHeader ? col : mixRGB(col, rT, 0.45)).join(",");   // 어두운 헤더에서는 밝게 보정
+  });
+  ["blue", "mint", "violet", "amber"].forEach(function (name, i) {
+    c.push(S + " .header-nav .nav-menu-group[data-group-tone=\"" + name + "\"]{--group-rgb:" + tones[i] + ";}");
+  });
+  var navParts = String(L.navRadius).split(" ");
+  var gRadius = L.groupRadius || (/999/.test(L.navRadius) ? "16px" : navParts.length > 1 ? L.navRadius : (parseFloat(L.navRadius) ? (parseFloat(L.navRadius) + 4) + "px" : "0"));
+  c.push(S + " .header-nav .nav-menu-group{border-radius:" + gRadius + " !important;border-style:" + (L.navBorderStyle === "dashed" ? "dashed" : "solid") + " !important;}");
+  c.push(S + " .header-nav .nav-group-caption{color:var(--hs-header-sub) !important;}");
+  // 그룹 색(--group-rgb)이 덮어쓰는 일반 메뉴 테두리를 스킨 색으로 복원 (신규 메뉴는 스킨 톤의 광채 유지)
+  var plainBtn = S + " .header-nav .nav-menu-group .nav-btn:not([data-new=\"true\"])";
+  c.push(plainBtn + "{border-color:" + (L.navBorderColor || "var(--hs-pill-border)") + " !important;}");
+  c.push(plainBtn + ":hover," + plainBtn + ":focus-visible{border-color:rgba(255,255,255,.65) !important;}");
+  // 신규 메뉴는 기존 광채 애니메이션이 호버 애니메이션을 가리므로, 호버 때는 스킨 애니메이션으로 교체
+  if (L.navHover !== "none") {
+    var newBtn = S + " .header-nav .nav-menu-group[data-group-tone] .nav-btn[data-new=\"true\"]";
+    c.push(newBtn + ":hover," + newBtn + ":focus-visible{animation:" + HOVER[L.navHover] + ";}");
+  }
+
+  /* --- 메뉴 툴팁 스킨 --- */
+  var T = {};
+  Object.keys(DEFAULT_TIP).forEach(function (k) { T[k] = DEFAULT_TIP[k]; });
+  Object.keys(TIPS[skin.id] || {}).forEach(function (k) { T[k] = TIPS[skin.id][k]; });
+  var TS = S + " .header-nav-tooltip";
+  function XT(str) { return X(str).replace(/@T/g, TS); }
+  c.push(TS + "{font-family:" + FONT_STACK + ";background:" + T.bg + ";color:" + T.color + ";border:" + T.border + ";" +
+    "border-radius:" + T.radius + ";box-shadow:" + T.shadow + ";padding:" + T.pad + ";" +
+    "transform-origin:var(--tip-arrow-x,50%) var(--hs-oy,0%);}");
+  c.push(TS + ".below{--hs-oy:0%;}" + TS + ".above{--hs-oy:100%;}");
+  c.push(TS + " .header-nav-tooltip-title{font-size:" + px(T.titleSize) + ";font-weight:" + T.titleWeight + ";letter-spacing:" + T.titleSpacing + ";color:" + T.titleColor + ";}");
+  c.push(TS + " .header-nav-tooltip-desc{font-size:" + px(T.descSize) + ";color:" + T.descColor + ";}");
+  if (T.icon) c.push(TS + " .header-nav-tooltip-title::before{content:\"" + T.icon + " \";}");
+  if (T.descIcon) c.push(TS + " .header-nav-tooltip-desc::before{content:\"" + T.descIcon + " \";}");
+  if (T.arrow === "none") {
+    c.push(TS + "::after{display:none;}");
+  } else if (T.arrow === "ball") {
+    c.push(TS + "::after{width:11px;height:11px;border-radius:50%;background:" + T.arrowBg + ";transform:translateX(-50%);}",
+      TS + ".below::after,html[data-holiday-skin] .header-nav-tooltip.above::after{border:2px solid " + T.arrowBorder + ";}",
+      TS + ".below::after{top:-9px;}" + TS + ".above::after{bottom:-9px;}");
+  } else {
+    c.push(TS + "::after{background:" + T.arrowBg + ";border-color:" + T.arrowBorder + ";}");
+  }
+  c.push(TS + ".hs-play{animation:hs-tip-" + T.anim + " " + T.animDur + " ease backwards;}");
+  if (T.deco) c.push(XT(T.deco));
+  if (T.extra) c.push(XT(T.extra));
+  c.push(S + "[data-hs-font-fail] .header-nav-tooltip .header-nav-tooltip-title{font-size:13px;letter-spacing:-.1px;}",
+    S + "[data-hs-font-fail] .header-nav-tooltip .header-nav-tooltip-desc{font-size:11px;}");
+  c.push(
+    "@keyframes hs-tip-pop{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.07)}100%{opacity:1;transform:scale(1)}}",
+    "@keyframes hs-tip-jelly{0%{opacity:0;transform:scale(.4)}35%{transform:scale(1.18,.84)}55%{transform:scale(.9,1.12)}75%{transform:scale(1.04,.98)}100%{opacity:1;transform:scale(1)}}",
+    "@keyframes hs-tip-fade{0%{opacity:0;transform:translateY(5px)}100%{opacity:1;transform:none}}",
+    "@keyframes hs-tip-float{0%{opacity:0;transform:translateY(12px)}100%{opacity:1;transform:none}}",
+    "@keyframes hs-tip-drop{0%{opacity:0;transform:translateY(-14px)}60%{opacity:1;transform:translateY(3px)}100%{transform:none}}",
+    "@keyframes hs-tip-dropbounce{0%{opacity:0;transform:translateY(-22px)}45%{opacity:1;transform:translateY(0)}60%{transform:translateY(-7px)}78%{transform:translateY(0)}88%{transform:translateY(-2px)}100%{transform:none}}",
+    "@keyframes hs-tip-bounce{0%{opacity:0;transform:translateY(10px) scale(.7)}40%{opacity:1;transform:translateY(-12px) scale(1.06)}65%{transform:translateY(0)}80%{transform:translateY(-4px)}100%{transform:none}}",
+    "@keyframes hs-tip-swing{0%{opacity:0;transform:rotate(-10deg)}35%{opacity:1;transform:rotate(7deg)}60%{transform:rotate(-4deg)}80%{transform:rotate(2deg)}100%{transform:none}}",
+    "@keyframes hs-tip-unroll{0%{opacity:0;transform:scaleY(.05)}100%{opacity:1;transform:scaleY(1)}}",
+    "@keyframes hs-tip-sprout{0%{opacity:0;transform:scale(.3,.1)}60%{opacity:1;transform:scale(1.05,1.12)}100%{transform:scale(1)}}",
+    "@keyframes hs-tip-bubble{0%{opacity:0;transform:scale(.2)}55%{opacity:1;transform:scale(1.14)}75%{transform:scale(.95)}100%{transform:scale(1)}}",
+    "@keyframes hs-tip-heart{0%{opacity:0;transform:scale(.4)}25%{opacity:1;transform:scale(1.15)}40%{transform:scale(.95)}60%{transform:scale(1.08)}100%{transform:scale(1)}}",
+    "@keyframes hs-tip-splash{0%{opacity:0;transform:rotate(-8deg) scale(.5)}60%{opacity:1;transform:rotate(4deg) scale(1.08)}100%{transform:none}}",
+    "@keyframes hs-tip-stamp{0%{opacity:0;transform:scale(1.6)}60%{opacity:1;transform:scale(.94)}100%{transform:scale(1)}}",
+    "@keyframes hs-tip-shake{0%{opacity:0;transform:translateX(-7px) rotate(-2deg)}25%{opacity:1;transform:translateX(6px) rotate(2deg)}50%{transform:translateX(-4px)}75%{transform:translateX(3px)}100%{transform:none}}",
+    "@keyframes hs-tip-ink{0%{opacity:0;filter:blur(8px);transform:scale(1.06)}100%{opacity:1;filter:blur(0);transform:none}}",
+    "@keyframes hs-tip-write{0%{clip-path:inset(-16px 100% -16px -16px)}100%{clip-path:inset(-16px -16px -16px -16px)}}",
+    "@keyframes hs-tip-shine{from{background-position:-120% 0}to{background-position:220% 0}}",
+    "@media (prefers-reduced-motion:reduce){" + TS + ".hs-play{animation:none;}}"
+  );
 
   if (L.extra) c.push(X(L.extra));
 
@@ -823,6 +1031,33 @@
       }
     });
     document.body.appendChild(fx);
+
+    // 메뉴 팔레트: header.js 가 버튼을 그룹으로 재배치하므로 CSS nth-child 대신 순서대로 색(--pc)을 부여
+    if (L.navPalette) {
+      var paint = function () {
+        var bs = document.querySelectorAll(".header-nav .nav-btn");
+        if (!bs.length) return false;
+        bs.forEach(function (b, i) { b.style.setProperty("--pc", L.navPalette[i % L.navPalette.length]); });
+        return true;
+      };
+      if (!paint()) {
+        var mo = new MutationObserver(function () { if (paint()) mo.disconnect(); });
+        mo.observe(document.documentElement, { childList: true, subtree: true });
+      }
+    }
+
+    // 툴팁: 버튼에 올릴 때마다(버튼 간 이동 포함) 등장 애니메이션을 처음부터 다시 재생
+    var replayTip = function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest(".header-nav .nav-btn") : null;
+      if (!btn || (e.relatedTarget && btn.contains(e.relatedTarget))) return;
+      var tip = document.querySelector(".header-nav-tooltip");
+      if (!tip) return;
+      tip.classList.remove("hs-play");
+      void tip.offsetWidth;
+      tip.classList.add("hs-play");
+    };
+    document.addEventListener("pointerover", function (e) { if (e.pointerType !== "touch") replayTip(e); }, true);
+    document.addEventListener("focusin", replayTip, true);
 
     // 안내 배지 (클릭하면 효과와 배지가 스르륵 사라짐)
     var dText = diff > 0 ? "D-" + diff : diff === 0 ? "D-Day" : "D+" + -diff;
