@@ -427,7 +427,7 @@
       ]
     },
 
-    /* ===== 🍫 빼빼로데이 : 둥글둥글 레트로 폰트 + 초콜릿 바 격자 + 딸기 시럽 하단 ===== */
+    /* ===== 🍫 빼빼로데이 : 초콜릿/딸기 톤 유지, 버튼은 단색 계열 고대비로 가독성 우선 ===== */
     {
       id: "pepero", name: "빼빼로데이", fixed: [11, 11],
       message: "Happy Pepero Day!", favicon: "🍫", ornament: " 🍫",
@@ -435,14 +435,19 @@
         "#e63946", "#b5651d", "rgba(0,0,0,0.45)", "linear-gradient(90deg,#3f2216,#7a2230)", "#ffd2a8", "#ffe0c2", "#d9a98c"),
       look: {
         font: "Yeon Sung", titleSize: 22, titleWeight: 400, titleSpacing: "0.02em", navSize: 11, menuSize: 22,
-        navRadius: "6px", navBorderW: "2px", navBorderColor: "#2b150c", navColor: "#ffe0c2",
-        navFill: "radial-gradient(circle,rgba(255,255,255,.85) 1.4px,transparent 2px) 0 0/11px 11px,linear-gradient(180deg,#6b3a1d,#4a2412)",
-        navHover: "wiggle", hoverBg: "linear-gradient(135deg,#e63946,#b5651d)",
+        navRadius: "9px", navBorderW: "1px", navBorderColor: "#b98b6c", navColor: "#fff6eb",
+        navFill: "linear-gradient(180deg,#67402f,#492719)",
+        navHover: "none", hoverBg: "linear-gradient(135deg,#7b3942,#633528)", hoverColor: "#ffffff",
         headRadius: "4px", headBorderW: "4px", headBorderColor: "#2b150c",
         headBg: "repeating-linear-gradient(90deg,rgba(0,0,0,.3) 0 2px,transparent 2px 52px),linear-gradient(90deg,#4a2412,#6b3a1d,#7a2230)",
         edge: E.drip("#ff8fb1"),
-        cardRadius: "6px", cardBorderW: "3px", cardBorderColor: "#2b150c", cardIdle: "sway",
-        cardFill: "repeating-linear-gradient(90deg,rgba(0,0,0,.25) 0 2px,transparent 2px 50px),repeating-linear-gradient(0deg,rgba(0,0,0,.25) 0 2px,transparent 2px 50px),linear-gradient(135deg,#6b3a1d,#4a2412)"
+        cardRadius: "12px", cardBorderW: "2px", cardBorderColor: "#b98b6c", cardIdle: "none",
+        cardFill: "linear-gradient(145deg,#633b2b,#43251c)",
+        extra: "& .menu-btn{font-family:'Paperlogy','Noto Sans KR',sans-serif !important;font-weight:700 !important;letter-spacing:-.02em !important;color:#fff6eb !important;text-shadow:0 1px 2px rgba(0,0,0,.35) !important;}" +
+          "& .menu-btn:hover{color:#ffffff !important;}" +
+          "& .header-nav .nav-btn,& .header-nav .nav-btn .nav-label{font-family:'Paperlogy','Noto Sans KR',sans-serif !important;font-weight:700 !important;letter-spacing:0 !important;text-shadow:none !important;}" +
+          "& .header-nav .nav-btn .nav-label{color:#fff6eb !important;}" +
+          "& .header-nav .nav-btn:hover .nav-label{color:#ffffff !important;}"
       },
       fx: [
         { m: "fall", p: ["🍫", "🍪", "🍓", "🥨"], n: 10, s: [18, 30], d: [10, 18] },
