@@ -455,6 +455,34 @@
       ]
     },
 
+    /* ===== 🥬 김치의 날 : 배추의 초록·고춧가루의 붉은색·옹기 톤, 선명한 버튼 대비 ===== */
+    {
+      id: "kimchi", name: "김치의 날", fixed: [11, 22],
+      message: "우리 김치의 맛과 멋을 기념해요!", favicon: "🥬", ornament: " 🥬",
+      vars: V("linear-gradient(140deg,#f5f4e7,#e8f0d7,#f7e7d9)", "#274332", "#fffaf2", "#283a2c", "#76956a",
+        "#a92d2b", "#42764b", "rgba(35,62,42,.18)", "linear-gradient(105deg,#23472f,#416c43,#8a332b)", "#fff4d8", "#fffaf0", "#d7e6c7"),
+      look: {
+        titleSize: 21, titleWeight: 800, navSize: 11, navWeight: 700, menuSize: 22,
+        navRadius: "10px", navBorderW: "1px", navBorderColor: "#d6e5c9",
+        navFill: "linear-gradient(180deg,#355c3a,#284b32)", navColor: "#fffaf0",
+        navHover: "none", hoverBg: "linear-gradient(135deg,#8b302b,#682b28)", hoverColor: "#ffffff",
+        headRadius: "12px", headBorderW: "2px", headBorderColor: "#8dac74",
+        edge: E.grass("#b7cf88"),
+        cardRadius: "17px", cardBorderW: "2px", cardBorderColor: "#8ba87b",
+        cardFill: "linear-gradient(145deg,#fffcf5,#f0f3e4)", cardIdle: "none",
+        cardShadow: "0 9px 22px rgba(41,70,44,.18),0 2px 5px rgba(41,70,44,.10)",
+        extra: "& .menu-btn{font-family:'Paperlogy','Noto Sans KR',sans-serif !important;font-weight:800 !important;color:#283a2c !important;text-shadow:none !important;}" +
+          "& .menu-btn:hover{color:#ffffff !important;}" +
+          "& .header-nav .nav-btn .nav-label{font-family:'Paperlogy','Noto Sans KR',sans-serif !important;font-weight:700 !important;color:#fffaf0 !important;text-shadow:none !important;}" +
+          "& .header-nav .nav-btn:hover .nav-label{color:#ffffff !important;}"
+      },
+      fx: [
+        { m: "fall", p: ["🥬", "🌶️", "🥕", "🧄"], n: 11, s: [19, 31], d: [11, 19], o: .8 },
+        { m: "drift", p: ["🍃", "🥬"], n: 7, s: [17, 27], d: [17, 27], o: .7 },
+        { m: "confetti", p: ["#ba4938", "#7d9c52", "#f3d39b"], n: 14, s: [7, 11], d: [7, 12], o: .65 }
+      ]
+    },
+
     /* ===== 🎉 창립기념일 : 회사 기본 폰트 + 골드 프리미엄 테두리 + 지나가는 빛 + 색종이 ===== */
     {
       /* 이테크시스템 창립기념일 — 매년 6/1 (주년 계산 기준 연도 founded: 2009 — 실제 창립 연도와 다르면 수정)
@@ -594,6 +622,14 @@
       titleColor: "#ffd2a8", descColor: "#e9b9a0", border: "3px solid #2b150c", radius: "6px",
       shadow: "0 8px 18px rgba(0,0,0,.45)", arrowBg: "#4a2412", arrowBorder: "#2b150c", icon: "🍫", descIcon: "🍓", anim: "dropbounce", animDur: ".65s",
       deco: "@T::before{content:\"\";position:absolute;left:-3px;right:-3px;top:-3px;height:10px;background:" + E.drip("#ff8fb1").bg + ";border-radius:6px 6px 0 0;pointer-events:none;}"
+    },
+    kimchi: {
+      titleSize: 13, descSize: 11, titleWeight: 800,
+      bg: "linear-gradient(145deg,#fffaf0,#edf3e0)", color: "#283a2c",
+      titleColor: "#8e2c26", descColor: "#416c43",
+      border: "2px solid #75946b", radius: "12px", pad: "10px 14px",
+      shadow: "0 10px 23px rgba(29,65,37,.24)", arrowBg: "#edf3e0", arrowBorder: "#75946b",
+      icon: "🥬", descIcon: "🌶️", anim: "sprout", animDur: ".48s"
     },
     founding: {
       titleSize: 13, descSize: 11, titleWeight: 800, bg: "linear-gradient(140deg,#0b1d3a,#123a69 60%,#6b5210)", color: "#fff3c9",
