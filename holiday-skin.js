@@ -655,7 +655,27 @@
   /* ------------------------------------------------------------------ */
   var qs = new URLSearchParams(location.search);
   var forced = qs.get("skin");
+
+  // 사용자 선택 상태
+  // - 파티클/하단 배지 OFF: 브라우저에 2시간 유지
+  // - 기본 테마 복귀: 현재 탭(session) 동안 유지, 새 탭/다음 접속에서는 시즌 테마 자동 복원
+  var HS_FX_OFF_UNTIL_KEY = "etech-holiday-fx-off-until";
+  var HS_DEFAULT_SESSION_KEY = "etech-holiday-default-session";
+  var HS_FX_OFF_MS = 2 * 60 * 60 * 1000;
+
+  function hsStorageGet(storage, key) {
+    try { return storage.getItem(key); } catch (e) { return null; }
+  }
+  function hsStorageSet(storage, key, value) {
+    try { storage.setItem(key, value); } catch (e) {}
+  }
+  function hsStorageRemove(storage, key) {
+    try { storage.removeItem(key); } catch (e) {}
+  }
+
   if (forced === "off") return;
+  // ?skin=... 강제 미리보기는 기본 테마 세션 상태보다 우선합니다.
+  if (!forced && hsStorageGet(window.sessionStorage, HS_DEFAULT_SESSION_KEY) === "1") return;
 
   var result = null;
   if (forced) {
@@ -968,7 +988,15 @@
     "animation:hs-pop .6s ease both;transition:opacity .8s ease,transform .8s ease;text-shadow:0 1px 2px rgba(0,0,0,.3);}",
     "#hs-badge.hs-out{opacity:0 !important;transform:translateY(10px) scale(.96);pointer-events:none;}",
     "@keyframes hs-pop{from{opacity:0;transform:translateY(12px) scale(.9)}to{opacity:1;transform:none}}",
-    "@media (prefers-reduced-motion:reduce){#hs-fx{display:none;}" + S + " .menu-btn," + S + " .nav-btn:hover," + S + " .header-title{animation:none !important;}}"
+    "#hs-default-theme{position:absolute;right:-34px;top:50%;z-index:10001;width:28px;height:28px;padding:0;border:1px solid rgba(30,58,138,.22);border-radius:9px;" +
+    "display:inline-flex;align-items:center;justify-content:center;cursor:pointer;background:rgba(255,255,255,.94);color:#1e3a8a;" +
+    "box-shadow:0 4px 12px rgba(15,23,42,.15);font:700 15px/1 Arial,sans-serif;transition:transform .16s ease,box-shadow .16s ease,background .16s ease;" +
+    "transform:translateY(-50%);backdrop-filter:blur(8px);}",
+    "#hs-default-theme:hover{transform:translateY(-50%) scale(1.07);background:#fff;box-shadow:0 6px 16px rgba(15,23,42,.22);}",
+    "#hs-default-theme:active{transform:translateY(-50%) scale(.96);}",
+    "#hs-default-theme:focus-visible{outline:2px solid color-mix(in srgb,var(--hs-a) 70%,#fff);outline-offset:2px;}",
+    "@media (max-width:900px){#hs-default-theme{right:2px;top:calc(100% + 10px);}}",
+    "@media (prefers-reduced-motion:reduce){#hs-fx{display:none;}#hs-default-theme{transition:none;}" + S + " .menu-btn," + S + " .nav-btn:hover," + S + " .header-title{animation:none !important;}}"
   );
 
   var styleEl = document.createElement("style");
@@ -993,44 +1021,82 @@
       "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>" + skin.favicon + "</text></svg>"
     );
 
+    // 상단 바 우측 바깥쪽: 현재 탭에서 기본 테마로 복귀
+    // header.js가 DOMContentLoaded 시점에 헤더를 만들 수 있으므로 즉시 시도 후 필요하면 잠깐 감시합니다.
+    var installDefaultThemeButton = function () {
+      if (document.getElementById("hs-default-theme")) return true;
+      var wrap = document.querySelector(".header-wrap");
+      if (!wrap) return false;
+
+      var btn = document.createElement("button");
+      btn.id = "hs-default-theme";
+      btn.type = "button";
+      btn.textContent = "↺";
+      btn.setAttribute("aria-label", "기본 테마로 돌아가기");
+      btn.title = "기본 테마로 돌아가기 · 현재 탭에서 유지";
+      btn.addEventListener("click", function () {
+        hsStorageSet(window.sessionStorage, HS_DEFAULT_SESSION_KEY, "1");
+        location.reload();
+      });
+      wrap.appendChild(btn);
+      return true;
+    };
+
+    if (!installDefaultThemeButton()) {
+      var headerObserver = new MutationObserver(function () {
+        if (installDefaultThemeButton()) headerObserver.disconnect();
+      });
+      headerObserver.observe(document.documentElement, { childList: true, subtree: true });
+      setTimeout(function () { headerObserver.disconnect(); }, 5000);
+    }
+
+    // 파티클/하단 배지 OFF 상태는 클릭 시점부터 2시간 동안 유지합니다.
+    var now = Date.now();
+    var fxOffUntil = parseInt(hsStorageGet(window.localStorage, HS_FX_OFF_UNTIL_KEY) || "0", 10);
+    var effectsSuppressed = fxOffUntil > now;
+    if (!effectsSuppressed && fxOffUntil) hsStorageRemove(window.localStorage, HS_FX_OFF_UNTIL_KEY);
+
     // 파티클 : 레이어마다 움직임(m)이 다름
-    var fx = document.createElement("div");
-    fx.id = "hs-fx";
-    var mob = window.innerWidth < 700 ? 0.55 : 1;
-    skin.fx.forEach(function (ly) {
-      var n = Math.max(1, Math.round(ly.n * mob));
-      for (var i = 0; i < n; i++) {
-        var it = ly.p[i % ly.p.length];
-        var size = rnd(ly.s ? ly.s[0] : 14, ly.s ? ly.s[1] : 30);
-        var dur = rnd(ly.d ? ly.d[0] : 10, ly.d ? ly.d[1] : 18);
-        var sp = document.createElement("span");
-        sp.className = "p m-" + ly.m;
-        var inner = document.createElement("i");
-        if (it.charAt(0) === "#") {          // 색종이 조각
-          inner.className = "shape";
-          inner.style.background = it;
-          inner.style.width = size * 0.45 + "px";
-          inner.style.height = size * 0.8 + "px";
-        } else {
-          inner.textContent = it;
+    var fx = null;
+    if (!effectsSuppressed) {
+      fx = document.createElement("div");
+      fx.id = "hs-fx";
+      var mob = window.innerWidth < 700 ? 0.55 : 1;
+      skin.fx.forEach(function (ly) {
+        var n = Math.max(1, Math.round(ly.n * mob));
+        for (var i = 0; i < n; i++) {
+          var it = ly.p[i % ly.p.length];
+          var size = rnd(ly.s ? ly.s[0] : 14, ly.s ? ly.s[1] : 30);
+          var dur = rnd(ly.d ? ly.d[0] : 10, ly.d ? ly.d[1] : 18);
+          var sp = document.createElement("span");
+          sp.className = "p m-" + ly.m;
+          var inner = document.createElement("i");
+          if (it.charAt(0) === "#") {          // 색종이 조각
+            inner.className = "shape";
+            inner.style.background = it;
+            inner.style.width = size * 0.45 + "px";
+            inner.style.height = size * 0.8 + "px";
+          } else {
+            inner.textContent = it;
+          }
+          var st = sp.style;
+          if (ly.c) st.color = ly.c;
+          if (ly.o) st.opacity = ly.o;
+          st.setProperty("--x", rnd(0, 100) + "%");
+          st.setProperty("--y", rnd(4, 86) + "%");
+          st.setProperty("--s", size + "px");
+          st.setProperty("--dur", dur + "s");
+          st.setProperty("--delay", -rnd(0, dur) + "s");
+          var swBase = ly.sw != null ? ly.sw : 80;
+          st.setProperty("--sway", (swBase < 0 ? -rnd(0.5, 1) * -swBase : rnd(-1, 1) * swBase) + "px");
+          st.setProperty("--rot", rnd(-1, 1) * (ly.rot != null ? ly.rot : 180) + "deg");
+          st.setProperty("--d2", rnd(ly.t ? ly.t[0] : 2.5, ly.t ? ly.t[1] : 5) + "s");
+          sp.appendChild(inner);
+          fx.appendChild(sp);
         }
-        var st = sp.style;
-        if (ly.c) st.color = ly.c;
-        if (ly.o) st.opacity = ly.o;
-        st.setProperty("--x", rnd(0, 100) + "%");
-        st.setProperty("--y", rnd(4, 86) + "%");
-        st.setProperty("--s", size + "px");
-        st.setProperty("--dur", dur + "s");
-        st.setProperty("--delay", -rnd(0, dur) + "s");
-        var swBase = ly.sw != null ? ly.sw : 80;
-        st.setProperty("--sway", (swBase < 0 ? -rnd(0.5, 1) * -swBase : rnd(-1, 1) * swBase) + "px");
-        st.setProperty("--rot", rnd(-1, 1) * (ly.rot != null ? ly.rot : 180) + "deg");
-        st.setProperty("--d2", rnd(ly.t ? ly.t[0] : 2.5, ly.t ? ly.t[1] : 5) + "s");
-        sp.appendChild(inner);
-        fx.appendChild(sp);
-      }
-    });
-    document.body.appendChild(fx);
+      });
+      document.body.appendChild(fx);
+    }
 
     // 메뉴 팔레트: header.js 가 버튼을 그룹으로 재배치하므로 CSS nth-child 대신 순서대로 색(--pc)을 부여
     if (L.navPalette) {
@@ -1059,20 +1125,23 @@
     document.addEventListener("pointerover", function (e) { if (e.pointerType !== "touch") replayTip(e); }, true);
     document.addEventListener("focusin", replayTip, true);
 
-    // 안내 배지 (클릭하면 효과와 배지가 스르륵 사라짐)
-    var dText = diff > 0 ? "D-" + diff : diff === 0 ? "D-Day" : "D+" + -diff;
-    var badge = document.createElement("div");
-    badge.id = "hs-badge";
-    badge.title = "클릭하면 떨어지는 효과가 사라집니다";
-    var msg = typeof skin.message === "function" ? skin.message(result.year) : skin.message;
-    badge.textContent = skin.favicon + " " + msg + " · " + skin.name + " " + dText;
-    badge.addEventListener("click", function () {
-      if (badge.dataset.closing) return;
-      badge.dataset.closing = "1";
-      badge.classList.add("hs-out");
-      fx.classList.add("hs-out");
-      setTimeout(function () { badge.remove(); fx.remove(); }, 1800);
-    });
-    document.body.appendChild(badge);
+    // 안내 배지 (클릭하면 효과와 배지가 사라지고 2시간 동안 다시 표시하지 않음)
+    if (!effectsSuppressed && fx) {
+      var dText = diff > 0 ? "D-" + diff : diff === 0 ? "D-Day" : "D+" + -diff;
+      var badge = document.createElement("div");
+      badge.id = "hs-badge";
+      badge.title = "클릭하면 효과가 2시간 동안 꺼집니다";
+      var msg = typeof skin.message === "function" ? skin.message(result.year) : skin.message;
+      badge.textContent = skin.favicon + " " + msg + " · " + skin.name + " " + dText;
+      badge.addEventListener("click", function () {
+        if (badge.dataset.closing) return;
+        badge.dataset.closing = "1";
+        hsStorageSet(window.localStorage, HS_FX_OFF_UNTIL_KEY, String(Date.now() + HS_FX_OFF_MS));
+        badge.classList.add("hs-out");
+        fx.classList.add("hs-out");
+        setTimeout(function () { badge.remove(); fx.remove(); }, 1800);
+      });
+      document.body.appendChild(badge);
+    }
   });
 })();
