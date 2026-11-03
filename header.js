@@ -375,13 +375,46 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
   document.head.appendChild(compactGroupStyle);
 
+  // 공통 메뉴 호버: 버튼(아이콘/텍스트 포함) 전체를 2배 확대하되 레이아웃은 유지합니다.
+  // 헤더/내비게이션의 overflow:hidden 을 해제해 확대 영역이 잘리지 않도록 처리합니다.
+  const hoverZoomStyle = document.createElement('style');
+  hoverZoomStyle.textContent = `
+    .header-wrap, .dashboard-header, .header-nav,
+    .header-nav .nav-menu-group, .header-nav .nav-group-items {
+      overflow: visible !important;
+    }
+    .header-nav .nav-menu-group { isolation: auto !important; }
+    .header-nav .nav-menu-group:has(.nav-btn:hover),
+    .header-nav .nav-menu-group:has(.nav-btn:focus-visible) {
+      z-index: 100 !important;
+    }
+    .header-nav .nav-btn:hover,
+    .header-nav .nav-btn:focus-visible {
+      position: relative !important;
+      z-index: 101 !important;
+      transform: scale(2) !important;
+      transform-origin: center center !important;
+      animation: none !important;
+      transition: transform .16s ease, background .16s ease, box-shadow .16s ease !important;
+    }
+    .header-nav .nav-btn:hover .nav-label,
+    .header-nav .nav-btn:focus-visible .nav-label {
+      visibility: visible !important;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .header-nav .nav-btn:hover,
+      .header-nav .nav-btn:focus-visible { transition: none !important; }
+    }
+  `;
+  document.head.appendChild(hoverZoomStyle);
+
   // 즉시 표시되는 커스텀 메뉴 툴팁 (브라우저 기본 title 툴팁은 제거)
   const tipStyle = document.createElement('style');
   tipStyle.textContent = `
     .header-nav-tooltip {
       position: fixed; z-index: 2147483000; left: 0; top: 0;
-      width: max-content; min-width: 205px; max-width: min(315px, calc(100vw - 20px));
-      padding: 9px 12px; border-radius: 10px;
+      width: max-content; min-width: min(410px, calc(100vw - 20px)); max-width: min(630px, calc(100vw - 20px));
+      padding: 18px 24px; border-radius: 20px;
       color: #f6faff; background: linear-gradient(140deg, #173a65, #102848);
       border: 1px solid rgba(175,210,255,.35);
       box-shadow: 0 10px 28px rgba(3,18,41,.29), inset 0 1px rgba(255,255,255,.08);
@@ -391,20 +424,20 @@ document.addEventListener("DOMContentLoaded", function () {
       line-height: 1.4; box-sizing: border-box; text-align: left;
     }
     .header-nav-tooltip.visible { opacity: 1; visibility: visible; }
-    .header-nav-tooltip-title { font-weight: 700; font-size: 12px; letter-spacing: -.1px; }
-    .header-nav-tooltip-desc { margin-top: 5px; color: #bed5ee; font-size: 11px; }
-    .header-nav-tooltip-category { margin-bottom: 5px; color: #91b9df; font-size: 9px; font-weight: 600; letter-spacing: .2px; }
-    .header-nav-tooltip-features { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; }
-    .header-nav-tooltip-feature { padding: 4px 7px; border-radius: 5px; background: rgba(var(--tip-rgb, 137,188,246), .13); border: 1px solid rgba(var(--tip-rgb, 137,188,246), .25); color: #deebfa; font-size: 10px; line-height: 1.2; white-space: nowrap; }
-    .header-nav-tooltip-footer { margin-top: 9px; color: #84a5c8; font-size: 9px; text-align: right; }
+    .header-nav-tooltip-title { font-weight: 700; font-size: 24px; letter-spacing: -.2px; }
+    .header-nav-tooltip-desc { margin-top: 10px; color: #bed5ee; font-size: 22px; }
+    .header-nav-tooltip-category { margin-bottom: 10px; color: #91b9df; font-size: 18px; font-weight: 600; letter-spacing: .4px; }
+    .header-nav-tooltip-features { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .header-nav-tooltip-feature { padding: 8px 14px; border-radius: 10px; background: rgba(var(--tip-rgb, 137,188,246), .13); border: 1px solid rgba(var(--tip-rgb, 137,188,246), .25); color: #deebfa; font-size: 20px; line-height: 1.2; white-space: nowrap; }
+    .header-nav-tooltip-footer { margin-top: 18px; color: #84a5c8; font-size: 18px; text-align: right; }
     .header-nav-tooltip::after {
       content: ''; position: absolute; left: var(--tip-arrow-x, 50%);
-      width: 9px; height: 9px; background: #17365e;
+      width: 18px; height: 18px; background: #17365e;
       border: 1px solid rgba(175,210,255,.35);
       transform: translateX(-50%) rotate(45deg);
     }
-    .header-nav-tooltip.below::after { top: -6px; border-right: 0; border-bottom: 0; }
-    .header-nav-tooltip.above::after { bottom: -6px; border-left: 0; border-top: 0; }
+    .header-nav-tooltip.below::after { top: -10px; border-right: 0; border-bottom: 0; }
+    .header-nav-tooltip.above::after { bottom: -10px; border-left: 0; border-top: 0; }
     @media (prefers-reduced-motion: reduce) {
       .header-nav-tooltip { transition: none; }
     }
@@ -434,8 +467,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const h = tooltip.offsetHeight;
     const mid = r.left + r.width / 2;
     const x = Math.max(10, Math.min(mid - w / 2, window.innerWidth - w - 10));
-    const below = r.bottom + 10 + h <= window.innerHeight || r.top < h + 12;
-    const y = below ? r.bottom + 10 : r.top - h - 10;
+    const below = r.bottom + 14 + h <= window.innerHeight || r.top < h + 16;
+    const y = below ? r.bottom + 14 : r.top - h - 14;
     tooltip.style.left = x + 'px';
     tooltip.style.top = Math.max(6, y) + 'px';
     tooltip.style.setProperty('--tip-arrow-x', Math.max(12, Math.min(w - 12, mid - x)) + 'px');

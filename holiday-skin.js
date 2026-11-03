@@ -924,8 +924,9 @@
     "border-radius:" + T.radius + ";box-shadow:" + T.shadow + ";padding:" + T.pad + ";" +
     "transform-origin:var(--tip-arrow-x,50%) var(--hs-oy,0%);}");
   c.push(TS + ".below{--hs-oy:0%;}" + TS + ".above{--hs-oy:100%;}");
-  c.push(TS + " .header-nav-tooltip-title{font-size:" + px(T.titleSize) + ";font-weight:" + T.titleWeight + ";letter-spacing:" + T.titleSpacing + ";color:" + T.titleColor + ";}");
-  c.push(TS + " .header-nav-tooltip-desc{font-size:" + px(T.descSize) + ";color:" + T.descColor + ";}");
+  c.push(TS + "{padding:18px 24px;}");
+  c.push(TS + " .header-nav-tooltip-title{font-size:" + px(T.titleSize * 2) + ";font-weight:" + T.titleWeight + ";letter-spacing:" + T.titleSpacing + ";color:" + T.titleColor + ";}");
+  c.push(TS + " .header-nav-tooltip-desc{font-size:" + px(T.descSize * 2) + ";color:" + T.descColor + ";}");
   if (T.icon) c.push(TS + " .header-nav-tooltip-title::before{content:\"" + T.icon + " \";}");
   if (T.descIcon) c.push(TS + " .header-nav-tooltip-desc::before{content:\"" + T.descIcon + " \";}");
   if (T.arrow === "none") {
@@ -940,8 +941,8 @@
   c.push(TS + ".hs-play{animation:hs-tip-" + T.anim + " " + T.animDur + " ease backwards;}");
   if (T.deco) c.push(XT(T.deco));
   if (T.extra) c.push(XT(T.extra));
-  c.push(S + "[data-hs-font-fail] .header-nav-tooltip .header-nav-tooltip-title{font-size:13px;letter-spacing:-.1px;}",
-    S + "[data-hs-font-fail] .header-nav-tooltip .header-nav-tooltip-desc{font-size:11px;}");
+  c.push(S + "[data-hs-font-fail] .header-nav-tooltip .header-nav-tooltip-title{font-size:26px;letter-spacing:-.1px;}",
+    S + "[data-hs-font-fail] .header-nav-tooltip .header-nav-tooltip-desc{font-size:22px;}");
   c.push(
     "@keyframes hs-tip-pop{0%{opacity:0;transform:scale(.6)}60%{transform:scale(1.07)}100%{opacity:1;transform:scale(1)}}",
     "@keyframes hs-tip-jelly{0%{opacity:0;transform:scale(.4)}35%{transform:scale(1.18,.84)}55%{transform:scale(.9,1.12)}75%{transform:scale(1.04,.98)}100%{opacity:1;transform:scale(1)}}",
