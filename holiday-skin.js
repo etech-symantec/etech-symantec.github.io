@@ -436,7 +436,7 @@
       look: {
         font: "Yeon Sung", titleSize: 22, titleWeight: 400, titleSpacing: "0.02em", navSize: 11, menuSize: 22,
         navRadius: "9px", navBorderW: "1px", navBorderColor: "#b98b6c", navColor: "#fff6eb",
-        navFill: "linear-gradient(180deg,#67402f,#492719)",
+        navFill: "repeating-linear-gradient(90deg,#b9825c 0 18px,#70432f 18px 20px) top/100% 3px no-repeat,repeating-linear-gradient(90deg,#70432f 0 18px,#b9825c 18px 20px) bottom/100% 3px no-repeat,linear-gradient(180deg,#67402f,#492719)",
         navHover: "none", hoverBg: "linear-gradient(135deg,#7b3942,#633528)", hoverColor: "#ffffff",
         headRadius: "4px", headBorderW: "4px", headBorderColor: "#2b150c",
         headBg: "repeating-linear-gradient(90deg,rgba(0,0,0,.3) 0 2px,transparent 2px 52px),linear-gradient(90deg,#4a2412,#6b3a1d,#7a2230)",
