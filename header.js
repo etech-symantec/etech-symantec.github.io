@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="brand-area">
           <button type="button" id="etechBrandSwitch" class="home-btn" aria-label="팔로알토 또는 브로드컴 페이지 선택" aria-haspopup="dialog" aria-controls="etechBrandPopup" aria-expanded="false" title="브랜드 사이트 선택">
             <span class="home-icon" aria-hidden="true">
-              <img class="home-logo-img" src="https://etech-symantec.github.io/brand-logo-premium.png" alt="">
+              <svg class="broadcom-wave-symbol" viewBox="0 0 170 170" width="24" height="24" role="presentation" aria-hidden="true" focusable="false"><circle cx="85" cy="85" r="82" fill="#cc0033"/><path d="M6 127 C23 118 36 118 50 131 C64 143 71 116 79 61 C82 40 89 37 93 60 L104 113 C108 137 122 128 138 119 C148 114 157 118 166 125" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
           </button>
           <span class="brand-divider" aria-hidden="true"></span>
