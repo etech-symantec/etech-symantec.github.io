@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="header-wrap">
       <div class="dashboard-header">
         <div class="brand-area">
-          <a href="https://etech-symantec.github.io/" class="home-btn" aria-label="홈으로 이동" title="홈">
+          <button type="button" id="etechBrandSwitch" class="home-btn" aria-label="팔로알토 또는 브로드컴 페이지 선택" aria-haspopup="dialog" aria-controls="etechBrandPopup" aria-expanded="false" title="브랜드 사이트 선택">
             <span class="home-icon" aria-hidden="true">
               <img class="home-logo-img" src="https://etech-symantec.github.io/brand-logo-premium.png" alt="">
             </span>
-          </a>
+          </button>
           <span class="brand-divider" aria-hidden="true"></span>
           <div class="brand-copy">
             <span class="header-title do-hyeon-regular">${title}</span>
@@ -61,6 +61,68 @@ document.addEventListener("DOMContentLoaded", function () {
   `;
 
   document.body.insertAdjacentHTML("afterbegin", headerHTML);
+  // 기존 공통 헤더 홈 버튼을 브랜드 선택기로 전환합니다.
+  {
+    const brandSwitchButton = document.getElementById('etechBrandSwitch');
+    const brandSwitchArea = brandSwitchButton?.closest('.brand-area');
+    if (brandSwitchButton && brandSwitchArea) {
+      const brandSwitchStyle = document.createElement('style');
+      brandSwitchStyle.textContent = [
+        '.dashboard-header .brand-area{position:relative!important}',
+        '.dashboard-header #etechBrandSwitch{padding:0!important;cursor:pointer!important;appearance:none;-webkit-appearance:none}',
+        '.dashboard-header #etechBrandSwitch:focus-visible{outline:2px solid #a7cfff!important;outline-offset:3px!important}',
+        '#etechBrandPopup[hidden]{display:none!important}',
+        '#etechBrandPopup{position:absolute;z-index:10000;left:0;top:calc(100% + 15px);width:min(344px,calc(100vw - 24px));box-sizing:border-box;padding:15px;border-radius:16px;background:#fff;border:1px solid #d9e4f0;color:#293a50;text-align:left;box-shadow:0 18px 46px #0f234040,0 2px 8px #0f234012;font-family:Paperlogy,"Noto Sans KR",sans-serif}',
+        '#etechBrandPopup::before{content:"";position:absolute;top:-7px;left:14px;width:12px;height:12px;background:#fff;border-top:1px solid #d9e4f0;border-left:1px solid #d9e4f0;transform:rotate(45deg)}',
+        '.etech-brand-title{font-size:12px;font-weight:800;color:#647894;margin:0 0 12px}',
+        '.etech-brand-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}',
+        '.etech-brand-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-width:0;padding:14px 8px 12px;border:1px solid #dce7f3;border-radius:12px;color:#283b55;background:#fff;text-decoration:none!important;font-size:12px;font-weight:800;transition:transform .16s,background .16s,border-color .16s,box-shadow .16s}',
+        '.etech-brand-choice:hover,.etech-brand-choice:focus-visible{transform:translateY(-2px);background:#f0f6ff;color:#164a85;border-color:#7eb7ef;box-shadow:0 5px 15px #2762a321;outline:none}',
+        '.etech-brand-logo{display:flex;align-items:center;justify-content:center;width:100%;height:43px}',
+        '.etech-brand-logo img{display:block;max-width:138px;width:100%;max-height:39px;object-fit:contain}',
+        '@media(max-width:600px){#etechBrandPopup{top:calc(100% + 9px)}}',
+        '@media(prefers-reduced-motion:reduce){.etech-brand-choice{transition:none}.etech-brand-choice:hover{transform:none}}'
+      ].join('\n');
+      document.head.appendChild(brandSwitchStyle);
+      const brandPopup = document.createElement('div');
+      brandPopup.id = 'etechBrandPopup';
+      brandPopup.setAttribute('role','dialog');
+      brandPopup.setAttribute('aria-label','이동할 브랜드 페이지 선택');
+      brandPopup.hidden = true;
+      brandPopup.innerHTML =
+        '<div class="etech-brand-title">이동할 페이지 선택</div><div class="etech-brand-choices">'+
+        '<a class="etech-brand-choice" href="https://etech-sse-paloalto.vercel.app/" aria-label="팔로알토 팀 페이지">'+
+          '<span class="etech-brand-logo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/PaloAltoNetworks_2020_Logo.svg" alt="Palo Alto Networks" loading="lazy"></span><span>팔로알토</span></a>'+
+        '<a class="etech-brand-choice" href="https://etech-symantec.github.io/" aria-label="브로드컴 페이지">'+
+          '<span class="etech-brand-logo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Broadcom_logo_%282016-present%29.svg" alt="Broadcom" loading="lazy"></span><span>브로드컴</span></a></div>';
+      brandSwitchArea.appendChild(brandPopup);
+      const closeBrandPopup = (focus) => {
+        if (brandPopup.hidden) return;
+        brandPopup.hidden = true;
+        brandSwitchButton.setAttribute('aria-expanded','false');
+        if (focus) brandSwitchButton.focus();
+      };
+      brandSwitchButton.addEventListener('click',()=>{
+        if (!brandPopup.hidden) {closeBrandPopup(true);return;}
+        brandPopup.hidden = false;
+        brandSwitchButton.setAttribute('aria-expanded','true');
+        brandPopup.querySelector('.etech-brand-choice')?.focus();
+      });
+      document.addEventListener('pointerdown', e=>{
+        if(!brandPopup.hidden && !brandPopup.contains(e.target) && !brandSwitchButton.contains(e.target))closeBrandPopup(false);
+      });
+      document.addEventListener('keydown',e=>{
+        if (brandPopup.hidden) return;
+        if (e.key==='Escape'){e.preventDefault();closeBrandPopup(true);return;}
+        if (e.key==='Tab'){
+          const choices=[...brandPopup.querySelectorAll('.etech-brand-choice')];
+          if(e.shiftKey && document.activeElement===choices[0]){e.preventDefault();choices[choices.length-1].focus();}
+          else if(!e.shiftKey && document.activeElement===choices[choices.length-1]){e.preventDefault();choices[0].focus();}
+        }
+      });
+    }
+  }
+
 
   // 신규 메뉴는 별도 배지 없이 테두리의 은은한 빛으로만 구분합니다.
   // 표시 여부는 기존과 동일하게 data-new="true"로 관리합니다.
