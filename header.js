@@ -111,9 +111,26 @@ document.addEventListener("DOMContentLoaded", function () {
       document.addEventListener('pointerdown', e=>{
         if(!brandPopup.hidden && !brandPopup.contains(e.target) && !brandSwitchButton.contains(e.target))closeBrandPopup(false);
       });
+      // 브랜드 선택 팝업이 열린 상태에서 "sse"를 입력하면 admin 페이지로 이동합니다.
+      const ADMIN_URL = 'https://etech-sse.vercel.app/';
+      const ADMIN_KEYWORD = 'sse';
+      let adminKeyBuf = '';
+      let adminKeyTimer = null;
       document.addEventListener('keydown',e=>{
         if (brandPopup.hidden) return;
-        if (e.key==='Escape'){e.preventDefault();closeBrandPopup(true);return;}
+        if (e.key==='Escape'){e.preventDefault();closeBrandPopup(true);adminKeyBuf='';return;}
+        // 한글 IME 상태에서도 동작하도록 e.key 대신 e.code(KeyS, KeyE)로 판별
+        if (!e.ctrlKey && !e.metaKey && !e.altKey && /^Key[A-Z]$/.test(e.code)) {
+          adminKeyBuf = (adminKeyBuf + e.code.slice(3).toLowerCase()).slice(-ADMIN_KEYWORD.length);
+          clearTimeout(adminKeyTimer);
+          adminKeyTimer = setTimeout(()=>{ adminKeyBuf=''; }, 1500);
+          if (adminKeyBuf === ADMIN_KEYWORD) {
+            adminKeyBuf = '';
+            e.preventDefault();
+            location.href = ADMIN_URL;
+            return;
+          }
+        }
         if (e.key==='Tab'){
           const choices=[...brandPopup.querySelectorAll('.etech-brand-choice')];
           if(e.shiftKey && document.activeElement===choices[0]){e.preventDefault();choices[choices.length-1].focus();}
