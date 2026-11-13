@@ -111,14 +111,22 @@ document.addEventListener("DOMContentLoaded", function () {
       document.addEventListener('pointerdown', e=>{
         if(!brandPopup.hidden && !brandPopup.contains(e.target) && !brandSwitchButton.contains(e.target))closeBrandPopup(false);
       });
-      // 브랜드 선택 팝업이 열린 상태에서 "sse"를 입력하면 admin 페이지로 이동합니다.
+      // 브랜드 선택 팝업이 열린 상태에서 "sse"를 입력하면 admin 페이지로, "1"을 누르면 캘린더 페이지로 이동합니다.
       const ADMIN_URL = 'https://etech-sse.vercel.app/';
       const ADMIN_KEYWORD = 'sse';
+      const CALENDAR_URL = 'https://etech-calendar.vercel.app/';
       let adminKeyBuf = '';
       let adminKeyTimer = null;
       document.addEventListener('keydown',e=>{
         if (brandPopup.hidden) return;
         if (e.key==='Escape'){e.preventDefault();closeBrandPopup(true);adminKeyBuf='';return;}
+        // 숫자 1(메인 키/키패드) → 캘린더 페이지
+        if (!e.ctrlKey && !e.metaKey && !e.altKey && !e.shiftKey && (e.code==='Digit1' || e.code==='Numpad1')) {
+          e.preventDefault();
+          adminKeyBuf = '';
+          location.href = CALENDAR_URL;
+          return;
+        }
         // 한글 IME 상태에서도 동작하도록 e.key 대신 e.code(KeyS, KeyE)로 판별
         if (!e.ctrlKey && !e.metaKey && !e.altKey && /^Key[A-Z]$/.test(e.code)) {
           adminKeyBuf = (adminKeyBuf + e.code.slice(3).toLowerCase()).slice(-ADMIN_KEYWORD.length);
