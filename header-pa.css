@@ -1,0 +1,76 @@
+/* Palo Alto 공통 헤더 스타일 (header-pa.css)
+   - 모든 팔로알토 페이지가 https://etech-symantec.github.io/header-pa.css 를 공유합니다.
+   - 헤더 전용 선택자(.pa-*)만 포함하며 페이지의 body/h1/폼 등은 건드리지 않습니다.
+   - 색상/디자인을 바꾸려면 이 파일만 수정하면 모든 팔로알토 페이지에 반영됩니다. */
+@font-face{font-family:"Paperlogy";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-8ExtraBold.woff2") format("woff2");font-weight:800;font-display:swap}
+@font-face{font-family:"Paperlogy";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/2408-3@1.0/Paperlogy-5Medium.woff2") format("woff2");font-weight:500;font-display:swap}
+
+/* ── 헤더 바 ── */
+.pa-header-wrap{position:sticky;top:0;z-index:1000;padding:6px 40px 7px;background:linear-gradient(180deg,rgba(248,247,245,.99) 0%,rgba(248,247,245,.93) 75%,rgba(248,247,245,0) 100%);font-family:Paperlogy,"Noto Sans KR",sans-serif}
+.pa-dashboard-header{position:relative;display:flex;align-items:center;justify-content:flex-start;gap:7px;width:100%;min-height:50px;padding:3px 5px;overflow:visible;background:radial-gradient(circle at 12% -55%,rgba(250,88,45,.30),transparent 38%),radial-gradient(circle at 88% 170%,rgba(250,88,45,.18),transparent 48%),linear-gradient(105deg,#1d2227 0%,#292c30 47%,#393332 100%);border:1px solid rgba(255,151,103,.24);border-radius:12px;box-shadow:0 8px 22px rgba(51,34,25,.16),0 2px 6px rgba(40,30,26,.09),inset 0 1px 0 rgba(255,255,255,.09)}
+.pa-dashboard-header::before{content:"";position:absolute;inset:0 auto 0 0;width:36%;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.05),transparent 58%);border-radius:12px}
+
+/* ── 브랜드 영역(홈 버튼 + 제목/버전) ── */
+.pa-brand-area{position:relative;z-index:1;display:flex;align-items:center;flex:0 0 auto;gap:8px;min-width:0;color:#f8fbff}
+.pa-home-btn{position:relative;width:28px;height:28px;flex:0 0 28px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;background:radial-gradient(circle at 26% 15%,rgba(255,255,255,.23),transparent 40%),linear-gradient(145deg,#ff8050 0%,#fa582d 52%,#bc3d21 100%);border:1px solid rgba(255,204,171,.5);box-shadow:0 7px 16px rgba(110,40,20,.32),0 0 0 1px rgba(250,88,45,.15),inset 0 1px 0 rgba(255,255,255,.27),inset 0 -7px 12px rgba(108,29,10,.18);transition:transform .18s,filter .18s;color:white}
+.pa-home-btn:hover{transform:translateY(-1px) scale(1.03);filter:brightness(1.07)}
+.pa-home-icon{font-size:21px;line-height:1;color:white;text-shadow:0 1px 4px #fff6}
+.pa-brand-switcher{cursor:pointer;padding:0;appearance:none;-webkit-appearance:none}
+.pa-brand-switcher:focus-visible{outline:2px solid #ffb189;outline-offset:3px}
+.pa-brand-switcher .pa-brand-icon{width:22px;height:22px;overflow:hidden;position:relative;display:block}
+.pa-brand-switcher .pa-brand-icon img{position:absolute;left:0;top:2px;width:auto;max-width:none;height:18px;max-height:18px;object-fit:contain;filter:brightness(0) invert(1);opacity:1}
+.pa-brand-copy{display:flex;align-items:center;gap:10px;white-space:nowrap;min-width:0}
+.pa-header-title{font-family:Paperlogy,"Noto Sans KR",sans-serif;font-size:21px;font-weight:800;line-height:1;letter-spacing:-.018em;color:#fffaf7;text-shadow:0 1px 1px rgba(0,0,0,.24),0 0 12px rgba(250,88,45,.17)}
+.pa-brand-meta{display:grid;grid-template-rows:10px 10px;align-items:center;gap:1px;height:21px;white-space:nowrap}
+.pa-header-version{color:#ffdbce;font-size:9px;font-weight:500;line-height:10px;opacity:.82}
+.pa-header-subtitle{color:#d4bdb2;font-size:9px;line-height:10px}
+
+/* ── 메뉴/계정 영역 ──
+   로그인이 필요한 페이지(window.paHeaderAccount=true)는 .pa-needs-auth 가 붙고,
+   body.pa-authenticated 가 되기 전까지 메뉴/계정 영역을 숨깁니다. */
+.pa-header-actions{display:flex;align-items:center;gap:7px;min-width:0;margin-left:auto}
+.pa-header-wrap.pa-needs-auth .pa-header-actions{display:none}
+body.pa-authenticated .pa-header-wrap.pa-needs-auth .pa-header-actions{display:flex}
+.pa-header-nav{display:flex;align-items:center;justify-content:flex-end;gap:5px;min-width:0}
+.pa-menu-group{--group-rgb:250,147,110;display:flex;align-items:center;gap:4px;flex:0 0 auto;padding:3px 5px 3px 4px;border:1px solid rgba(var(--group-rgb),.35);border-radius:11px;background:rgba(var(--group-rgb),.06);box-shadow:inset 0 1px 0 #ffffff09;transition:border-color .16s,background .16s}
+.pa-menu-group:hover{border-color:rgba(var(--group-rgb),.57);background:rgba(var(--group-rgb),.09)}
+.pa-group-caption{display:flex;align-items:center;justify-content:center;flex:0 0 28px;width:28px;font:600 8px/1.25 Arial,sans-serif;color:#ffdfcf;text-align:center;white-space:pre-line}
+.pa-group-items{display:flex;gap:4px;align-items:center}
+.pa-nav-btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:5px;height:34px;min-height:34px;padding:2px 9px;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.04));color:#fff3ec;border:1px solid rgba(255,189,156,.23);box-shadow:inset 0 1px 0 #ffffff0f,0 2px 5px #0000001c;cursor:pointer;font-family:Paperlogy,"Noto Sans KR",sans-serif;font-weight:500;font-size:10px;white-space:nowrap;transition:transform .16s,background .16s,border-color .16s,box-shadow .16s}
+a.pa-nav-btn{text-decoration:none}
+.pa-nav-btn:hover,.pa-nav-btn:focus-visible{position:relative;z-index:101;transform:scale(2);background:linear-gradient(135deg,#fa582d,#d74b2c);border-color:rgba(255,207,177,.78);box-shadow:0 6px 14px rgba(94,32,19,.30),inset 0 1px rgba(255,255,255,.18)}
+.pa-nav-btn:active{transform:scale(1.95)}
+.pa-nav-btn.active{border-color:rgba(255,164,119,.72);background:linear-gradient(180deg,rgba(250,88,45,.36),rgba(194,67,33,.26));color:#fff}
+.pa-nav-icon{font-size:15px;line-height:1;flex:0 0 auto}
+.pa-nav-label{display:flex;flex-direction:column;gap:0;align-items:flex-start;line-height:1.12;font-size:10px}
+.pa-nav-line{display:block;white-space:nowrap}
+.pa-nav-btn.icon-only{width:30px;min-width:30px;padding:3px;gap:0}
+.pa-nav-btn.icon-only .pa-nav-label{display:none}
+.pa-account{display:flex;align-items:center;gap:7px;color:#f0d7cd;font-size:10px;white-space:nowrap;border-left:1px solid rgba(255,197,169,.25);padding-left:8px}
+.pa-account-name{font-weight:800;color:#fff4ed}
+.pa-account-role{font-size:9px;color:#ffbd9f}
+.pa-logout{height:30px;padding:0 9px;border-radius:999px;color:#fff4ed;border:1px solid rgba(255,196,165,.35);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.035));font-family:inherit;font-size:10px;cursor:pointer}
+.pa-logout:hover{background:rgba(250,88,45,.25);border-color:rgba(255,179,139,.65)}
+
+/* ── 메뉴 툴팁 ── */
+.pa-tip{position:fixed;z-index:2147483000;left:0;top:0;width:max-content;max-width:min(450px,calc(100vw - 20px));padding:12px 15px;border-radius:15px;color:#fff7f1;background:linear-gradient(140deg,#38302c,#211f20);border:1px solid rgba(250,157,112,.45);box-shadow:0 10px 28px rgba(39,23,17,.29);pointer-events:none;opacity:0;visibility:hidden;transition:opacity .12s,visibility .12s;line-height:1.45}
+.pa-tip.visible{opacity:1;visibility:visible}
+.pa-tip strong{display:block;font-size:15px}
+.pa-tip span{display:block;color:#e2c4b6;font-size:12px;margin-top:4px}
+
+/* ── 브랜드 선택 팝업(팔로알토 / 브로드컴) ── */
+.pa-brand-popup[hidden]{display:none!important}
+.pa-brand-popup{position:absolute;top:calc(100% + 13px);left:0;z-index:2100;width:min(340px,calc(100vw - 24px));padding:15px;border:1px solid #ebd5ca;border-radius:16px;background:#fffdfb;box-shadow:0 18px 46px rgba(45,28,19,.22),0 2px 10px rgba(45,28,19,.07);color:#332d29;font-family:Paperlogy,"Noto Sans KR",sans-serif}
+.pa-brand-popup::before{content:"";position:absolute;top:-7px;left:15px;width:12px;height:12px;transform:rotate(45deg);background:#fffdfb;border-top:1px solid #ebd5ca;border-left:1px solid #ebd5ca}
+.pa-brand-popup-title{font-size:12px;font-weight:800;color:#78655c;margin-bottom:12px}
+.pa-brand-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.pa-brand-choice{min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:15px 9px 12px;border-radius:12px;border:1px solid #e9e3df;background:#fff;color:#38312d;text-decoration:none;font-size:12px;font-weight:800;transition:background .16s,border-color .16s,box-shadow .16s,transform .16s}
+.pa-brand-choice:hover,.pa-brand-choice:focus-visible{color:#a83d21;border-color:#fa9b79;background:#fff2eb;box-shadow:0 5px 15px rgba(198,81,40,.11);transform:translateY(-2px);outline:none}
+.pa-brand-choice-image{width:100%;height:43px;display:flex;align-items:center;justify-content:center}
+.pa-brand-choice-image img{display:block;width:100%;max-width:140px;max-height:39px;height:auto;object-fit:contain}
+.pa-brand-choice-name{line-height:1.4}
+
+/* ── 반응형 / 모션 ── */
+@media(max-width:900px){.pa-header-wrap{padding-left:12px;padding-right:12px}.pa-header-title{font-size:18px}}
+@media(max-width:600px){.pa-header-wrap{padding:5px 6px 7px}.pa-dashboard-header{flex-wrap:wrap;gap:5px;padding:5px 7px}.pa-header-title{font-size:15px}.pa-header-actions{width:100%;justify-content:space-between;flex-wrap:wrap;gap:6px}.pa-menu-group{padding:2px 4px}.pa-account{margin-left:auto}.pa-header-version,.pa-header-subtitle{font-size:8px}.pa-nav-btn:hover,.pa-nav-btn:focus-visible{transform:scale(1.35)}.pa-brand-popup{top:calc(100% + 8px);left:0}.pa-brand-choice{padding:13px 7px 11px}}
+@media(prefers-reduced-motion:reduce){.pa-nav-btn,.pa-home-btn,.pa-tip,.pa-brand-choice{transition:none}.pa-nav-btn:hover,.pa-nav-btn:focus-visible{transform:none}.pa-brand-choice:hover{transform:none}}
