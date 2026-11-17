@@ -67,7 +67,7 @@ const accountHTML=needsAuth?'<div class="pa-account"><span class="pa-account-nam
 const el=document.createElement('div');
 el.className='pa-header-wrap'+(needsAuth?' pa-needs-auth':'');
 el.innerHTML='<div class="pa-dashboard-header">'+
- '<div class="pa-brand-area"><button type="button" class="pa-home-btn pa-brand-switcher" id="paBrandSwitcher" aria-label="브랜드 페이지 선택" aria-haspopup="dialog" aria-expanded="false" aria-controls="paBrandPopup" title="클라우드플레어 / 브로드컴 페이지 선택"><span class="pa-home-icon pa-brand-icon" aria-hidden="true"><img src="favicon.svg" alt="" loading="eager"></span></button>'+
+ '<div class="pa-brand-area"><button type="button" class="pa-home-btn pa-brand-switcher" id="paBrandSwitcher" aria-label="브랜드 페이지 선택" aria-haspopup="dialog" aria-expanded="false" aria-controls="paBrandPopup" title="클라우드플레어 / 팔로알토 / 브로드컴 페이지 선택"><span class="pa-home-icon pa-brand-icon" aria-hidden="true"><img src="favicon.svg" alt="" loading="eager"></span></button>'+
  '<div class="pa-brand-copy"><span class="pa-header-title">'+title+'</span><div class="pa-brand-meta"><span class="pa-header-version">'+version+'</span><span class="pa-header-subtitle">by 이테크시스템</span></div></div></div>'+
  ((navHTML||accountHTML)?'<div class="pa-header-actions">'+navHTML+accountHTML+'</div>':'')+
  '</div>';

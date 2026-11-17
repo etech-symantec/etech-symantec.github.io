@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="header-wrap">
       <div class="dashboard-header">
         <div class="brand-area">
-          <button type="button" id="etechBrandSwitch" class="home-btn" aria-label="팔로알토 또는 브로드컴 페이지 선택" aria-haspopup="dialog" aria-controls="etechBrandPopup" aria-expanded="false" title="브랜드 사이트 선택">
+          <button type="button" id="etechBrandSwitch" class="home-btn" aria-label="클라우드플레어, 팔로알토 또는 브로드컴 페이지 선택" aria-haspopup="dialog" aria-controls="etechBrandPopup" aria-expanded="false" title="브랜드 사이트 선택">
             <span class="home-icon" aria-hidden="true">
               <svg class="broadcom-wave-symbol" viewBox="0 0 170 170" width="24" height="24" role="presentation" aria-hidden="true" focusable="false"><circle cx="85" cy="85" r="82" fill="#cc0033"/><path d="M6 127 C23 118 36 118 50 131 C64 143 71 116 79 61 C82 40 89 37 93 60 L104 113 C108 137 122 128 138 119 C148 114 157 118 166 125" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
@@ -72,10 +72,10 @@ document.addEventListener("DOMContentLoaded", function () {
         '.dashboard-header #etechBrandSwitch{padding:0!important;cursor:pointer!important;appearance:none;-webkit-appearance:none}',
         '.dashboard-header #etechBrandSwitch:focus-visible{outline:2px solid #a7cfff!important;outline-offset:3px!important}',
         '#etechBrandPopup[hidden]{display:none!important}',
-        '#etechBrandPopup{position:absolute;z-index:10000;left:0;top:calc(100% + 15px);width:min(344px,calc(100vw - 24px));box-sizing:border-box;padding:15px;border-radius:16px;background:#fff;border:1px solid #d9e4f0;color:#293a50;text-align:left;box-shadow:0 18px 46px #0f234040,0 2px 8px #0f234012;font-family:Paperlogy,"Noto Sans KR",sans-serif}',
+        '#etechBrandPopup{position:absolute;z-index:10000;left:0;top:calc(100% + 15px);width:min(480px,calc(100vw - 24px));box-sizing:border-box;padding:15px;border-radius:16px;background:#fff;border:1px solid #d9e4f0;color:#293a50;text-align:left;box-shadow:0 18px 46px #0f234040,0 2px 8px #0f234012;font-family:Paperlogy,"Noto Sans KR",sans-serif}',
         '#etechBrandPopup::before{content:"";position:absolute;top:-7px;left:14px;width:12px;height:12px;background:#fff;border-top:1px solid #d9e4f0;border-left:1px solid #d9e4f0;transform:rotate(45deg)}',
         '.etech-brand-title{font-size:12px;font-weight:800;color:#647894;margin:0 0 12px}',
-        '.etech-brand-choices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}',
+        '.etech-brand-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}',
         '.etech-brand-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-width:0;padding:14px 8px 12px;border:1px solid #dce7f3;border-radius:12px;color:#283b55;background:#fff;text-decoration:none!important;font-size:12px;font-weight:800;transition:transform .16s,background .16s,border-color .16s,box-shadow .16s}',
         '.etech-brand-choice:hover,.etech-brand-choice:focus-visible{transform:translateY(-2px);background:#f0f6ff;color:#164a85;border-color:#7eb7ef;box-shadow:0 5px 15px #2762a321;outline:none}',
         '.etech-brand-logo{display:flex;align-items:center;justify-content:center;width:100%;height:43px}',
@@ -91,6 +91,8 @@ document.addEventListener("DOMContentLoaded", function () {
       brandPopup.hidden = true;
       brandPopup.innerHTML =
         '<div class="etech-brand-title">이동할 페이지 선택</div><div class="etech-brand-choices">'+
+        '<a class="etech-brand-choice" href="https://etech-sse-cloudflare.vercel.app/" aria-label="클라우드플레어 팀 페이지">'+
+          '<span class="etech-brand-logo"><img src="https://www.cloudflare.com/favicon.ico" alt="Cloudflare" loading="lazy"></span><span>클라우드플레어</span></a>'+
         '<a class="etech-brand-choice" href="https://etech-sse-paloalto.vercel.app/" aria-label="팔로알토 팀 페이지">'+
           '<span class="etech-brand-logo"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/PaloAltoNetworks_2020_Logo.svg" alt="Palo Alto Networks" loading="lazy"></span><span>팔로알토</span></a>'+
         '<a class="etech-brand-choice" href="https://etech-symantec.github.io/" aria-label="브로드컴 페이지">'+

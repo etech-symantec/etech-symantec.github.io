@@ -31,6 +31,7 @@ const BASE=(function(){
   if(s&&s.src)return s.src.split('?')[0].replace(/[^\/]*$/,'');
   return 'https://etech-symantec.github.io/';
 })();
+const CLOUDFLARE_URL='https://etech-sse-cloudflare.vercel.app/';
 const PALOALTO_URL='https://etech-sse-paloalto.vercel.app/';
 const BROADCOM_URL='https://etech-symantec.github.io/';
 const ADMIN_URL='https://etech-sse.vercel.app/';
@@ -66,7 +67,7 @@ const accountHTML=needsAuth?'<div class="pa-account"><span class="pa-account-nam
 const el=document.createElement('div');
 el.className='pa-header-wrap'+(needsAuth?' pa-needs-auth':'');
 el.innerHTML='<div class="pa-dashboard-header">'+
- '<div class="pa-brand-area"><button type="button" class="pa-home-btn pa-brand-switcher" id="paBrandSwitcher" aria-label="브랜드 페이지 선택" aria-haspopup="dialog" aria-expanded="false" aria-controls="paBrandPopup" title="팔로알토 / 브로드컴 페이지 선택"><span class="pa-home-icon pa-brand-icon" aria-hidden="true"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/PaloAltoNetworks_2020_Logo.svg" alt="" loading="eager"></span></button>'+
+ '<div class="pa-brand-area"><button type="button" class="pa-home-btn pa-brand-switcher" id="paBrandSwitcher" aria-label="브랜드 페이지 선택" aria-haspopup="dialog" aria-expanded="false" aria-controls="paBrandPopup" title="클라우드플레어 / 팔로알토 / 브로드컴 페이지 선택"><span class="pa-home-icon pa-brand-icon" aria-hidden="true"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/PaloAltoNetworks_2020_Logo.svg" alt="" loading="eager"></span></button>'+
  '<div class="pa-brand-copy"><span class="pa-header-title">'+title+'</span><div class="pa-brand-meta"><span class="pa-header-version">'+version+'</span><span class="pa-header-subtitle">by 이테크시스템</span></div></div></div>'+
  ((navHTML||accountHTML)?'<div class="pa-header-actions">'+navHTML+accountHTML+'</div>':'')+
  '</div>';
@@ -82,6 +83,7 @@ chooser.setAttribute('aria-label','이동할 브랜드 페이지 선택');
 chooser.hidden=true;
 chooser.innerHTML='<div class="pa-brand-popup-title">이동할 페이지 선택</div>'+
  '<div class="pa-brand-choices">'+
+ '<a class="pa-brand-choice" href="'+CLOUDFLARE_URL+'" aria-label="클라우드플레어 팀 페이지로 이동"><span class="pa-brand-choice-image"><img src="https://www.cloudflare.com/favicon.ico" alt="Cloudflare" loading="lazy"></span><span class="pa-brand-choice-name">클라우드플레어</span></a>'+
  '<a class="pa-brand-choice" href="'+PALOALTO_URL+'" aria-label="팔로알토 팀 페이지로 이동"><span class="pa-brand-choice-image"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/PaloAltoNetworks_2020_Logo.svg" alt="Palo Alto Networks" loading="lazy"></span><span class="pa-brand-choice-name">팔로알토</span></a>'+
  '<a class="pa-brand-choice" href="'+BROADCOM_URL+'" aria-label="브로드컴 페이지로 이동"><span class="pa-brand-choice-image"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Broadcom_logo_%282016-present%29.svg" alt="Broadcom" loading="lazy"></span><span class="pa-brand-choice-name">브로드컴</span></a>'+
  '</div>';
